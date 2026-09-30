@@ -1,0 +1,1 @@
+{"xml": "fg/A320-family/XMLs/A320.xml", "texmap": {"A320-NWA.png": "A320-family/Models/Liveries/A320-Blank.png"}, "az": 212, "el": 10, "pitch": -2, "dist": 1.25, "out": "/home/claude/mc/a320_hero.png", "W": 1400, "H": 1400, "samples": 48, "exclude": ["landinggear"]}

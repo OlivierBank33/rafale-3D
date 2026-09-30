@@ -1,0 +1,11 @@
+{
+  "account": "@minuteaero",
+  "slots": ["12:30", "19:00", "21:30"],
+  "videos": [
+    {"date": "2026-09-30", "status": "publié par Olivier", "format": "classement", "topic": "Avions du plus petit au plus grand (dessins 2D, jugé moyen)"},
+    {"date": "2026-09-30", "status": "publié par Olivier", "format": "quiz", "topic": "Quiz silhouette 10 avions : Concorde, Spitfire, B-2, Beluga, SR-71, F-22, A-10, Mirage 2000, F-117, An-225"},
+    {"date": "2026-10-02", "slot": "19:00", "status": "programmé", "metricool_uuid": "5947433875843138446", "format": "et-si", "topic": "Moteurs coupés à 11 000 m (finesse A320, RAT, Gimli 1983, Transat 236, Hudson 2009)"},
+    {"date": "2026-10-03", "slot": "12:30", "status": "programmé", "metricool_uuid": "5703874253249728296", "format": "tournoi", "topic": "Tournoi 8 avions : Concorde, SR-71, F-22, Mirage 2000, A-10, Spitfire, An-225, B-2 — SR-71 champion"}
+  ],
+  "notes": ["Le post quiz du 2026-10-01 19:00 (uuid -5353720635340927760) est en brouillon : doublon, ne pas publier ; le créneau 19:00 du 1er oct est libre."]
+}

@@ -1,0 +1,18 @@
+SEGS = [
+ dict(k='h', say="Onze mille mètres. Les deux moteurs viennent de s'arrêter. Tu as combien de temps avant de toucher le sol ?",
+      show="11 000 mètres. Les deux moteurs viennent de s'arrêter. Tu as combien de temps avant de toucher le sol ?"),
+ dict(k='g1', say="Bonne nouvelle : un avion ne tombe pas comme une pierre. Il devient un planeur. Un A trois cent vingt avance d'environ dix-sept mètres pour chaque mètre perdu.",
+      show="Bonne nouvelle : un avion ne tombe pas comme une pierre. Il devient un planeur. Un A320 avance d'environ 17 mètres pour chaque mètre perdu."),
+ dict(k='g2', say="Depuis onze mille mètres, ça fait près de cent quatre-vingt-dix kilomètres... et presque vingt minutes de vol. Sans aucun moteur.",
+      show="Depuis 11 000 mètres, ça fait près de 190 km... et presque 20 minutes de vol. Sans aucun moteur."),
+ dict(k='r', say="Et sans moteurs, plus de courant ? Pas de panique : une petite éolienne sort sous l'avion. Elle alimente les commandes de vol. L'avion reste pilotable.",
+      show="Et sans moteurs, plus de courant ? Pas de panique : une petite éolienne sort sous l'avion. Elle alimente les commandes de vol. L'avion reste pilotable."),
+ dict(k='c1', say="Premier cas réel. Mille neuf cent quatre-vingt-trois : un Bo-inng sept cent soixante-sept tombe en panne sèche à plus de douze mille mètres. La cause ? Une erreur de conversion entre livres et kilos. Il plane jusqu'à une ancienne base militaire. Les soixante-neuf personnes à bord survivent.",
+      show="Premier cas réel. 1983 : un Boeing 767 tombe en panne sèche à plus de 12 000 mètres. La cause ? Une erreur de conversion entre livres et kilos. Il plane jusqu'à une ancienne base militaire. Les 69 personnes à bord survivent."),
+ dict(k='c2', say="Deux mille un : un Airbus A trois cent trente perd tout son carburant au-dessus de l'Atlantique. Il plane cent vingt kilomètres jusqu'aux Açores. Le plus long vol plané d'un avion de ligne. Trois cent six survivants.",
+      show="2001 : un Airbus A330 perd tout son carburant au-dessus de l'Atlantique. Il plane 120 km jusqu'aux Açores. Le plus long vol plané d'un avion de ligne. 306 survivants."),
+ dict(k='c3', say="Deux mille neuf, à Niou-Yorque. Un A trois cent vingt percute des oies juste après le décollage. Là, pas vingt minutes : trois minutes et demie. Le commandant pose l'avion sur le fleuve Hudsonne. Cent cinquante-cinq survivants.",
+      show="2009, à New York. Un A320 percute des oies juste après le décollage. Là, pas 20 minutes : 3 minutes et demie. Le commandant pose l'avion sur le fleuve Hudson. 155 survivants."),
+ dict(k='o', say="Moralité : perdre ses moteurs, c'est grave... mais ce n'est presque jamais la fin. Et toi, tu montes encore dans un avion ? Dis-le en commentaire.",
+      show="Moralité : perdre ses moteurs, c'est grave... mais ce n'est presque jamais la fin. Et toi, tu montes encore dans un avion ? Dis-le en commentaire."),
+]
