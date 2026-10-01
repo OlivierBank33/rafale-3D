@@ -1,0 +1,6 @@
+#!/bin/bash
+# Usage : bash eleven_prep.sh <dossier> <nom>  -> <nom>_bed.mp4 (vidéo + musique/bruitages, sans voix) et <nom>_guide.mp3 (voix guide calée)
+D=$1; N=$2
+ffmpeg -y -loglevel error -i $D/voice.wav -i $D/music.wav -i $D/sfx.wav -filter_complex "[0:a]aresample=48000,asplit=2[vsc][vg];[1:a]aresample=48000,volume=0.32[m];[m][vsc]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=350[md];[2:a]aresample=48000,volume=0.6[s];[md][s]amix=inputs=2:normalize=0,loudnorm=I=-22:TP=-3,aresample=48000[bed];[vg]highpass=f=70,loudnorm=I=-16:TP=-1.5,aresample=44100[g]" -map "[bed]" -c:a pcm_s16le $D/bed.wav -map "[g]" -c:a libmp3lame -b:a 192k ${N}_guide.mp3
+ffmpeg -y -loglevel error -i $D/video_noaudio.mp4 -i $D/bed.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart ${N}_bed.mp4
+ls -la ${N}_bed.mp4 ${N}_guide.mp3

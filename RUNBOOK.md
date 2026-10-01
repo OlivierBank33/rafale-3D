@@ -58,3 +58,13 @@ Ménage : supprimer du dépôt média les vidéos déjà publiées depuis > 3 jo
 
 ## 5. Journal
 Mettre à jour `history.json` (sujet, format, fichier, date, créneau, id Metricool, stats quand dispo) et pousser sur la branche `minuteaero-pipeline` avec les scripts nouveaux ou modifiés. Terminer par un court compte rendu (SendUserMessage) : 3 vidéos programmées, créneaux, 1 enseignement tiré des stats.
+
+
+## 6. Voix d'Olivier (ElevenLabs) — OBLIGATOIRE depuis le 01/10
+Voir history.json > voice. Résumé :
+1. Produire la vidéo SANS voix : `bash eleven_prep.sh <dossier> <nom>` -> `<nom>_bed.mp4` (musique + bruitages, ducking calé sur la voix guide) et `<nom>_guide.mp3`.
+2. Héberger sur la branche minuteaero-media (Olivier a autorisé la publication).
+3. ElevenLabs : `creative_create_flow` -> `creative_attach_reference_file` (bed.mp4 et guide.mp3 si STS) -> nœud `voice-changer` (eleven_multilingual_sts_v2, voice_id Olivier) OU nœud `tts` (eleven_multilingual_v2, script complet avec breaks) -> nœud `composition` (vidéo + audio) -> `creative_run_flow_nodes` avec generations_count=1 -> `creative_get_flow_run_status` -> `master_url`.
+4. Pour le TTS narratif : générer d'abord la voix, lire `duration_secs`, calculer `timing.json` (durées de scènes proportionnelles aux durées Kokoro, breaks 0.8 s), PUIS rendre la vidéo (voir tech_render.py).
+5. Metricool `createScheduledPost` avec `master_url` immédiatement.
+Économie de crédits : 1 seule génération, vidéos de 65–80 s, privilégier le TTS (au caractère) quand il y a beaucoup de silences.

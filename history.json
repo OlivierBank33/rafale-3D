@@ -91,6 +91,38 @@
    "metricool_uuid": "3403476747649499452",
    "format": "classement",
    "topic": "Top 8 des plus rapides : Spitfire 600, B-52 1050, Harrier 1180, Concorde M2.04, Mirage 2000 M2.2, F-22 M2.25, F-15 M2.5, SR-71 3529 km/h"
+  },
+  {
+   "date": "2026-10-02",
+   "slot": "08:00",
+   "format": "quiz",
+   "metricool_uuid": "-5968852416287848644",
+   "topic": "Quiz#3 avions de légende : Wright Flyer, Fokker Dr.I, SPAD VII, Bell X-1, Lockheed Vega, Sopwith Camel, Mirage III, Morane-Saulnier L, Zero, X-15",
+   "voice": "Olivier (STS)"
+  },
+  {
+   "date": "2026-10-02",
+   "slot": "12:30",
+   "format": "technique",
+   "metricool_uuid": "-6021162547164592088",
+   "topic": "Comment fonctionne un réacteur (aspirer, comprimer, brûler, éjecter ; flux secondaire ; 40x ; >1500 °C ; aubes refroidies)",
+   "voice": "Olivier (TTS)"
+  },
+  {
+   "date": "2026-10-02",
+   "slot": "19:00",
+   "format": "biographie",
+   "metricool_uuid": "3902154161864855014",
+   "topic": "Louis Blériot, traversée de la Manche 1909",
+   "voice": "Olivier (STS)"
+  },
+  {
+   "date": "2026-10-02",
+   "slot": "21:30",
+   "format": "et-si",
+   "metricool_uuid": "5947433875843138446",
+   "topic": "Moteurs coupés (déplacé de 19:00, revoix Olivier)",
+   "voice": "Olivier (STS)"
   }
  ],
  "notes": [
@@ -99,5 +131,17 @@
   "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale.",
   "2026-10-01 : Olivier passe à 4 vidéos par jour, ajout d'un créneau matin à 08:00."
  ],
- "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767"
+ "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
+ "slot_roles": {
+  "08:00": "quiz (quiz silhouette / vrai-ou-faux)",
+  "12:30": "technique (comment ça marche)",
+  "19:00": "biographie d'un aviateur célèbre (style archive, bio_render)",
+  "21:30": "viral (top 8, et-si, tournoi)"
+ },
+ "voice": {
+  "provider": "ElevenLabs (connecteur)",
+  "voice_id": "b5AfKFGq7tASJsvSXIFK",
+  "name": "Olivier CH",
+  "rule": "TOUJOURS la voix d'Olivier. 1 seule génération (generations_count=1). Narratif (bio, technique, et-si) : TTS eleven_multilingual_v2 du script complet avec <break time=\"0.8s\" /> entre scènes, puis timing des scènes proportionnel aux durées Kokoro. Formats synchronisés (quiz, vrai-ou-faux, tournoi, top) : voix guide Kokoro calée + voice-changer eleven_multilingual_sts_v2. Puis nœud composition (vidéo sans voix + voix). URL master_url -> Metricool tout de suite (lien valable 2 h). Coût observé : ~1 crédit/caractère en TTS, ~17 crédits/seconde en voice-changer."
+ }
 }
