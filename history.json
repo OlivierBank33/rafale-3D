@@ -140,8 +140,8 @@
  },
  "voice": {
   "provider": "ElevenLabs (connecteur)",
-  "voice_id": "b5AfKFGq7tASJsvSXIFK",
-  "name": "Olivier CH",
-  "rule": "TOUJOURS la voix d'Olivier. 1 seule génération (generations_count=1). Narratif (bio, technique, et-si) : TTS eleven_multilingual_v2 du script complet avec <break time=\"0.8s\" /> entre scènes, puis timing des scènes proportionnel aux durées Kokoro. Formats synchronisés (quiz, vrai-ou-faux, tournoi, top) : voix guide Kokoro calée + voice-changer eleven_multilingual_sts_v2. Puis nœud composition (vidéo sans voix + voix). URL master_url -> Metricool tout de suite (lien valable 2 h). Coût observé : ~1 crédit/caractère en TTS, ~17 crédits/seconde en voice-changer."
+  "voice_id": "Ht4OibD14Nq9LzMUT7HK",
+  "name": "Yariq – acteur français (voix de la bibliothèque)",
+  "rule": "Décision d'Olivier 2026-10-01 21:27 : voix Yariq, uniquement sur la biographie 19:00 (TTS eleven_multilingual_v2, script complet ≤750 caractères avec <break time=\"0.8s\" /> entre scènes, generations_count=1, timing des scènes proportionnel aux durées Kokoro, puis nœud composition). Quiz, technique et viral : voix Kokoro gratuite. Budget : ~22 500 crédits/mois sur 30 000. Ancienne voix Olivier CH (b5AfKFGq7tASJsvSXIFK) abandonnée : trop chère. Clones gratuits testés (YourTTS, kNN-VC, Chatterbox) jugés insuffisants."
  }
 }
