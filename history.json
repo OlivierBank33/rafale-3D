@@ -130,7 +130,8 @@
   "Run du 2026-10-01 06:51 : aucune vidéo produite. Le sandbox a refusé l'exécution de setup.sh (pip install + téléchargement Kokoro) puis de tout script Python du pipeline (motif « code externe »). Créneaux restés vides : 01/10 12:30, 19:00, 21:30 ; 02/10 12:30, 21:30.",
   "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale.",
   "2026-10-01 : Olivier passe à 4 vidéos par jour, ajout d'un créneau matin à 08:00.",
-  "2026-10-01 21:47 : posts programmés 02/10 (4) + 03/10 12:30 (tournoi déjà programmé le 30/09) passés en isAigc=false. Le créneau 03/10 12:30 est donc déjà occupé par le tournoi."
+  "2026-10-01 21:47 : posts programmés 02/10 (4) + 03/10 12:30 (tournoi déjà programmé le 30/09) passés en isAigc=false. Le créneau 03/10 12:30 est donc déjà occupé par le tournoi.",
+  "2026-10-01 22:10 : les 4 vidéos du 02/10 refaites avec Yariq et mises à jour dans Metricool (quiz 105,9 s, tech 71,9 s retimée, bio 81 s, moteurs 81 s). ~10,6k crédits dépensés ce soir (dont ~5,4k perdus en double génération). Le tournoi du 03/10 12:30 a encore l'ancienne voix Kokoro : à revoicer avec Yariq lors du run du 02/10."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -143,24 +144,12 @@
   "provider": "ElevenLabs (connecteur, nouveau compte, ~363k crédits au 2026-10-01)",
   "model": "eleven_v4",
   "voices": {
-   "08:00 quiz": {
-    "id": "jGpnMdbhtKgQbVrYezOx",
-    "name": "Kev - Dynamic TikTok"
-   },
-   "12:30 technique": {
-    "id": "GfDgTuUOHHSyKnQXhnYt",
-    "name": "Mathieu - Narration"
-   },
-   "19:00 biographie": {
-    "id": "3HZyQcLKlT0a3RDeXVsP",
-    "name": "Guillaume - Documentary & Storytelling"
-   },
-   "21:30 viral": {
+   "toutes": {
     "id": "Ht4OibD14Nq9LzMUT7HK",
     "name": "Yariq - acteur français dynamique"
    }
   },
-  "rule": "Décision d'Olivier 2026-10-01 21:44 : meilleures voix ElevenLabs sur les 4 vidéos. Coût mesuré via le connecteur : ~1,03 crédit/caractère quel que soit le modèle (v4 = v2 = flash) -> on utilise eleven_v4. generations_count=1 toujours. Narratif : TTS du script complet avec pauses, timing des scènes proportionnel aux durées Kokoro ; formats synchronisés (quiz/vrai-faux/tournoi) : TTS par segment ou voice-changer selon le coût le plus bas. Budget ~150k crédits/mois pour 4 vidéos/jour : surveiller le solde (demander à Olivier, pas d'outil de solde)."
+  "rule": "Décision d'Olivier 2026-10-01 22:03 : UNE SEULE voix pour toute la chaîne = Yariq (identité). Formats synchronisés (quiz, vrai-faux, tournoi, et-si avec guide Kokoro) : nœud voice-changer eleven_multilingual_sts_v2 sur le guide (~16,7 crédits/s). Narratif (technique, bio) : TTS eleven_multilingual_v2 avec <break time=\"0.8s\" />, puis retimer la vidéo (timing.json) sur duration_secs. ATTENTION COÛT : ne lancer QUE le nœud composition (creative_run_flow_nodes sur la composition seule) — lancer aussi le nœud voix le génère deux fois (perdu ~5,4k crédits le 01/10). Vérifier avec estimate_only avant chaque run. generations_count=1."
  },
  "publish_rules": {
   "tiktok_isAigc": false,
