@@ -139,9 +139,26 @@
   "21:30": "viral (top 8, et-si, tournoi)"
  },
  "voice": {
-  "provider": "ElevenLabs (connecteur)",
-  "voice_id": "Ht4OibD14Nq9LzMUT7HK",
-  "name": "Yariq – acteur français (voix de la bibliothèque)",
-  "rule": "Décision d'Olivier 2026-10-01 21:27 : voix Yariq, uniquement sur la biographie 19:00 (TTS eleven_multilingual_v2, script complet ≤750 caractères avec <break time=\"0.8s\" /> entre scènes, generations_count=1, timing des scènes proportionnel aux durées Kokoro, puis nœud composition). Quiz, technique et viral : voix Kokoro gratuite. Budget : ~22 500 crédits/mois sur 30 000. Ancienne voix Olivier CH (b5AfKFGq7tASJsvSXIFK) abandonnée : trop chère. Clones gratuits testés (YourTTS, kNN-VC, Chatterbox) jugés insuffisants."
+  "provider": "ElevenLabs (connecteur, nouveau compte, ~363k crédits au 2026-10-01)",
+  "model": "eleven_v4",
+  "voices": {
+   "08:00 quiz": {
+    "id": "jGpnMdbhtKgQbVrYezOx",
+    "name": "Kev - Dynamic TikTok"
+   },
+   "12:30 technique": {
+    "id": "GfDgTuUOHHSyKnQXhnYt",
+    "name": "Mathieu - Narration"
+   },
+   "19:00 biographie": {
+    "id": "3HZyQcLKlT0a3RDeXVsP",
+    "name": "Guillaume - Documentary & Storytelling"
+   },
+   "21:30 viral": {
+    "id": "Ht4OibD14Nq9LzMUT7HK",
+    "name": "Yariq - acteur français dynamique"
+   }
+  },
+  "rule": "Décision d'Olivier 2026-10-01 21:44 : meilleures voix ElevenLabs sur les 4 vidéos. Coût mesuré via le connecteur : ~1,03 crédit/caractère quel que soit le modèle (v4 = v2 = flash) -> on utilise eleven_v4. generations_count=1 toujours. Narratif : TTS du script complet avec pauses, timing des scènes proportionnel aux durées Kokoro ; formats synchronisés (quiz/vrai-faux/tournoi) : TTS par segment ou voice-changer selon le coût le plus bas. Budget ~150k crédits/mois pour 4 vidéos/jour : surveiller le solde (demander à Olivier, pas d'outil de solde)."
  }
 }
