@@ -78,11 +78,19 @@
   },
   {
    "date": "2026-10-01",
-   "slot": "21:30",
+   "slot": "09:30",
    "status": "programmé",
    "metricool_uuid": "-1882912770041165098",
    "format": "quiz",
    "topic": "Quiz#2 niveau pilote : Alpha Jet, F-16, A330, Caravelle, C-130, 787, Su-37, A320, B-52, 767"
+  },
+  {
+   "date": "2026-10-01",
+   "slot": "21:30",
+   "status": "programmé",
+   "metricool_uuid": "3403476747649499452",
+   "format": "classement",
+   "topic": "Top 8 des plus rapides : Spitfire 600, B-52 1050, Harrier 1180, Concorde M2.04, Mirage 2000 M2.2, F-22 M2.25, F-15 M2.5, SR-71 3529 km/h"
   }
  ],
  "notes": [

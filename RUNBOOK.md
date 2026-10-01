@@ -31,6 +31,7 @@ Si le dépôt n'est pas accessible, appelle `add_repo` (owner `OlivierBank33`, r
    - **Tournoi** (`tournoi_script.py`, `tn_tts.py`, `tournoi_render.py`, `tn_audio.py`) — 8 avions, critères chiffrés vérifiés, finale en 3 manches.
    - **« Et si… ? »** (`mc_script.py`, `mc_render.py`, `mc_audio.py`) — scénario catastrophe expliqué + cas réels. Idées : porte ouverte en vol, pilotes inconscients, foudre, dépressurisation, oiseau dans le moteur, atterrissage sans train, turbulences extrêmes.
    - **Vrai ou faux** — adapter le moteur quiz : 2 réponses (VRAI/FAUX), affirmation surprenante + image de l'avion concerné.
+   - **Classement / top 8** (`top_script.py`, `top_render.py`) — compte à rebours n°8 → n°1, compteur de vitesse animé, mur du son. Décliner : plus grands, plus lourds, plus hauts, plus chers, plus produits.
    - Tu peux créer de nouveaux formats si les stats montrent une lassitude.
 5. Avions 3D disponibles : `r3d/*.png` (Concorde, Spitfire, B-2, Beluga, SR-71, F-22, A-10, Mirage 2000, F-117, An-225) et `mc/*.png` (A320, A330, 767). Pour d'autres avions : dépôts `https://github.com/FGMEMBERS/<Nom>` (ex. Eurofighter, F-15C, f16, F-35B, 787-8, 777, 707, 737-800, A400M, c130, Caravelle, MiG-21bis, Su-37, Harrier-GR1, B-52F, Alphajet, pc7, DR400, ASK21, An-124, 747-8i, A300-600ST, Extra-500). Rendu : `render3d.py` (un seul .ac) ou `render_fg.py` (assemblage via le XML FlightGear). Vérifier chaque rendu (vue d'ensemble), éviter les livrées de compagnies réelles si possible (textures neutres : `texmap`).
 
