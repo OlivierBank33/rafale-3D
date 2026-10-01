@@ -11,14 +11,28 @@
    "status": "publié par Olivier",
    "format": "classement",
    "topic": "Avions du plus petit au plus grand (dessins 2D, jugé moyen)",
-   "stats_2026-10-01": {"publie": "2026-09-30 19:13", "duree_s": 103, "vues": 158, "likes": 1, "commentaires": 0, "partages": 0}
+   "stats_2026-10-01": {
+    "publie": "2026-09-30 19:13",
+    "duree_s": 103,
+    "vues": 158,
+    "likes": 1,
+    "commentaires": 0,
+    "partages": 0
+   }
   },
   {
    "date": "2026-09-30",
    "status": "publié par Olivier",
    "format": "quiz",
    "topic": "Quiz silhouette 10 avions : Concorde, Spitfire, B-2, Beluga, SR-71, F-22, A-10, Mirage 2000, F-117, An-225",
-   "stats_2026-10-01": {"publie": "2026-09-30 19:41", "duree_s": 92, "vues": 114, "likes": 3, "commentaires": 0, "partages": 0}
+   "stats_2026-10-01": {
+    "publie": "2026-09-30 19:41",
+    "duree_s": 92,
+    "vues": 114,
+    "likes": 3,
+    "commentaires": 0,
+    "partages": 0
+   }
   },
   {
    "date": "2026-10-02",
@@ -44,10 +58,36 @@
    "format": "vrai-ou-faux",
    "topic": "Vrai ou faux 8 affirmations : Concorde <4 h Paris-NY (V), B-2 dérive (F), SR-71 s'allonge (V), F-117 jamais abattu (F), An-225 navette Bourane (V), F-22 exporté (F), Mirage 2000 sans profondeur (V), Beluga passagers (F)",
    "stats_2026-10-01": "absente des analytics Metricool au 01/10 06:55 (publication à vérifier)"
+  },
+  {
+   "date": "2026-10-01",
+   "slot": "12:30",
+   "status": "programmé",
+   "metricool_uuid": "-6050528353454176552",
+   "format": "vrai-ou-faux",
+   "topic": "VF#2 idées reçues avion de ligne : porte en vol (F), trou hublot (V), foudre ~1/an (V), biréacteur 1 moteur (V), gilet gonflé avant sortie (F), repas pilotes différents (V), masques O2 des heures (F), Concorde plus haut (V)"
+  },
+  {
+   "date": "2026-10-01",
+   "slot": "19:00",
+   "status": "programmé",
+   "metricool_uuid": "213787278807419263",
+   "format": "tournoi",
+   "topic": "Tournoi#2 militaires : B-52, C-130, F-15, F-16, Typhoon, Harrier, MiG-21, F-35 — finale B-52 vs MiG-21, MiG-21 champion (11 000+ construits)"
+  },
+  {
+   "date": "2026-10-01",
+   "slot": "21:30",
+   "status": "programmé",
+   "metricool_uuid": "-1882912770041165098",
+   "format": "quiz",
+   "topic": "Quiz#2 niveau pilote : Alpha Jet, F-16, A330, Caravelle, C-130, 787, Su-37, A320, B-52, 767"
   }
  ],
  "notes": [
   "Le post quiz du 2026-10-01 19:00 (uuid -5353720635340927760) est en brouillon : doublon, ne pas publier ; le créneau 19:00 du 1er oct est libre.",
-  "Run du 2026-10-01 06:51 : aucune vidéo produite. Le sandbox a refusé l'exécution de setup.sh (pip install + téléchargement Kokoro) puis de tout script Python du pipeline (motif « code externe »). Créneaux restés vides : 01/10 12:30, 19:00, 21:30 ; 02/10 12:30, 21:30."
- ]
+  "Run du 2026-10-01 06:51 : aucune vidéo produite. Le sandbox a refusé l'exécution de setup.sh (pip install + téléchargement Kokoro) puis de tout script Python du pipeline (motif « code externe »). Créneaux restés vides : 01/10 12:30, 19:00, 21:30 ; 02/10 12:30, 21:30.",
+  "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale."
+ ],
+ "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767"
 }

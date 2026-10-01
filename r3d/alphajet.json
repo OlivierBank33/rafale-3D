@@ -1,0 +1,1 @@
+{"ac": "fg/Alphajet/Models/alphajet.ac", "out": "/home/claude/r3d/alphajet.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 18, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow"]}

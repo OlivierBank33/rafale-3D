@@ -1,0 +1,1 @@
+{"ac": "fg/Su-37/Models/SU-37-005-125h.ac", "out": "/home/claude/r3d/su37.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 22, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow"]}

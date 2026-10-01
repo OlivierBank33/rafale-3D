@@ -1,0 +1,1 @@
+{"ac": "fg/F-15C/Models/f-15C.ac", "out": "/home/claude/r3d/f15.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 22, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow"]}

@@ -1,0 +1,1 @@
+{"ac": "fg/Caravelle/Models/caravelle.ac", "out": "/home/claude/r3d/caravelle.png", "W": 1400, "H": 1400, "samples": 48, "az": 212, "el": 12, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow"]}

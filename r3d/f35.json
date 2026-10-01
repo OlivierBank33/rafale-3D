@@ -1,0 +1,1 @@
+{"ac": "fg/F-35B/Models/F-35B.ac", "out": "/home/claude/r3d/f35.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 20, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow"]}
