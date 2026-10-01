@@ -1,10 +1,10 @@
-# minuteaero — Runbook de la production quotidienne (3 vidéos / jour)
+# minuteaero — Runbook de la production quotidienne (4 vidéos / jour)
 
 Compte TikTok : **@minuteaero** (Metricool, blogId `7174127`, fuseau `Europe/Paris`).
 Propriétaire : Olivier. Langue : **français**. Objectif : croissance puis monétisation (Creator Rewards : vidéos ≥ 60 s, originales).
 
 ## 0. Principes non négociables
-- **3 vidéos par jour**, créneaux **12 h 30, 19 h 00, 21 h 30** (heure de Paris). Ne remplir que les créneaux vides (vérifier `getScheduledPosts`).
+- **4 vidéos par jour**, créneaux **08 h 00, 12 h 30, 19 h 00, 21 h 30** (heure de Paris). Ne remplir que les créneaux vides (vérifier `getScheduledPosts`).
 - Durée **65–110 s** chacune (≥ 60 s obligatoire).
 - **Faits vérifiés** : chaque chiffre/date/nom affiché ou prononcé doit être vérifié par recherche web si tu n'en es pas certain. En cas de doute, retire le fait. Jamais de statistique inventée.
 - **Jamais deux fois le même sujet** : lire et mettre à jour `history.json`.

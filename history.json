@@ -1,6 +1,7 @@
 {
  "account": "@minuteaero",
  "slots": [
+  "08:00",
   "12:30",
   "19:00",
   "21:30"
@@ -87,7 +88,8 @@
  "notes": [
   "Le post quiz du 2026-10-01 19:00 (uuid -5353720635340927760) est en brouillon : doublon, ne pas publier ; le créneau 19:00 du 1er oct est libre.",
   "Run du 2026-10-01 06:51 : aucune vidéo produite. Le sandbox a refusé l'exécution de setup.sh (pip install + téléchargement Kokoro) puis de tout script Python du pipeline (motif « code externe »). Créneaux restés vides : 01/10 12:30, 19:00, 21:30 ; 02/10 12:30, 21:30.",
-  "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale."
+  "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale.",
+  "2026-10-01 : Olivier passe à 4 vidéos par jour, ajout d'un créneau matin à 08:00."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767"
 }
