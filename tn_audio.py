@@ -29,10 +29,10 @@ for k in range(int(TOTAL/beat)):
     if s0+L>n: break
     ph=2*np.pi*np.cumsum(45+90*np.exp(-tt*30))/SR; drums[s0:s0+L]+=np.sin(ph)*np.exp(-tt*10)*0.65
     if k%2==1:
-        L2=int(.18*SR); nz=rng.standard_normal(L2); drums[s0:s0+L2]+=(nz-lp(nz,1500))*np.exp(-np.arange(L2)/SR*25)*0.25
+        L2=int(.18*SR); tt3=np.arange(L2)/SR; drums[s0:s0+L2]+=np.sin(2*np.pi*np.cumsum(220*np.exp(-tt3*8)+110)/SR)*np.exp(-tt3*25)*0.25
     for h in (0,.5):
         s1=int((k+h)*beat*SR); L2=int(.04*SR)
-        if s1+L2<n: nz=rng.standard_normal(L2); drums[s1:s1+L2]+=(nz-lp(nz,7000))*np.exp(-np.arange(L2)/SR*90)*0.1
+        pass  # charleston au bruit blanc supprimé
 music=lp(pad,2000)+lp(bass,500)+drums
 g=np.ones(n)
 for s in SEQ:
@@ -41,17 +41,17 @@ g=lp(g,10); music*=g*np.clip((TOTAL-t)/2,0,1); music*=0.5/np.abs(music).max()
 sfx=np.zeros(n)
 def roll(a,b):
     s0=int(a*SR); L=int((b-a)*SR); tt=np.arange(L)/SR
-    rate=12+10*tt/(b-a); hits=(np.sin(2*np.pi*np.cumsum(rate)/SR)>0.6).astype(float)
-    nz=rng.standard_normal(L); body=nz-lp(nz,300); body=lp(body,3500)
+    rate=12+10*tt/(b-a); hits=np.clip((np.sin(2*np.pi*np.cumsum(rate)/SR)-0.6)/0.4,0,1)**2
+    body=np.sin(2*np.pi*190*tt)+0.4*np.sin(2*np.pi*290*tt)
     sfx[s0:s0+L]+=body*hits*(0.25+0.5*tt/(b-a))
 def impact(a,g_=1):
     s0=int(a*SR); L=int(1.4*SR); tt=np.arange(L)/SR
     ph=2*np.pi*np.cumsum(35+120*np.exp(-tt*15))/SR
     nz=rng.standard_normal(L)
-    sfx[s0:s0+L]+=(np.sin(ph)*np.exp(-tt*3)*0.9+lp(nz,5000)*np.exp(-tt*12)*0.4)*g_
+    sfx[s0:s0+L]+=(np.sin(ph)*np.exp(-tt*3)*0.9)*g_
 def whoosh(a,dur=.55,gn=.35):
     s0=max(0,int(a*SR)); L=int(dur*SR); tt=np.arange(L)/SR; nz=rng.standard_normal(L)
-    sfx[s0:s0+L]+=((1-tt/dur)*lp(nz,700)+(tt/dur)*lp(nz,4000))*np.sin(np.pi*tt/dur)**2*gn
+    sfx[s0:s0+L]+=np.sin(2*np.pi*np.cumsum(150+550*(tt/dur)**1.5)/SR)*0.5*np.sin(np.pi*tt/dur)**2*gn
 def fanfare(a):
     for k,(m,d) in enumerate([(67,.15),(72,.15),(76,.15),(79,.6)]):
         s0=int((a+k*0.15)*SR); L=int(d*SR+0.3*SR); tt=np.arange(L)/SR

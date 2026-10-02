@@ -35,14 +35,14 @@ for k in range(6):
     s0=int((1.0+k*0.33)*SR); L=int(0.18*SR); tt=np.arange(L)/SR
     sfx[s0:s0+L]+=np.sign(np.sin(2*np.pi*(880 if k%2==0 else 660)*tt))*0.18*np.minimum(1,(0.18-tt)/0.02)
 L=int(3.5*SR); tt=np.arange(L)/SR; nz=rng.standard_normal(L)
-spool=lp(nz,2500)*np.exp(-tt*1.1)*0.5; whine=np.sin(2*np.pi*np.cumsum(3200*np.exp(-tt*0.9)+80)/SR)*np.exp(-tt*1.2)*0.12
-eng=np.zeros(n); eng[:int(1.0*SR)]=lp(rng.standard_normal(int(1.0*SR)),2500)*0.5
+spool=(np.sin(2*np.pi*np.cumsum(180*np.exp(-tt*0.8)+40)/SR)+0.5*np.sin(2*np.pi*np.cumsum(360*np.exp(-tt*0.8)+80)/SR))*np.exp(-tt*1.1)*0.35; whine=np.sin(2*np.pi*np.cumsum(3200*np.exp(-tt*0.9)+80)/SR)*np.exp(-tt*1.2)*0.12
+eng=np.zeros(n); te=np.arange(int(1.0*SR))/SR; eng[:int(1.0*SR)]=(np.sin(2*np.pi*180*te)+0.5*np.sin(2*np.pi*360*te)+0.2*np.sin(2*np.pi*3280*te))*0.3
 eng[int(1.0*SR):int(1.0*SR)+L]+=spool+whine; sfx+=eng
 # vent pendant le vol plané
-wind=lp(rng.standard_normal(n),600)*0.15*(0.6+0.4*np.sin(t*0.7)); m=(t>TL['g1']['t0'])&(t<TL['r']['t0']); sfx+=wind*m
+wind=(np.sin(2*np.pi*70*t)+0.6*np.sin(2*np.pi*105*t))*0.05*(0.6+0.4*np.sin(t*0.7)); m=(t>TL['g1']['t0'])&(t<TL['r']['t0']); sfx+=wind*m
 def whoosh(a,dur=.6,g=.4):
     s0=max(0,int(a*SR)); L=int(dur*SR); tt=np.arange(L)/SR; nz=rng.standard_normal(L)
-    sfx[s0:s0+L]+=((1-tt/dur)*lp(nz,700)+(tt/dur)*lp(nz,4000))*np.sin(np.pi*tt/dur)**2*g
+    sfx[s0:s0+L]+=np.sin(2*np.pi*np.cumsum(150+550*(tt/dur)**1.5)/SR)*np.sin(np.pi*tt/dur)**2*g*0.5
 def hit(a,g=.8):
     s0=int(a*SR); L=int(1.2*SR); tt=np.arange(L)/SR
     sfx[s0:s0+L]+=np.sin(2*np.pi*np.cumsum(38+100*np.exp(-tt*14))/SR)*np.exp(-tt*3.5)*g

@@ -1,14 +1,14 @@
 import numpy as np, soundfile as sf, json
 from scipy.signal import lfilter
-tl=json.load(open('vf2/timeline.json')); T=tl['T']; qs=tl['qs']; TOTAL=tl['total']
-D=json.load(open('vf2/durs.json'))
+tl=json.load(open('vf3/timeline.json')); T=tl['T']; qs=tl['qs']; TOTAL=tl['total']
+D=json.load(open('vf3/durs.json'))
 vsr=24000; voice=np.zeros(int(TOTAL*vsr)+vsr)
 def put(fn,t0):
     a,sr=sf.read(fn); j=int(t0*vsr); voice[j:j+len(a)]+=a
-put('vf2/intro.wav',T['intro']); put('vf2/outro.wav',T['outro'])
+put('vf3/intro.wav',T['intro']); put('vf3/outro.wav',T['outro'])
 for i,q in enumerate(qs):
-    put(f'vf2/q{i}.wav',q['q0']+0.15); put(f'vf2/a{i}.wav',q['a0'])
-voice/=np.abs(voice).max()*1.05; sf.write('vf2/voice.wav',voice.astype(np.float32),vsr)
+    put(f'vf3/q{i}.wav',q['q0']+0.15); put(f'vf3/a{i}.wav',q['a0'])
+voice/=np.abs(voice).max()*1.05; sf.write('vf3/voice.wav',voice.astype(np.float32),vsr)
 SR=44100; n=int(TOTAL*SR)+SR; rng=np.random.default_rng(3)
 lp=lambda x,fc:(lambda a:lfilter([1-a],[1,-a],x))(np.exp(-2*np.pi*fc/SR))
 f=lambda m:440*2**((m-69)/12)
@@ -55,4 +55,4 @@ for q in qs:
     for s in range(3): tick(q['cd0']+s, s==2)
     ding(q['rev'])
 sfx*=0.7/np.abs(sfx).max()
-sf.write('vf2/music.wav',music.astype(np.float32),SR); sf.write('vf2/sfx.wav',sfx.astype(np.float32),SR)
+sf.write('vf3/music.wav',music.astype(np.float32),SR); sf.write('vf3/sfx.wav',sfx.astype(np.float32),SR)

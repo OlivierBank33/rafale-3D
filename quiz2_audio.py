@@ -31,7 +31,7 @@ for k in range(int(TOTAL/beat)):
     ph=2*np.pi*np.cumsum(45+90*np.exp(-tt*30))/SR; drums[s0:s0+L]+=np.sin(ph)*np.exp(-tt*10)*0.6
     for h in (0,.5):
         s1=int((k+h)*beat*SR); L2=int(.04*SR)
-        if s1+L2<n: nz=rng.standard_normal(L2); drums[s1:s1+L2]+=(nz-lp(nz,7000))*np.exp(-np.arange(L2)/SR*90)*0.1
+        pass  # charleston au bruit blanc supprimé
 music=lp(pad,1800)+lp(bass,500)+drums
 t=np.arange(n)/SR
 # pendant les comptes à rebours : musique plus basse (tension)
@@ -49,7 +49,7 @@ def ding(at):
         sfx[s0:s0+L]+=np.sin(2*np.pi*fr*tt)*np.exp(-tt*3)*a
 def whoosh(at,dur=.6,gn=.35):
     s0=max(0,int(at*SR)); L=int(dur*SR); tt=np.arange(L)/SR; nz=rng.standard_normal(L)
-    sfx[s0:s0+L]+=((1-tt/dur)*lp(nz,700)+(tt/dur)*lp(nz,4000))*np.sin(np.pi*tt/dur)**2*gn
+    sfx[s0:s0+L]+=np.sin(2*np.pi*np.cumsum(150+550*(tt/dur)**1.5)/SR)*0.5*np.sin(np.pi*tt/dur)**2*gn
 for q in qs:
     whoosh(q['q0']-0.1)
     for s in range(3): tick(q['cd0']+s, s==2)
