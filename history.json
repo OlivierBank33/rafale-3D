@@ -183,7 +183,8 @@
   "2026-10-02 : nouveau format 'duel' (duel_script/duel_render/duel_audio, render_glb.py pour le modèle Rafale .glb du dépôt main). ~2,4k crédits (une 1re narration trop longue jetée). Idée de série : Rafale vs Su-57, Mirage 2000 vs F-16, Typhoon vs F-35…",
   "2026-10-02: jamais de bruit blanc continu dans les beds (rumble/whoosh au bruit filtré = souffle 'micro-ondes'). Drones et whooshes en sinus.",
   "2026-10-02 soir: Blériot (sfx = bruit pur) et moteurs coupés (vent au bruit filtré) refaits : voix isolée depuis la vidéo publiée (audio_isolation ~16.7 cr/s) + bed propre. Tous les *_audio.py purgés du bruit blanc (charleston, whoosh, caisse claire, roulement). eleven_prep.sh appelle noise_check.py (bloque si souffle large bande).",
-  "2026-10-02 20:27: forfait gratuit Metricool épuisé (20 posts/mois, erreur 'account limit'). Olivier a activé l'essai gratuit 1 mois (fin ~2026-11-02) -> décider Starter (~20-25 €/mois) avant la fin. Blériot TikTok republié 20:35."
+  "2026-10-02 20:27: forfait gratuit Metricool épuisé (20 posts/mois, erreur 'account limit'). Olivier a activé l'essai gratuit 1 mois (fin ~2026-11-02) -> décider Starter (~20-25 €/mois) avant la fin. Blériot TikTok republié 20:35.",
+  "2026-10-02 21:30: Olivier délègue toutes les décisions. Passage à 3 vidéos/jour 10:00/12:30/18:00 (pics Metricool). Stratégie dans RUNBOOK §1. Samedi 03: 10:00 VF3 (Kev), 12:30 tournoi (Léa), 18:00 prix (Yariq). Dimanche 04: 18:00 bio Earhart (Yariq)."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -213,7 +214,13 @@
    "tiktok",
    "youtube",
    "facebook"
-  ]
+  ],
+  "slots": [
+   "10:00",
+   "12:30",
+   "18:00"
+  ],
+  "per_day": 3
  },
  "voice_test": {
   "decision": "Olivier 2026-10-02 11:37 : tester plusieurs voix pour trouver celle qui retient le plus et fait le plus de vues. Remplace la règle 'voix unique Yariq' pendant le test.",
