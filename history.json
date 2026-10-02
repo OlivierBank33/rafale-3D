@@ -136,7 +136,17 @@
     "youtube",
     "facebook"
    ],
-   "metricool_uuid_tiktok": "622546919615513741"
+   "metricool_uuid_tiktok": "622546919615513741",
+   "repost": {
+    "date": "2026-10-02 17:40",
+    "reason": "bruit blanc dans le bed (rumble au bruit filtré) -> sinus uniquement",
+    "uuids": {
+     "tiktok": "-5618276062036276615",
+     "youtube": "-3640523495097286141",
+     "facebook": "998791829862370854"
+    },
+    "media": "https://static.metricool.com/planner/202610/7174127-file-2503382108324966406.mp4"
+   }
   }
  ],
  "notes": [
@@ -146,7 +156,8 @@
   "2026-10-01 : Olivier passe à 4 vidéos par jour, ajout d'un créneau matin à 08:00.",
   "2026-10-01 21:47 : posts programmés 02/10 (4) + 03/10 12:30 (tournoi déjà programmé le 30/09) passés en isAigc=false. Le créneau 03/10 12:30 est donc déjà occupé par le tournoi.",
   "2026-10-01 22:10 : les 4 vidéos du 02/10 refaites avec Yariq et mises à jour dans Metricool (quiz 105,9 s, tech 71,9 s retimée, bio 81 s, moteurs 81 s). ~10,6k crédits dépensés ce soir (dont ~5,4k perdus en double génération). Le tournoi du 03/10 12:30 a encore l'ancienne voix Kokoro : à revoicer avec Yariq lors du run du 02/10.",
-  "2026-10-02 : nouveau format 'duel' (duel_script/duel_render/duel_audio, render_glb.py pour le modèle Rafale .glb du dépôt main). ~2,4k crédits (une 1re narration trop longue jetée). Idée de série : Rafale vs Su-57, Mirage 2000 vs F-16, Typhoon vs F-35…"
+  "2026-10-02 : nouveau format 'duel' (duel_script/duel_render/duel_audio, render_glb.py pour le modèle Rafale .glb du dépôt main). ~2,4k crédits (une 1re narration trop longue jetée). Idée de série : Rafale vs Su-57, Mirage 2000 vs F-16, Typhoon vs F-35…",
+  "2026-10-02: jamais de bruit blanc continu dans les beds (rumble/whoosh au bruit filtré = souffle 'micro-ondes'). Drones et whooshes en sinus."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {

@@ -35,7 +35,7 @@ music = np.zeros(N); sfx = np.zeros(N)
 # --- drone + pad ---
 swell = 0.6 + 0.4 * np.sin(2 * np.pi * t / 9)
 music += 0.30 * np.sin(2 * np.pi * 41.2 * t) * swell + 0.18 * np.sin(2 * np.pi * 61.7 * t) * swell
-rum = lp(rng.standard_normal(N), 400); music += 0.25 * rum / np.abs(rum).max()
+music += 0.10 * np.sin(2 * np.pi * 30.9 * t) * swell  # sub propre (plus de bruit blanc)
 chords = {'hook': [82.4, 98.0, 123.5], 'vitesse': [65.4, 82.4, 98.0], 'furtif': [73.4, 87.3, 110.0], 'poly': [82.4, 98.0, 123.5],
           'reel': [65.4, 82.4, 98.0], 'duel': [77.8, 92.5, 116.5], 'doute': [77.8, 92.5, 116.5], 'verdict': [82.4, 103.8, 123.5]}
 for i, s in enumerate(SCENES):
@@ -59,7 +59,7 @@ while bt < TOTAL - 1:
 for (a, b) in [(0.0, 1.2), (T('duel') - 1.6, T('duel') - 0.3)]:
     n = int((b - a) * SR); x = np.arange(n) / SR
     f = 200 + 1600 * (x / (b - a)) ** 2
-    rise = np.sin(2 * np.pi * np.cumsum(f) / SR) * (x / (b - a)) ** 2 * 0.25 + rng.standard_normal(n) * 0.08 * (x / (b - a)) ** 2
+    rise = np.sin(2 * np.pi * np.cumsum(f) / SR) * (x / (b - a)) ** 2 * 0.25
     add(sfx, a, rise)
 
 
@@ -67,15 +67,15 @@ def boom(g=1.0):
     n = int(1.2 * SR); x = np.arange(n) / SR
     f = 40 + 80 * np.exp(-x * 6)
     s = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-x * 2.5)
-    s += lp(rng.standard_normal(n), 6) * np.exp(-x * 9) * 0.6
+    s += np.sin(2 * np.pi * np.cumsum(f * 2.01) / SR) * np.exp(-x * 9) * 0.3
     return s * g
 
 
 def whoosh(d=0.6, g=0.5):
-    n = int(d * SR); x = np.arange(n) / SR; nz = rng.standard_normal(n)
-    k = (3 + 30 * (1 - np.sin(np.pi * x / d))).astype(int)
-    out = np.array([nz[max(0, i - 8):i + 1].mean() for i in range(n)])
-    return out * np.sin(np.pi * x / d) * g
+    """balayage sinusoïdal grave->aigu, sans bruit"""
+    n = int(d * SR); x = np.arange(n) / SR
+    f = 120 + 500 * (x / d) ** 1.5
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * x / d) ** 2 * g * 0.5
 
 
 def blip(f, d=0.12, g=0.4):
