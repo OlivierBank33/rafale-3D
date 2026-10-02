@@ -123,6 +123,20 @@
    "metricool_uuid": "5947433875843138446",
    "topic": "Moteurs coupés (déplacé de 19:00, revoix Olivier)",
    "voice": "Olivier (STS)"
+  },
+  {
+   "date": "2026-10-02 17:20",
+   "slot": "bonus",
+   "name": "duel-rafale-f22",
+   "format": "duel (rounds + score + radar + HUD)",
+   "voice": "Yariq",
+   "duree": 79.5,
+   "networks": [
+    "tiktok",
+    "youtube",
+    "facebook"
+   ],
+   "metricool_uuid_tiktok": "622546919615513741"
   }
  ],
  "notes": [
@@ -131,7 +145,8 @@
   "2026-10-01 08:40 : les 3 créneaux du 01/10 ont été produits et programmés depuis la session principale (le run automatique est bloqué par le sandbox sur l'exécution de scripts). Production désormais assurée par des réveils planifiés de la session principale.",
   "2026-10-01 : Olivier passe à 4 vidéos par jour, ajout d'un créneau matin à 08:00.",
   "2026-10-01 21:47 : posts programmés 02/10 (4) + 03/10 12:30 (tournoi déjà programmé le 30/09) passés en isAigc=false. Le créneau 03/10 12:30 est donc déjà occupé par le tournoi.",
-  "2026-10-01 22:10 : les 4 vidéos du 02/10 refaites avec Yariq et mises à jour dans Metricool (quiz 105,9 s, tech 71,9 s retimée, bio 81 s, moteurs 81 s). ~10,6k crédits dépensés ce soir (dont ~5,4k perdus en double génération). Le tournoi du 03/10 12:30 a encore l'ancienne voix Kokoro : à revoicer avec Yariq lors du run du 02/10."
+  "2026-10-01 22:10 : les 4 vidéos du 02/10 refaites avec Yariq et mises à jour dans Metricool (quiz 105,9 s, tech 71,9 s retimée, bio 81 s, moteurs 81 s). ~10,6k crédits dépensés ce soir (dont ~5,4k perdus en double génération). Le tournoi du 03/10 12:30 a encore l'ancienne voix Kokoro : à revoicer avec Yariq lors du run du 02/10.",
+  "2026-10-02 : nouveau format 'duel' (duel_script/duel_render/duel_audio, render_glb.py pour le modèle Rafale .glb du dépôt main). ~2,4k crédits (une 1re narration trop longue jetée). Idée de série : Rafale vs Su-57, Mirage 2000 vs F-16, Typhoon vs F-35…"
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
