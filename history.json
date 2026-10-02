@@ -162,5 +162,67 @@
    "youtube",
    "facebook"
   ]
+ },
+ "voice_test": {
+  "decision": "Olivier 2026-10-02 11:37 : tester plusieurs voix pour trouver celle qui retient le plus et fait le plus de vues. Remplace la règle 'voix unique Yariq' pendant le test.",
+  "voices": {
+   "Yariq": "Ht4OibD14Nq9LzMUT7HK",
+   "Kev": "jGpnMdbhtKgQbVrYezOx",
+   "Guillaume": "3HZyQcLKlT0a3RDeXVsP",
+   "Lea": "KSyQzmsYhFbuOhqj1Xxv"
+  },
+  "model": "eleven_multilingual_v2 TTS direct",
+  "plan_carre_latin": {
+   "2026-10-03": {
+    "08:00": "Kev",
+    "12:30": "Guillaume",
+    "19:00": "Yariq",
+    "21:30": "Lea"
+   },
+   "2026-10-04": {
+    "08:00": "Lea",
+    "12:30": "Kev",
+    "19:00": "Guillaume",
+    "21:30": "Yariq"
+   },
+   "2026-10-05": {
+    "08:00": "Yariq",
+    "12:30": "Lea",
+    "19:00": "Kev",
+    "21:30": "Guillaume"
+   },
+   "2026-10-06": {
+    "08:00": "Guillaume",
+    "12:30": "Yariq",
+    "19:00": "Lea",
+    "21:30": "Kev"
+   },
+   "2026-10-07": {
+    "08:00": "Kev",
+    "12:30": "Guillaume",
+    "19:00": "Yariq",
+    "21:30": "Lea"
+   },
+   "2026-10-08": {
+    "08:00": "Lea",
+    "12:30": "Kev",
+    "19:00": "Guillaume",
+    "21:30": "Yariq"
+   },
+   "2026-10-09": {
+    "08:00": "Yariq",
+    "12:30": "Lea",
+    "19:00": "Kev",
+    "21:30": "Guillaume"
+   },
+   "2026-10-10": {
+    "08:00": "Guillaume",
+    "12:30": "Yariq",
+    "19:00": "Lea",
+    "21:30": "Kev"
+   }
+  },
+  "mesure": "Pour chaque vidéo : vues à 48 h, temps de visionnage moyen / % regardé, abonnés gagnés, partages (TikTok + YouTube + Facebook via Metricool). Comparer par voix en neutralisant le format (carré latin). Bilan le 2026-10-11, puis adopter la meilleure voix.",
+  "log": []
  }
 }
