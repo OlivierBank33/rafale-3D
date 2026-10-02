@@ -67,5 +67,6 @@ Voir history.json > voice. Résumé :
 3. ElevenLabs : `creative_create_flow` -> `creative_attach_reference_file` (bed.mp4 et guide.mp3 si STS) -> nœud `voice-changer` (eleven_multilingual_sts_v2, voice_id Olivier) OU nœud `tts` (eleven_multilingual_v2, script complet avec breaks) -> nœud `composition` (vidéo + audio) -> `creative_run_flow_nodes` avec generations_count=1 -> `creative_get_flow_run_status` -> `master_url`.
 4. Pour le TTS narratif : générer d'abord la voix, lire `duration_secs`, calculer `timing.json` (durées de scènes proportionnelles aux durées Kokoro, breaks 0.8 s), PUIS rendre la vidéo (voir tech_render.py).
 5. Metricool `createScheduledPost` avec `master_url` immédiatement.
+Mixage : bed musique+bruitages à -30 LUFS (voix ElevenLabs ≈ -16/-18) — Olivier trouvait la musique trop forte à -22 (02/10).
 Filigrane : eleven_prep.sh incruste brand/filigrane_video.png (coin haut gauche, 280 px, 80 %) sur toutes les vidéos depuis le 02/10.
 Économie de crédits : 1 seule génération, vidéos de 65–80 s, privilégier le TTS (au caractère) quand il y a beaucoup de silences.
