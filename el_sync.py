@@ -49,6 +49,10 @@ def segments(fmt):
         mod = {'ea': ('ea_script', 'ea_render', 'ea'), 'bio': ('bio_script', 'bio_render', 'bio')}[fmt]
         S = importlib.import_module(mod[0]); R = importlib.import_module(mod[1])
         return mod[2], [(sg['k'], sc['say'], sg['vt']) for sg, sc in zip(R.SEG, S.SCENES)]
+    if fmt == 'px':
+        S = importlib.import_module('px_script'); R = importlib.import_module('px_render')
+        txt = dict(intro=S.INTRO['say'], outro=S.OUTRO['say'], **{f'p{i}': p['say'] for i, p in enumerate(S.PLANES)})
+        return 'px', [(sg['k'], txt[sg['k']], sg['vt']) for sg in R.SEG]
     raise SystemExit('format inconnu')
 
 

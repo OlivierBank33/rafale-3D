@@ -157,6 +157,20 @@
     "youtube": "-6295101124592320469",
     "facebook": "8691824620132057864"
    }
+  },
+  {
+   "date": "2026-10-03 17:30",
+   "slot": "bonus",
+   "name": "avions-plus-chers",
+   "format": "classement prix (alignement + dézoom + piles de billets ∝ prix)",
+   "voice": "Yariq",
+   "duree": 108,
+   "uuids": {
+    "tiktok": "6909404303784626121",
+    "youtube": "-2133356665404043815",
+    "facebook": "-6423200694318248171"
+   },
+   "flow": "56vdeZWUsQ0UytyXGbSx"
   }
  ],
  "notes": [
