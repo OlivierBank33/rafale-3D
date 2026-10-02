@@ -155,6 +155,12 @@
   "tiktok_isAigc": false,
   "why": "Décision d'Olivier 2026-10-01 21:47 : ne plus cocher la mention IA (isAigc=false) sur les publications TikTok. Risque signalé : règles TikTok sur l'audio IA réaliste.",
   "autonomy": "Olivier : autonomie totale, objectif maximiser les revenus (Creator Rewards : vidéos >60 s, rétention, originalité).",
-  "youtube": "Depuis le 02/10 : YouTube connecté à Metricool (UCQMD5dRsF3wBsJLOSSkWIKw). Chaque vidéo = post TikTok + post YouTube séparé, même heure, même media (URL static.metricool.com du post TikTok), youtubeData {title ≤100 car. finissant par #shorts, type short, privacy public, tags, category EDUCATION, madeForKids false, isAiGeneratedContent false}."
+  "youtube": "Depuis le 02/10 : YouTube connecté à Metricool (UCQMD5dRsF3wBsJLOSSkWIKw). Chaque vidéo = post TikTok + post YouTube séparé, même heure, même media (URL static.metricool.com du post TikTok), youtubeData {title ≤100 car. finissant par #shorts, type short, privacy public, tags, category EDUCATION, madeForKids false, isAiGeneratedContent false}.",
+  "facebook": "Depuis le 02/10 : Page Facebook connectée à Metricool (1384175288106569). Chaque vidéo = aussi un post facebook séparé, même heure, même media, facebookData {type REEL, title}. Pas de #shorts.",
+  "networks": [
+   "tiktok",
+   "youtube",
+   "facebook"
+  ]
  }
 }
