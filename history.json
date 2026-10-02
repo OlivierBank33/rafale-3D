@@ -149,11 +149,12 @@
     "name": "Yariq - acteur français dynamique"
    }
   },
-  "rule": "Décision d'Olivier 2026-10-01 22:03 : UNE SEULE voix pour toute la chaîne = Yariq (identité). Formats synchronisés (quiz, vrai-faux, tournoi, et-si avec guide Kokoro) : nœud voice-changer eleven_multilingual_sts_v2 sur le guide (~16,7 crédits/s). Narratif (technique, bio) : TTS eleven_multilingual_v2 avec <break time=\"0.8s\" />, puis retimer la vidéo (timing.json) sur duration_secs. ATTENTION COÛT : ne lancer QUE le nœud composition (creative_run_flow_nodes sur la composition seule) — lancer aussi le nœud voix le génère deux fois (perdu ~5,4k crédits le 01/10). Vérifier avec estimate_only avant chaque run. generations_count=1."
+  "rule": "Décision 2026-10-02 : voix unique Yariq, TOUJOURS en TTS direct (eleven_multilingual_v2) — plus de voice-changer : il recopie la prononciation de la voix guide Kokoro (plainte d'Olivier sur la prononciation du quiz du 02/10). Méthode : script complet avec <break time=\"Xs\" /> entre segments (sigles, chiffres et noms étrangers écrits en toutes lettres/phonétique dans le texte TTS), générer, lire duration_secs, recalculer la timeline (durées de parole proportionnelles aux durées Kokoro par segment, breaks fixes), PUIS rendre la vidéo + bed (eleven_prep.sh) et composer. Ne lancer QUE le nœud composition (estimate_only d'abord). generations_count=1. Coût TTS ≈ 1 crédit/caractère (moins cher que le voice-changer à 16,7 crédits/s)."
  },
  "publish_rules": {
   "tiktok_isAigc": false,
   "why": "Décision d'Olivier 2026-10-01 21:47 : ne plus cocher la mention IA (isAigc=false) sur les publications TikTok. Risque signalé : règles TikTok sur l'audio IA réaliste.",
-  "autonomy": "Olivier : autonomie totale, objectif maximiser les revenus (Creator Rewards : vidéos >60 s, rétention, originalité)."
+  "autonomy": "Olivier : autonomie totale, objectif maximiser les revenus (Creator Rewards : vidéos >60 s, rétention, originalité).",
+  "youtube": "Depuis le 02/10 : YouTube connecté à Metricool (UCQMD5dRsF3wBsJLOSSkWIKw). Chaque vidéo = post TikTok + post YouTube séparé, même heure, même media (URL static.metricool.com du post TikTok), youtubeData {title ≤100 car. finissant par #shorts, type short, privacy public, tags, category EDUCATION, madeForKids false, isAiGeneratedContent false}."
  }
 }
