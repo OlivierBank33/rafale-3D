@@ -13,7 +13,8 @@ Propriétaire : Olivier (veut rester anonyme : jamais son nom/visage/voix réell
 
 ## 1. Stratégie éditoriale (décidée le 02/10 sur les stats)
 Stats semaine 1 (TikTok, 36,9 k abonnés) : vrai/faux 1 968 et 1 240 vues, quiz niveau pilote 1 069, tournoi 731, top vitesse 313, partages ≈ 0.
-- **Cœur (2 vidéos/jour)** : formats « je joue » = vrai ou faux, quiz (silhouette, devine le prix, devine l'année), duels A vs B (rounds + score + verdict). Ce sont ceux qui font commenter.
+- **DUEL TOUS LES JOURS à 18:00** (demande d'Olivier le 04/10 : le duel Rafale vs F-22 a été la meilleure vidéo). Moteur générique : écrire `dl/<slug>/cfg.py` (A, B, FLIP, SCENES ; copier dl/rafale_typhoon/cfg.py comme modèle), rendre 4 vues par avion `a_34/a_side/a_front/a_top.png` et `b_*.png` (render3d.py / render_fg.py / render_glb.py, az 215/180|270/270|180/88 selon l'orientation du modèle — contrôler la planche, retirer train/feux via skip), `DL=dl/<slug> python3 dl_tts.py`, `python3 pipe/el_sync.py plan dl:<slug>`, voix ElevenLabs, `el_sync.py apply dl:<slug> <durée>`, `DL=dl/<slug> python3 dl_render.py`, `DL=dl/<slug> python3 dl_audio.py`, `eleven_prep.sh dl/<slug> <nom>`. 5 rounds factuels sourcés, score qui reste serré jusqu'au bout, verdict nuancé + « Et toi, tu mets qui ? ». Choisir dans `history.json > duel_backlog` (rayer après usage).
+- **Cœur (1 à 2 vidéos/jour)** : formats « je joue » = vrai ou faux, quiz (silhouette, devine le prix, devine l'année), duels A vs B (rounds + score + verdict). Ce sont ceux qui font commenter.
 - **Pari viral (1 vidéo/jour)** : classements visuels à comparaison d'échelle (prix avec piles de billets `px_*`, taille, vitesse, altitude), « et si… ? », crashs qui ont changé l'aviation (sobre, sans voyeurisme).
 - **Bio / technique** : max 2 par semaine, seulement si les stats les justifient.
 - Accroche : chiffre ou question choc dans les 2 premières secondes, texte à l'écran dès la 1re image.

@@ -204,6 +204,19 @@
     "youtube": "5684101289707785452",
     "facebook": "1124582211080113022"
    }
+  },
+  {
+   "date": "2026-10-04",
+   "format": "duel",
+   "name": "Rafale vs Typhoon",
+   "voice": "Yariq",
+   "flow": "WTPkJB6prQP8B6EDcDKn",
+   "sources": [
+    "leonardo.com Typhoon Mach 2 / 2x90 kN",
+    "wikipedia Snecma M88 75 kN",
+    "meta-defense 2026-08 exports",
+    "wikipedia Eurofighter procurement"
+   ]
   }
  ],
  "notes": [
@@ -218,7 +231,8 @@
   "2026-10-02 soir: Blériot (sfx = bruit pur) et moteurs coupés (vent au bruit filtré) refaits : voix isolée depuis la vidéo publiée (audio_isolation ~16.7 cr/s) + bed propre. Tous les *_audio.py purgés du bruit blanc (charleston, whoosh, caisse claire, roulement). eleven_prep.sh appelle noise_check.py (bloque si souffle large bande).",
   "2026-10-02 20:27: forfait gratuit Metricool épuisé (20 posts/mois, erreur 'account limit'). Olivier a activé l'essai gratuit 1 mois (fin ~2026-11-02) -> décider Starter (~20-25 €/mois) avant la fin. Blériot TikTok republié 20:35.",
   "2026-10-02 21:30: Olivier délègue toutes les décisions. Passage à 3 vidéos/jour 10:00/12:30/18:00 (pics Metricool). Stratégie dans RUNBOOK §1. Samedi 03: 10:00 VF3 (Kev), 12:30 tournoi (Léa), 18:00 prix (Yariq). Dimanche 04: 18:00 bio Earhart (Yariq).",
-  "Tâche planifiée trig_01RDWrNoMNgEYLDUfUQkzG9c : tous les jours 13:50 Paris, produit les 3 vidéos du lendemain (remplace l'ancienne trig_01DMyqgD…, supprimée car règles obsolètes et sans ElevenLabs)."
+  "Tâche planifiée trig_01RDWrNoMNgEYLDUfUQkzG9c : tous les jours 13:50 Paris, produit les 3 vidéos du lendemain (remplace l'ancienne trig_01DMyqgD…, supprimée car règles obsolètes et sans ElevenLabs).",
+  "2026-10-04 00:00: Olivier : le duel Rafale vs F-22 a bien marché (1 871 vues, meilleur score) -> 1 DUEL PAR JOUR au créneau 18:00. Moteur générique dl_render.py / dl_audio.py / dl_tts.py + dl/<slug>/cfg.py (types de rounds : bars, chips, counters, list, radar, verdict). Premier : Rafale vs Typhoon (Yariq, 1 105 crédits). Backlog dans duel_backlog."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -317,5 +331,67 @@
   },
   "mesure": "Pour chaque vidéo : vues à 48 h, temps de visionnage moyen / % regardé, abonnés gagnés, partages (TikTok + YouTube + Facebook via Metricool). Comparer par voix en neutralisant le format (carré latin). Bilan le 2026-10-11, puis adopter la meilleure voix.",
   "log": []
- }
+ },
+ "duel_backlog": [
+  {
+   "match": "F-16 vs MiG-21",
+   "models": "fg/f16, fg/MiG-21bis",
+   "angle": "Guerre froide : le best-seller US contre le chasseur le plus produit"
+  },
+  {
+   "match": "Spitfire vs Bf 109",
+   "models": "fg/Spitfire, fg/bf109",
+   "angle": "Bataille d'Angleterre 1940"
+  },
+  {
+   "match": "F-22 vs F-35",
+   "models": "fg/F-22, fg/F-35B",
+   "angle": "les deux furtifs américains"
+  },
+  {
+   "match": "Mirage 2000 vs F-16",
+   "models": "fg/Mirage-2000, fg/f16",
+   "angle": "France vs USA années 80"
+  },
+  {
+   "match": "P-51 Mustang vs A6M Zero",
+   "models": "fg/p51d, fg/A6M2",
+   "angle": "Pacifique 1942-45"
+  },
+  {
+   "match": "Rafale vs F-35",
+   "models": "rafale.glb, fg/F-35B",
+   "angle": "le choix des pays européens"
+  },
+  {
+   "match": "Me 262 vs P-51",
+   "models": "fg/Me-262, fg/p51d",
+   "angle": "premier chasseur à réaction vs meilleur chasseur à hélice"
+  },
+  {
+   "match": "Mirage III vs MiG-21",
+   "models": "fg/MirageIII, fg/MiG-21bis",
+   "angle": "guerre des Six Jours 1967"
+  },
+  {
+   "match": "Harrier vs F-35B",
+   "models": "fg/Harrier-GR1, fg/F-35B",
+   "angle": "décollage vertical, ancien vs nouveau"
+  },
+  {
+   "match": "F-117 vs B-2",
+   "models": "fg/F-117, fg/B-2",
+   "angle": "les furtifs historiques"
+  },
+  {
+   "match": "F-15 vs F-22",
+   "models": "fg/F-15C, fg/F-22",
+   "angle": "104 victoires 0 défaite vs successeur"
+  },
+  {
+   "match": "Eurofighter vs F-35",
+   "models": "fg/Eurofighter, fg/F-35B",
+   "angle": "Europe vs USA"
+  }
+ ]
 }

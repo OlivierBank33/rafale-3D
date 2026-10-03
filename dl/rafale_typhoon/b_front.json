@@ -1,0 +1,1 @@
+{"ac": "/home/claude/fg/Eurofighter/Models/typhoon.ac", "out": "/home/claude/dl/rafale_typhoon/b_front.png", "W": 1400, "H": 1400, "samples": 40, "az": 180, "el": 4, "dist": 1.3, "skip": ["gear", "wheel", "light", "beacon", "strobe", "lens", "blah", "flame", "pod", "hook", "eject", "seat", "flir", "apu", "air.out", "glasshud", "mauser"]}
