@@ -195,7 +195,7 @@
    }
   },
   {
-   "date": "2026-10-04 18:00",
+   "date": "2026-10-04 10:00",
    "format": "biographie",
    "name": "Amelia Earhart",
    "voice": "Yariq",
@@ -206,7 +206,7 @@
    }
   },
   {
-   "date": "2026-10-04",
+   "date": "2026-10-04 18:00",
    "format": "duel",
    "name": "Rafale vs Typhoon",
    "voice": "Yariq",
@@ -216,7 +216,12 @@
     "wikipedia Snecma M88 75 kN",
     "meta-defense 2026-08 exports",
     "wikipedia Eurofighter procurement"
-   ]
+   ],
+   "uuids": {
+    "tiktok": "-3816810101902848704",
+    "youtube": "107999151483996719",
+    "facebook": "-152313507460529566"
+   }
   }
  ],
  "notes": [
@@ -232,7 +237,8 @@
   "2026-10-02 20:27: forfait gratuit Metricool épuisé (20 posts/mois, erreur 'account limit'). Olivier a activé l'essai gratuit 1 mois (fin ~2026-11-02) -> décider Starter (~20-25 €/mois) avant la fin. Blériot TikTok republié 20:35.",
   "2026-10-02 21:30: Olivier délègue toutes les décisions. Passage à 3 vidéos/jour 10:00/12:30/18:00 (pics Metricool). Stratégie dans RUNBOOK §1. Samedi 03: 10:00 VF3 (Kev), 12:30 tournoi (Léa), 18:00 prix (Yariq). Dimanche 04: 18:00 bio Earhart (Yariq).",
   "Tâche planifiée trig_01RDWrNoMNgEYLDUfUQkzG9c : tous les jours 13:50 Paris, produit les 3 vidéos du lendemain (remplace l'ancienne trig_01DMyqgD…, supprimée car règles obsolètes et sans ElevenLabs).",
-  "2026-10-04 00:00: Olivier : le duel Rafale vs F-22 a bien marché (1 871 vues, meilleur score) -> 1 DUEL PAR JOUR au créneau 18:00. Moteur générique dl_render.py / dl_audio.py / dl_tts.py + dl/<slug>/cfg.py (types de rounds : bars, chips, counters, list, radar, verdict). Premier : Rafale vs Typhoon (Yariq, 1 105 crédits). Backlog dans duel_backlog."
+  "2026-10-04 00:00: Olivier : le duel Rafale vs F-22 a bien marché (1 871 vues, meilleur score) -> 1 DUEL PAR JOUR au créneau 18:00. Moteur générique dl_render.py / dl_audio.py / dl_tts.py + dl/<slug>/cfg.py (types de rounds : bars, chips, counters, list, radar, verdict). Premier : Rafale vs Typhoon (Yariq, 1 105 crédits). Backlog dans duel_backlog.",
+  "2026-10-04: la tâche planifiée du 03/10 13:50 n'a tourné que 4 min sans rien programmer (cause inconnue) -> prompt renforcé (contournements, duel en priorité). Vérifier son compte rendu du 04/10."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
