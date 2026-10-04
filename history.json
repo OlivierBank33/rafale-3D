@@ -224,7 +224,7 @@
    }
   },
   {
-   "date": "2026-10-05 12:30",
+   "date": "2026-10-04 20:50",
    "format": "débat chiffré",
    "name": "L'avion pollue-t-il plus que le reste ?",
    "voice": "Yariq",
@@ -234,6 +234,20 @@
     "tiktok": "-3068269313423031151",
     "youtube": "3398605916329886017",
     "facebook": "-4790072863708920985"
+   }
+  },
+  {
+   "date": "2026-10-05 10:00",
+   "format": "vrai/faux",
+   "name": "Vrai ou faux : spécial aviation française",
+   "voice": "Corentin",
+   "duree": 88.5,
+   "flow": "f7M2QKupcRsPWJh73WU5",
+   "montage": "camera dynamique v1",
+   "uuids": {
+    "tiktok": "-7092754253898234697",
+    "youtube": "170162982527190160",
+    "facebook": "3204379754871605063"
    }
   },
   {
