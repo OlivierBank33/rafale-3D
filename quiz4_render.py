@@ -1,10 +1,10 @@
 import cairo, json, math, subprocess, sys
 import numpy as np
 from PIL import Image, ImageFilter
-from vf4_script import INTRO, OUTRO, Q
+from quiz4_script import INTRO, OUTRO, Q
 
 W, H, FPS = 1080, 1920, 30
-D = json.load(open('vf4/durs.json'))
+D = json.load(open('qa4/durs.json'))
 NQ = len(Q)
 COUNT = 3.0
 
@@ -15,15 +15,15 @@ T['intro'] = t; t += D['intro'] + 0.45
 qs = []
 for i in range(NQ):
     q0 = t
-    cd0 = q0 + 0.15 + D[f'q{i}'] + 0.15   # compte à rebours après la lecture
-    rev = cd0 + COUNT
+    cd0 = q0 + 0.5                       # début du compte à rebours
+    rev = max(cd0 + COUNT, q0 + D[f'q{i}'] + 1.0)
     a0 = rev + 0.2
     end = a0 + D[f'a{i}'] + 0.55
     qs.append(dict(q0=q0, cd0=cd0, rev=rev, a0=a0, end=end))
     t = end
 T['outro'] = t + 0.1
 TOTAL = T['outro'] + D['outro'] + 2.2
-json.dump(dict(T=T, qs=qs, total=TOTAL), open('vf4/timeline.json', 'w'))
+json.dump(dict(T=T, qs=qs, total=TOTAL), open('qa4/timeline.json', 'w'))
 
 YEL = (1.0, 0.84, 0.1); GRN = (0.2, 0.85, 0.4); RED = (1.0, 0.3, 0.3); CYA = (0.35, 0.85, 1.0)
 
@@ -54,7 +54,7 @@ def to_surface(img):
     return s
 
 
-BOX_W, BOX_H = 960, 520
+BOX_W, BOX_H = 1000, 640
 IMGS = []
 for q in Q:
     im = Image.open(f"r3d/{q['img']}.png").convert('RGBA')
@@ -112,7 +112,7 @@ def rrect(c, x, y, w, h, r):
     c.arc(x + r, y + h - r, r, math.pi / 2, math.pi); c.arc(x + r, y + r, r, math.pi, 3 * math.pi / 2); c.close_path()
 
 
-IMG_CY = 800
+IMG_CY = 760
 
 
 def background(c, t, burst=0.0, tint=(0.08, 0.16, 0.32)):
@@ -144,7 +144,7 @@ def draw_img(c, surf, w, h, cx, cy, scale, alpha):
 
 def header(c, t, qi):
     # logo
-    font(c, 30); lab = "VRAI OU FAUX"
+    font(c, 30); lab = "AVIONS DE COMBAT"
     e = c.text_extents(lab); bw = e.x_advance + 50
     rrect(c, W / 2 - bw / 2, 70, bw, 56, 28); c.set_source_rgba(*YEL, 1); c.fill()
     c.set_source_rgb(0.03, 0.05, 0.1); c.move_to(W / 2 - e.x_advance / 2, 109); c.show_text(lab)
@@ -179,7 +179,7 @@ def draw_timer(c, t, q, cx, cy):
 
 
 def draw_options(c, t, i, q):
-    opts = ['VRAI', 'FAUX']; ans = Q[i]['answer']
+    opts = Q[i]['options']; ans = Q[i]['answer']
     y0 = 1260; hgt = 96; gap = 22; wdt = 860
     revealed = t >= q['rev']
     for k, o in enumerate(opts):
@@ -202,7 +202,7 @@ def draw_options(c, t, i, q):
         # lettre
         c.arc(x + hgt / 2, y + hgt / 2, 32, 0, 2 * math.pi)
         c.set_source_rgba(*(border if revealed else YEL), ta); c.fill()
-        font(c, 38); L = "VF"[k]; e = c.text_extents(L)
+        font(c, 38); L = "ABC"[k]; e = c.text_extents(L)
         c.set_source_rgb(0.03, 0.05, 0.1); c.move_to(x + hgt / 2 - e.x_advance / 2 - e.x_bearing, y + hgt / 2 + e.height / 2); c.show_text(L)
         font(c, 42); c.set_source_rgba(1, 1, 1, ta)
         e = c.text_extents(o); fs = 42
@@ -224,7 +224,7 @@ def draw_fact(c, t, i, q):
     # retirer l'intro « C'est le X ! » déjà affichée au-dessus
     if '!' in txt: txt = txt.split('!', 1)[1].strip()
     lines = wrap(c, txt, 40, 880)
-    y = 1105
+    y = 1128 - (len(lines) - 1) * 24
     for k, ln in enumerate(lines):
         text_c(c, ln, W / 2, y + k * 50 + (1 - u) * 30, 40, (1, 1, 1, u), stroke=8)
 
@@ -239,14 +239,12 @@ def question_frame(c, t, i):
     # titre
     if not revealed:
         app = back_out((t - q['q0']) / 0.35)
-        text_c(c, f"AFFIRMATION N°{i + 1}", W / 2, 235, 40 * app, (*YEL, 1), stroke=6)
-        for k, ln in enumerate(wrap(c, Q[i]['stmt'], 56, 960)):
-            text_c(c, ln, W / 2, 315 + k * 68, 56 * app, (1, 1, 1, 1), stroke=8)
+        text_c(c, f"AVION N°{i + 1}", W / 2, 250, 44 * app, (*YEL, 1), stroke=6)
+        text_c(c, "QUEL EST CET AVION ?", W / 2, 340, 70 * app, (1, 1, 1, 1), stroke=8, maxw=980)
     else:
         v = back_out(ru / 0.4)
-        ok = Q[i]['answer'] == 0
-        text_c(c, f"AFFIRMATION N°{i + 1}", W / 2, 235, 40, (*YEL, 1), stroke=6)
-        text_c(c, "C'EST VRAI !" if ok else "C'EST FAUX !", W / 2, 360, 100 * (0.6 + 0.4 * v), (*(GRN if ok else RED), 1), stroke=10)
+        text_c(c, "C'EST LE...", W / 2, 250, 44, (*GRN, 1), stroke=6)
+        text_c(c, Q[i]['name'].upper(), W / 2, 345, 74 * (0.6 + 0.4 * v), (*YEL, 1), stroke=9, maxw=1000)
     # avion
     enter = ease_out((t - q['q0']) / 0.45)
     zoom = 0.92 + 0.08 * ease((t - q['q0']) / (q['rev'] - q['q0']))
@@ -256,12 +254,13 @@ def question_frame(c, t, i):
         # léger tremblement dans la dernière seconde
         if q['rev'] - t < 1.0:
             cx += 3 * math.sin(t * 70)
-        draw_img(c, im['color'], im['w'], im['h'], cx, cy, zoom, 1)
+        draw_img(c, im['sil'], im['w'], im['h'], cx, cy, zoom, 1)
     else:
         pop = 1.0 + 0.08 * math.sin(min(1, ru / 0.35) * math.pi)
         s = 1.0 * pop + 0.03 * ease(ru / 4)
         draw_img(c, im['glow'], im['w'], im['h'], cx, cy, s, max(0, 0.9 - ru / 1.5))
-        draw_img(c, im['color'], im['w'], im['h'], cx, cy, s, 1)
+        draw_img(c, im['sil'], im['w'], im['h'], cx, cy, s, 1 - ease(ru / 0.3))
+        draw_img(c, im['color'], im['w'], im['h'], cx, cy, s, ease(ru / 0.3))
     draw_timer(c, t, q, W / 2, 1135)
     draw_options(c, t, i, q)
     if revealed:
@@ -283,15 +282,15 @@ def intro_frame(c, t):
     k = int(max(0, lt) / 0.42) % NQ
     im = IMGS[k]
     sc = 0.78 + 0.05 * ((max(0, lt) % 0.42) / 0.42)
-    draw_img(c, im['color'], im['w'], im['h'], W / 2, IMG_CY + 40, sc, min(1, lt / 0.2))
+    draw_img(c, im['sil'], im['w'], im['h'], W / 2, IMG_CY + 40, sc, min(1, lt / 0.2))
     a = back_out(lt / 0.4)
-    text_c(c, "VRAI", W / 2, 300, 110 * a, (*GRN, 1), stroke=10)
-    text_c(c, "OU FAUX ?", W / 2, 415, 110 * a, (*RED, 1), stroke=10, maxw=1000)
+    text_c(c, "RECONNAIS-TU", W / 2, 300, 92 * a, (1, 1, 1, 1), stroke=10)
+    text_c(c, "CES 10 AVIONS ?", W / 2, 405, 92 * a, (*YEL, 1), stroke=10, maxw=1000)
     b = back_out((lt - 1.6) / 0.4)
     if b > 0:
         c.save(); c.translate(W / 2, 1230); c.rotate(-0.05); c.scale(b, b)
         rrect(c, -330, -60, 660, 120, 30); c.set_source_rgba(*RED, 1); c.fill()
-        text_c(c, "8 AFFIRMATIONS · 3 S", 0, 20, 52, (1, 1, 1, 1))
+        text_c(c, "3 SECONDES CHACUN", 0, 20, 52, (1, 1, 1, 1))
         c.restore()
     b2 = back_out((lt - 3.1) / 0.4)
     if b2 > 0:
@@ -306,8 +305,8 @@ def outro_frame(c, t):
     header(c, t, NQ - 1)
     a = back_out(lt / 0.4)
     text_c(c, "TON SCORE", W / 2, 300, 96 * a, (1, 1, 1, 1), stroke=10)
-    text_c(c, "SUR 8 ?", W / 2, 410, 96 * a, (*YEL, 1), stroke=10)
-    rows = [("0 – 2", "TOURISTE", (0.6, 0.65, 0.75)), ("3 – 5", "PASSAGER", CYA), ("6 – 7", "PILOTE", GRN), ("8", "AS DU MANCHE", YEL)]
+    text_c(c, "SUR 10 ?", W / 2, 410, 96 * a, (*YEL, 1), stroke=10)
+    rows = [("0 – 3", "TOURISTE", (0.6, 0.65, 0.75)), ("4 – 6", "PASSAGER", CYA), ("7 – 9", "PILOTE", GRN), ("10", "AS DU MANCHE", YEL)]
     for k, (sc, lab, col) in enumerate(rows):
         u = back_out((lt - 0.4 - 0.2 * k) / 0.35)
         if u <= 0: continue
@@ -354,6 +353,8 @@ def render(t, surf):
     c0.save(); c0.translate(W / 2 + dx, H / 2 + dy); c0.scale(z, z); c0.translate(-W / 2, -H / 2)
     c0.set_source_surface(_LAYER, 0, 0); c0.paint(); c0.restore()
     c = c0
+    if t < 0.2:
+        c.set_source_rgba(0, 0, 0, 1 - t / 0.2); c.paint()
     if t > TOTAL - 0.4:
         c.set_source_rgba(0, 0, 0, (t - (TOTAL - 0.4)) / 0.4); c.paint()
 
@@ -361,12 +362,12 @@ def render(t, surf):
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'stills':
         for tt in map(float, sys.argv[2:]):
-            sf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); render(tt, sf); sf.write_to_png(f'vf4/still_{tt:.1f}.png')
+            sf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); render(tt, sf); sf.write_to_png(f'qa4/still_{tt:.1f}.png')
         print(json.dumps(qs[:2]), TOTAL); sys.exit()
     nframes = int(TOTAL * FPS)
     ff = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgra', '-s', f'{W}x{H}',
                            '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20',
-                           '-pix_fmt', 'yuv420p', 'vf4/video_noaudio.mp4'], stdin=subprocess.PIPE)
+                           '-pix_fmt', 'yuv420p', 'qa4/video_noaudio.mp4'], stdin=subprocess.PIPE)
     sf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
     for f in range(nframes):
         render(f / FPS, sf); sf.flush(); ff.stdin.write(bytes(sf.get_data()))
