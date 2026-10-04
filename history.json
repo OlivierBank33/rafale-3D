@@ -248,6 +248,33 @@
     "tiktok": "-7092754253898234697",
     "youtube": "170162982527190160",
     "facebook": "3204379754871605063"
+   },
+   "note": "v2 : cadrage caméra corrigé (plus de bords noirs)"
+  },
+  {
+   "date": "2026-10-05 12:30",
+   "format": "quiz silhouettes",
+   "name": "Quiz silhouettes : avions de combat",
+   "voice": "Corentin",
+   "duree": 99.7,
+   "flow": "xDIwo5Rtwwl5lUcZPgTq",
+   "credits": 1673,
+   "items": [
+    "F-117",
+    "A-10",
+    "Mirage 2000",
+    "Harrier",
+    "F-15",
+    "Typhoon",
+    "SR-71",
+    "Su-37",
+    "F-35",
+    "F-22"
+   ],
+   "uuids": {
+    "tiktok": "6867113821352904413",
+    "youtube": "3553746897244275891",
+    "facebook": "8399344262344167410"
    }
   },
   {
