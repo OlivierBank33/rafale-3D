@@ -20,6 +20,7 @@ Stats semaine 1 (TikTok, 36,9 k abonnés) : vrai/faux 1 968 et 1 240 vues, quiz 
 - Accroche : chiffre ou question choc dans les 2 premières secondes, texte à l'écran dès la 1re image.
 - Chaque dimanche : relever vues, temps moyen, partages, abonnés gagnés par vidéo (Metricool `getAnalyticsDataByMetrics` TKPO07/08/10/13/15) → ajuster la répartition (doubler le gagnant, couper ce qui fait < 50 % de la médiane deux semaines de suite).
 - **Décision au 01/11** : médiane ≥ 3 000 vues/vidéo ou une vidéo ≥ 100 k → on garde Metricool Starter et le rythme ; médiane < 1 500 → 1 vidéo/jour et proposer à Olivier de couper les abonnements.
+- **Bilan hebdo du 04/10** (TikTok, 12 vidéos du 30/09 au 02/10 visibles dans Metricool ; médiane ≈ 1 080 vues, abonnés stables ≈ 36,9 k, partages 0–6) : vrai/faux avions légendaires 2 098, duel Rafale vs F-22 1 871, vrai/faux avion de ligne 1 313, quiz pilote 1 099, tournoi militaires 1 092, tech réacteur 881, quiz légendes 627, top vitesse 514, Blériot (version bruitée) 353. → On confirme : **18:00 duel**, **10:00 vrai/faux** (n°1 des formats), **12:30 quiz/prix/tournoi en rotation**. Top vitesse < 50 % de la médiane (1re semaine) : à couper si ça se répète la semaine prochaine. Bio/tech : max 1 par semaine tant qu'elles restent sous la médiane.
 - Test des voix : Yariq Ht4OibD14Nq9LzMUT7HK, Kev jGpnMdbhtKgQbVrYezOx, Guillaume 3HZyQcLKlT0a3RDeXVsP, Léa KSyQzmsYhFbuOhqj1Xxv — tourner sur les 3 créneaux, bilan le 11/10 (rétention, vues 48 h).
 
 ## 2. Installation
