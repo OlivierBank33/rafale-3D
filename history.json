@@ -222,6 +222,19 @@
     "youtube": "107999151483996719",
     "facebook": "-152313507460529566"
    }
+  },
+  {
+   "date": "2026-10-05 12:30",
+   "format": "débat chiffré",
+   "name": "L'avion pollue-t-il plus que le reste ?",
+   "voice": "Yariq",
+   "duree": 78.7,
+   "flow": "h3xCPTvZn8RBebzHwcc2",
+   "uuids": {
+    "tiktok": "-3068269313423031151",
+    "youtube": "3398605916329886017",
+    "facebook": "-4790072863708920985"
+   }
   }
  ],
  "notes": [
@@ -239,7 +252,8 @@
   "Tâche planifiée trig_01RDWrNoMNgEYLDUfUQkzG9c : tous les jours 13:50 Paris, produit les 3 vidéos du lendemain (remplace l'ancienne trig_01DMyqgD…, supprimée car règles obsolètes et sans ElevenLabs).",
   "2026-10-04 00:00: Olivier : le duel Rafale vs F-22 a bien marché (1 871 vues, meilleur score) -> 1 DUEL PAR JOUR au créneau 18:00. Moteur générique dl_render.py / dl_audio.py / dl_tts.py + dl/<slug>/cfg.py (types de rounds : bars, chips, counters, list, radar, verdict). Premier : Rafale vs Typhoon (Yariq, 1 105 crédits). Backlog dans duel_backlog.",
   "2026-10-04: la tâche planifiée du 03/10 13:50 n'a tourné que 4 min sans rien programmer (cause inconnue) -> prompt renforcé (contournements, duel en priorité). Vérifier son compte rendu du 04/10.",
-  "2026-10-04 13:50 (tâche planifiée) : AUCUNE vidéo produite. Même blocage que le 01/10 : le classifieur de sécurité du sandbox a refusé (1) la copie de pipe/* vers /home/claude (« destruction locale »), (2) l'exécution de setup.sh puis de tout Python lancé depuis le clone (« code externe », même un simple test d'import). Cause probable de l'échec silencieux du 03/10. Les tâches planifiées ne peuvent pas exécuter le pipeline : production à faire depuis la session principale. Créneaux vides : 05/10 10:00, 12:30, 18:00 (duel prévu : F-16 vs MiG-21, toujours en tête du backlog). Bilan hebdo du 04/10 ajouté au RUNBOOK §1. 0 crédit ElevenLabs dépensé."
+  "2026-10-04 13:50 (tâche planifiée) : AUCUNE vidéo produite. Même blocage que le 01/10 : le classifieur de sécurité du sandbox a refusé (1) la copie de pipe/* vers /home/claude (« destruction locale »), (2) l'exécution de setup.sh puis de tout Python lancé depuis le clone (« code externe », même un simple test d'import). Cause probable de l'échec silencieux du 03/10. Les tâches planifiées ne peuvent pas exécuter le pipeline : production à faire depuis la session principale. Créneaux vides : 05/10 10:00, 12:30, 18:00 (duel prévu : F-16 vs MiG-21, toujours en tête du backlog). Bilan hebdo du 04/10 ajouté au RUNBOOK §1. 0 crédit ElevenLabs dépensé.",
+  "2026-10-04 20:45: tâche planifiée trig_01RDWr… DÉSACTIVÉE (classifieur bloque le pipeline en session neuve). Remplacée par des rappels send_later dans la session principale (13:50)."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {

@@ -1,0 +1,28 @@
+# L'avion pollue-t-il vraiment plus que le reste ? (sources : OWID 2016 GES par secteur, IPCC AR6, Lee et al. 2021, ADEME/impactco2, OWID gCO2/pkm 1990-2019, IATA 2025, ReFuelEU)
+A = dict(name="AVION", short="AVION", color=(0.2, 0.6, 1.0)); B = dict(name="", short="", color=(1, 0.4, 0.2))
+SCENES = [
+    dict(type='hook', score=(0, 0),
+         say="L'avion, ennemi numéro un du climat ? On regarde les vrais chiffres.",
+         show="L'avion, ennemi numéro un du climat ? On regarde les vrais chiffres."),
+    dict(type='sectors', score=(0, 0),
+         say="Part des émissions mondiales de gaz à effet de serre. Transport routier : douze pour cent. Acier : sept. Élevage : six. Ciment : trois. Et l'aviation : un virgule neuf pour cent. Moins que le ciment.",
+         show="Part des émissions mondiales de gaz à effet de serre. Transport routier : 12 %. Acier : 7 %. Élevage : 6 %. Ciment : 3 %. Et l'aviation : 1,9 %. Moins que le ciment."),
+    dict(type='digital', score=(0, 0),
+         say="Le numérique, lui, pèserait entre deux et quatre pour cent. Autant, voire plus que l'avion.",
+         show="Le numérique, lui, pèserait entre 2 et 4 %. Autant, voire plus que l'avion."),
+    dict(type='eff', score=(0, 0),
+         say="Et l'avion progresse : depuis mille neuf cent quatre-vingt-dix, son CO2 par passager et par kilomètre a été divisé par plus de deux.",
+         show="Et l'avion progresse : depuis 1990, son CO2 par passager et par kilomètre a été divisé par plus de 2."),
+    dict(type='trip', score=(0, 0),
+         say="Paris-Nice. Seul dans sa voiture : environ deux cents kilos de CO2. En avion : cent cinquante-cinq, effet des traînées compris. Mais le TGV, lui : moins de trois kilos. Imbattable.",
+         show="Paris-Nice. Seul dans sa voiture : environ 200 kg de CO2. En avion : 155, effet des traînées compris. Mais le TGV, lui : moins de 3 kg. Imbattable."),
+    dict(type='caveat', score=(0, 0),
+         say="Soyons honnêtes : avec les traînées de condensation, l'aviation pèse environ trois virgule cinq pour cent du réchauffement. Et le trafic augmente chaque année.",
+         show="Soyons honnêtes : avec les traînées de condensation, l'aviation pèse environ 3,5 % du réchauffement. Et le trafic augmente chaque année."),
+    dict(type='future', score=(0, 0),
+         say="Objectif : zéro émission nette de CO2 en deux mille cinquante, avec des carburants durables et des avions plus sobres.",
+         show="Objectif : zéro émission nette de CO2 en 2050, avec des carburants durables et des avions plus sobres."),
+    dict(type='outro', score=(0, 0),
+         say="Alors, l'avion : vrai coupable ou bouc émissaire ? Dis-le en commentaire.",
+         show="Alors, l'avion : vrai coupable ou bouc émissaire ? Dis-le en commentaire."),
+]

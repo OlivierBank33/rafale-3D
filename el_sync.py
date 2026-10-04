@@ -49,6 +49,9 @@ def segments(fmt):
         mod = {'ea': ('ea_script', 'ea_render', 'ea'), 'bio': ('bio_script', 'bio_render', 'bio')}[fmt]
         S = importlib.import_module(mod[0]); R = importlib.import_module(mod[1])
         return mod[2], [(sg['k'], sc['say'], sg['vt']) for sg, sc in zip(R.SEG, S.SCENES)]
+    if fmt == 'pol':
+        R = importlib.import_module('pol_render').R
+        return 'pol', [(sg['k'], sg['p']['say'], sg['vt']) for sg in R.SEG]
     if fmt.startswith('dl:'):
         os.environ['DL'] = 'dl/' + fmt[3:]
         R = importlib.import_module('dl_render')
