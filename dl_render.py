@@ -15,8 +15,8 @@ DUR = json.load(open(D + 'durs.json'))
 # ---------- Timeline ----------
 SEG = []; t = 0.0
 for i, s in enumerate(SCENES):
-    pre = 0.3 if i == 0 else 0.5
-    post = 0.6 if i < len(SCENES) - 1 else 1.8
+    pre = 0.2 if i == 0 else 0.3
+    post = 0.35 if i < len(SCENES) - 1 else getattr(CFG, 'END_HOLD', 1.6)
     SEG.append(dict(i=i, k=f's{i}', scene=s['type'], t0=t, vt=t + pre, dur=DUR[f's{i}'], end=t + pre + DUR[f's{i}'] + post, score=tuple(s['score']), p=s))
     t = SEG[-1]['end']
 TOTAL = t
@@ -90,7 +90,7 @@ def plane(c, key, cx, cy, size, alpha=1.0, rot=0.0, glow=None):
 STREAKS = [dict(y=random.uniform(300, 1500), sp=random.uniform(900, 2200), ph=random.uniform(0, 2000), ln=random.uniform(80, 260)) for _ in range(40)]
 
 
-def background(c, t, tint=None, streak=0.0):
+def background(c, t, tint=None, streak=0.7):
     g = cairo.LinearGradient(0, 0, 0, H)
     g.add_color_stop_rgb(0, 0.025, 0.035, 0.07); g.add_color_stop_rgb(0.55, 0.05, 0.07, 0.13); g.add_color_stop_rgb(1, 0.015, 0.02, 0.04)
     c.set_source(g); c.paint()
@@ -166,19 +166,22 @@ def round_title(c, t, s):
 def sc_hook(c, t, s):
     lt = t - s['t0']
     background(c, t, tint=[(CA, 270, 820, 560, 0.35), (CB, 810, 1120, 560, 0.35)], streak=1.0)
-    u = ease_out(lt / 1.1); bob = math.sin(t * 2.2) * 8
+    u = ease_out(0.55 + lt / 1.2); bob = math.sin(t * 2.2) * 8
     plane(c, 'a_34', -380 + u * 720, 820 + bob, 680, glow=CA)
     plane(c, 'b_34', 1460 - u * 720, 1130 - bob, 680, glow=CB)
-    na = ease((lt - 1.0) / 0.4)
+    na = ease((lt - 0.1) / 0.25)
     text_c(c, A['name'], 300, 600, 64, (*CA, na), stroke=8, maxw=520)
     text_c(c, B['name'], 780, 1370, 64, (*CB, na), stroke=8, maxw=520)
-    if lt > 1.1:
-        v = back_out((lt - 1.1) / 0.35)
+    if lt > 0.05:
+        v = back_out((lt - 0.05) / 0.3)
         c.save(); c.translate(W / 2, 1000); c.scale(0.4 + 0.6 * v, 0.4 + 0.6 * v); c.rotate(-0.08)
         text_c(c, "VS", 0, 70, 230, (1, 1, 1, 1), stroke=18); c.restore()
-        fl = 1 - ease((lt - 1.1) / 0.25)
+        fl = 1 - ease((lt - 0.05) / 0.2)
         if fl > 0: c.set_source_rgba(1, 1, 1, 0.8 * fl); c.paint()
-    text_c(c, s['p'].get('kicker', "LE DUEL"), W / 2, 400, 52, (*YEL, ease(lt / 0.5)), stroke=8)
+    text_c(c, s['p'].get('kicker', "LE DUEL"), W / 2, 400, 52, (*YEL, 1.0), stroke=8)
+    q = back_out((lt - 0.4) / 0.3)
+    if q > 0.02:
+        c.save(); c.translate(W / 2, 1470); c.scale(q, q); text_c(c, "QUI GAGNE ?", 0, 0, 80, (*YEL, 1), stroke=12); c.restore()
 
 
 def bar(c, x, y, w, h, frac, col, label, val, a):
@@ -239,9 +242,9 @@ def sc_counters(c, t, s):
     text_c(c, B['short'], 800, 900, 48, (*CB, a), stroke=6, maxw=440)
     c.set_source_rgba(1, 1, 1, 0.15 * a); c.rectangle(W / 2 - 1, 560, 2, 820); c.fill()
     for (num, sub, x, col, st) in ((p['a_num'], p['a_sub'], 280, CA, p.get('a_start', 0.15)), (p['b_num'], p['b_sub'], 800, CB, p.get('b_start', 0.45))):
-        v = int(round(num * ease_out((u - st) / 0.25)))
+        v = num if p.get('static') else int(round(num * ease_out((u - st) / 0.25)))
         if u > st - 0.02:
-            text_c(c, p.get('pre', '') + f"{v:,}".replace(',', ' ') + p.get('suffix', ''), x, 1080, 120, (1, 1, 1, a), stroke=10, maxw=480)
+            text_c(c, p.get('pre', '') + (str(v) if p.get('static') else f"{v:,}".replace(',', ' ')) + p.get('suffix', ''), x, 1080, 120, (1, 1, 1, a), stroke=10, maxw=480)
             text_c(c, sub, x, 1160, 38, (*col, a * ease((u - st - 0.2) / 0.1)), stroke=6, maxw=480)
     if p.get('pill'):
         pill(c, p['pill'], W / 2, 1300, 36, GREY, fg=INK, s=back_out((u - 0.72) / 0.1))
@@ -329,6 +332,8 @@ def sc_verdict(c, t, s):
         c.set_source_rgba(*YEL, a); c.set_line_width(8)
         yy = 1250 + 12 * math.sin(t * 6)
         c.move_to(W / 2 - 30, yy); c.line_to(W / 2, yy + 34); c.line_to(W / 2 + 30, yy); c.stroke()
+        if t > s['vt'] + s['dur'] + 0.3:
+            pill(c, "NOUVEAU DUEL CHAQUE JOUR · ABONNE-TOI", W / 2, 1420, 40, YEL, fg=INK, s=back_out((t - s['vt'] - s['dur'] - 0.3) / 0.3))
 
 
 SCN = dict(hook=sc_hook, bars=sc_bars, chips=sc_chips, counters=sc_counters, list=sc_list, radar=sc_radar, verdict=sc_verdict)
@@ -388,20 +393,46 @@ def captions(c, t):
     c.restore()
 
 
+_LAYER = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
+CAP_STARTS = sorted(cp['t0'] for cp in CAPS)
+SCORE_T = []
+_prev = (0, 0)
+for _s in SEG:
+    if _s['score'] != _prev: SCORE_T.append(_s['vt'] + _s['dur'] * 0.86)
+    _prev = _s['score']
+
+
+def camera(t, s):
+    """Mouvement de caméra permanent : dérive lente + coup de zoom à chaque groupe de sous-titres + secousse sur les points."""
+    lt = t - s['t0']
+    drift = 1.0 + 0.06 * min(1.0, lt / max(1.0, s['end'] - s['t0']))
+    last = max([c0 for c0 in CAP_STARTS if c0 <= t] or [-9])
+    punch = 0.045 * max(0.0, 1 - (t - last) / 0.18)
+    sh = 0.0
+    for ts in SCORE_T:
+        if 0 <= t - ts < 0.45: sh = 1 - (t - ts) / 0.45
+    dx = 18 * sh * math.sin(t * 90); dy = 14 * sh * math.cos(t * 77)
+    rot = 0.006 * math.sin(t * 0.9)
+    return drift + punch + 0.03 * sh, dx, dy, rot
+
+
 def render(t, surf):
-    c = cairo.Context(surf)
     s = SEG[0]
     for x in SEG:
         if t >= x['t0']: s = x
-    SCN[s['scene']](c, t, s)
+    lc = cairo.Context(_LAYER)
+    SCN[s['scene']](lc, t, s)
+    _LAYER.flush()
+    c = cairo.Context(surf)
+    z, dx, dy, rot = camera(t, s)
+    c.save(); c.translate(W / 2 + dx, H / 2 + dy); c.rotate(rot); c.scale(z, z); c.translate(-W / 2, -H / 2)
+    c.set_source_surface(_LAYER, 0, 0); c.paint(); c.restore()
     scoreboard(c, t, s)
     captions(c, t)
     lt = t - s['t0']
     if lt < 0.12 and s['t0'] > 0:
-        c.set_source_rgba(1, 1, 1, 0.35 * (1 - lt / 0.12)); c.paint()
+        c.set_source_rgba(1, 1, 1, 0.45 * (1 - lt / 0.12)); c.paint()
     c.set_source_rgba(*YEL, 1); c.rectangle(0, 0, W * t / TOTAL, 6); c.fill()
-    if t < 0.15:
-        c.set_source_rgba(0, 0, 0, 1 - t / 0.15); c.paint()
     if t > TOTAL - 0.4:
         c.set_source_rgba(0, 0, 0, (t - (TOTAL - 0.4)) / 0.4); c.paint()
 
