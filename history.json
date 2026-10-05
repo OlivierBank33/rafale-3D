@@ -310,7 +310,13 @@
    "name": "Quiz silhouettes : avions de ligne et cargos",
    "voice": "Corentin",
    "flow": "9HJZb4vm6dju3cmcaKpS",
-   "credits": 1672
+   "credits": 1672,
+   "duree": 96.9,
+   "uuids": {
+    "tiktok": "7851019782915703161",
+    "youtube": "3447038133713519804",
+    "facebook": "-7957806573364297320"
+   }
   },
   {
    "date": "2026-10-06 18:00",
@@ -320,7 +326,12 @@
    "duree": 61.9,
    "flow": "Xsr7U4b54wOkk0oq7tKR",
    "credits": 1203,
-   "score": "3-2 Spitfire"
+   "score": "3-2 Spitfire",
+   "uuids": {
+    "tiktok": "-3747185026437592865",
+    "youtube": "4312684703810863138",
+    "facebook": "3742961572269932637"
+   }
   }
  ],
  "notes": [
