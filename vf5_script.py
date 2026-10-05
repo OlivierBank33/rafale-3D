@@ -1,0 +1,41 @@
+# Vrai ou faux : records de l'aviation (faits : SR-71 3 529 km/h 28/07/1976 ; Wright 17/12/1903 1er vol 12 s ; C-130 sur l'USS Forrestal oct.-nov. 1963 ;
+# Concorde Mach 2,02 ; An-225 MTOW 640 t, plus lourd jamais construit, détruit 2022 ; Cessna 172 > 44 000 = le plus produit ; X-15 Mach 6,7 (1967) ;
+# B-52 1er vol 1952, B-52J prévu jusqu'aux années 2050)
+INTRO = dict(say="Vrai ou faux, spécial records de l'aviation ! Huit affirmations, trois secondes pour répondre. La dernière piège tout le monde.",
+             show="Vrai ou faux : records de l'aviation ! 8 affirmations, 3 secondes pour répondre.")
+OUTRO = dict(say="Alors, combien sur huit ? Écris ton score en commentaire !",
+             show="Alors, combien sur 8 ? Écris ton score en commentaire !")
+Q = [
+    dict(img='sr71', stmt="Le SR-71 détient le record de vitesse d'un avion à réaction.", answer=0,
+         q_say="Numéro un. Le S R soixante et onze détient le record de vitesse d'un avion à réaction.",
+         a_say="Vrai ! Trois mille cinq cent vingt-neuf kilomètres heure, en mille neuf cent soixante-seize. Jamais battu.",
+         a_show="Vrai ! 3 529 km/h, en 1976. Jamais battu."),
+    dict(img='wright', stmt="Le premier vol des frères Wright a duré une minute.", answer=1,
+         q_say="Numéro deux. Le premier vol des frères Wright a duré une minute.",
+         a_say="Faux ! Il a duré douze secondes, sur trente-sept mètres.",
+         a_show="Faux ! Il a duré 12 secondes, sur 37 mètres."),
+    dict(img='c130', stmt="Un C-130 Hercules s'est déjà posé sur un porte-avions.", answer=0,
+         q_say="Numéro trois. Un C cent trente Hercules s'est déjà posé sur un porte-avions.",
+         a_say="Vrai ! En mille neuf cent soixante-trois, sur l'U S S Forrestal. Sans crochet d'appontage.",
+         a_show="Vrai ! En 1963, sur l'USS Forrestal. Sans crochet d'appontage."),
+    dict(img='concorde', stmt="Le Concorde volait à Mach 3.", answer=1,
+         q_say="Numéro quatre. Le Concorde volait à Mach trois.",
+         a_say="Faux ! Mach deux. Déjà deux fois la vitesse du son.",
+         a_show="Faux ! Mach 2. Déjà deux fois la vitesse du son."),
+    dict(img='an225', stmt="L'An-225 est l'avion le plus lourd jamais construit.", answer=0,
+         q_say="Numéro cinq. L'Antonov deux cent vingt-cinq est l'avion le plus lourd jamais construit.",
+         a_say="Vrai ! Six cent quarante tonnes au décollage. L'unique exemplaire a été détruit en deux mille vingt-deux.",
+         a_show="Vrai ! 640 tonnes au décollage. L'unique exemplaire a été détruit en 2022."),
+    dict(img='c172', stmt="L'avion le plus produit de l'histoire est un avion de chasse.", answer=1,
+         q_say="Numéro six. L'avion le plus produit de l'histoire est un avion de chasse.",
+         a_say="Faux ! C'est le petit Cessna cent soixante-douze. Plus de quarante-quatre mille exemplaires.",
+         a_show="Faux ! C'est le petit Cessna 172. Plus de 44 000 exemplaires."),
+    dict(img='x15', stmt="Le X-15 a dépassé Mach 6.", answer=0,
+         q_say="Numéro sept. Le X quinze a dépassé Mach six.",
+         a_say="Vrai ! Mach six virgule sept en mille neuf cent soixante-sept. Toujours le record pour un avion piloté.",
+         a_show="Vrai ! Mach 6,7 en 1967. Toujours le record pour un avion piloté."),
+    dict(img='b52', stmt="Le B-52 sera retiré du service avant 2030.", answer=1,
+         q_say="Dernière. Le B cinquante-deux sera retiré du service avant deux mille trente.",
+         a_say="Faux ! Il vole depuis mille neuf cent cinquante-deux, et l'armée de l'air américaine veut le garder jusqu'aux années deux mille cinquante. Presque un siècle !",
+         a_show="Faux ! Il vole depuis 1952, et l'armée de l'air américaine veut le garder jusqu'aux années 2050. Presque un siècle !"),
+]
