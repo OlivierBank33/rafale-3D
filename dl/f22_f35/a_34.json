@@ -1,0 +1,1 @@
+{"ac": "/home/claude/fg/F-22/Models/F-22.ac", "out": "/home/claude/dl/f22_f35/a_34.png", "W": 1200, "H": 1200, "samples": 32, "az": 215, "el": 16, "dist": 1.25, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow", "gear", "wheel", "tire", "tyre", "strut", "chock", "pilot", "flame", "afterburner", "disk", "shadow"]}

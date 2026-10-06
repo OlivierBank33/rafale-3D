@@ -451,6 +451,7 @@ def draw_mascot(c, t, s):
     blink = 1 if ph < 0.1 else 0
     enter = ease_out((t - 0.1) / 0.45) if t < 0.6 else 1.0
     bob = 5 * math.sin(t * 2.4) + (1 - enter) * 600 - 6 * m
+    if pose in ('celebrate', 'panic'): bob += 60
     _M.draw(c, 215, 1942 + bob, 560, pose=pose, mouth=m, blink=blink, pop=pop, tilt=-0.02 + 0.015 * math.sin(t * 1.1))
 
 def camera(t, s):

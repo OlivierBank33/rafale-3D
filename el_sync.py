@@ -37,7 +37,7 @@ def segments(fmt):
             if s['kind'] == 'duel': seg.append((s['rvoice'], txt[s['rvoice']], s['rvt']))
         return 'tn', seg
     if fmt.startswith('vf') or fmt.startswith('qa'):
-        mod = {'qa5': ('quiz5_script', 'quiz5_render', 'qa5'), 'vf5': ('vf5_script', 'vf5_render', 'vf5'), 'qa4': ('quiz4_script', 'quiz4_render', 'qa4'), 'vf4': ('vf4_script', 'vf4_render', 'vf4'), 'vf3': ('vf3_script', 'vf3_render', 'vf3'), 'vf2': ('vf2_script', 'vf2_render', 'vf2')}[fmt]
+        mod = {'qa6': ('quiz6_script', 'quiz6_render', 'qa6'), 'vf6': ('vf6_script', 'vf6_render', 'vf6'), 'qa5': ('quiz5_script', 'quiz5_render', 'qa5'), 'vf5': ('vf5_script', 'vf5_render', 'vf5'), 'qa4': ('quiz4_script', 'quiz4_render', 'qa4'), 'vf4': ('vf4_script', 'vf4_render', 'vf4'), 'vf3': ('vf3_script', 'vf3_render', 'vf3'), 'vf2': ('vf2_script', 'vf2_render', 'vf2')}[fmt]
         S = importlib.import_module(mod[0]); R = importlib.import_module(mod[1])
         seg = [('intro', S.INTRO['say'], R.T['intro'])]
         for i, q in enumerate(S.Q):

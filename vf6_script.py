@@ -1,0 +1,41 @@
+# Vrai ou faux : avions militaires (faits : A-10 conçu autour du canon GAU-8 anti-chars ; France quitte le programme Eurofighter en 1985 ;
+# Harrier peut reculer en vol stationnaire ; SR-71 non armé (reconnaissance) ; B-2 ~11 000 km sans ravitaillement ; F-16 conçu pour 9 G ;
+# Su-37 : un seul prototype ; F-117 = avion d'attaque au sol malgré le « F »)
+INTRO = dict(say="Vrai ou faux, spécial avions militaires ! Huit affirmations, trois secondes pour répondre. La dernière piège tout le monde.",
+             show="Vrai ou faux : avions militaires ! 8 affirmations, 3 secondes pour répondre.")
+OUTRO = dict(say="Alors, combien sur huit ? Écris ton score en commentaire !",
+             show="Alors, combien sur 8 ? Écris ton score en commentaire !")
+Q = [
+    dict(img='a10', stmt="L'A-10 a été conçu pour détruire des chars.", answer=0,
+         q_say="Numéro un. Le A dix a été conçu pour détruire des chars.",
+         a_say="Vrai ! Il est construit autour d'un énorme canon de trente millimètres.",
+         a_show="Vrai ! Il est construit autour d'un énorme canon de 30 mm."),
+    dict(img='typhoon', stmt="La France a construit le Typhoon.", answer=1,
+         q_say="Numéro deux. La France a construit le Typhoon.",
+         a_say="Faux ! La France a quitté le projet en mille neuf cent quatre-vingt-cinq, pour faire le Rafale.",
+         a_show="Faux ! La France a quitté le projet en 1985, pour faire le Rafale."),
+    dict(img='harrier', stmt="Le Harrier peut voler en marche arrière.", answer=0,
+         q_say="Numéro trois. Le Harrier peut voler en marche arrière.",
+         a_say="Vrai ! En vol stationnaire, il peut reculer, grâce à ses tuyères orientables.",
+         a_show="Vrai ! En vol stationnaire, il peut reculer, grâce à ses tuyères orientables."),
+    dict(img='sr71', stmt="Le SR-71 était armé de missiles.", answer=1,
+         q_say="Numéro quatre. Le S R soixante et onze était armé de missiles.",
+         a_say="Faux ! Aucune arme. Avion espion, sa seule défense, c'était la vitesse.",
+         a_show="Faux ! Aucune arme. Avion espion, sa seule défense, c'était la vitesse."),
+    dict(img='b2', stmt="Le B-2 peut voler plus de 10 000 km sans ravitailler.", answer=0,
+         q_say="Numéro cinq. Le B deux peut voler plus de dix mille kilomètres sans ravitailler.",
+         a_say="Vrai ! Environ onze mille kilomètres. Et avec ravitaillement en vol, il fait le tour du monde.",
+         a_show="Vrai ! Environ 11 000 km. Et avec ravitaillement en vol, il fait le tour du monde."),
+    dict(img='f16', stmt="Le F-16 encaisse 9 G en virage.", answer=0,
+         q_say="Numéro six. Le F seize encaisse neuf G en virage.",
+         a_say="Vrai ! Le pilote pèse alors neuf fois son poids.",
+         a_show="Vrai ! Le pilote pèse alors neuf fois son poids."),
+    dict(img='su37', stmt="Le Su-37 a été produit en série.", answer=1,
+         q_say="Numéro sept. Le Soukhoï trente-sept a été produit en série.",
+         a_say="Faux ! Un seul exemplaire a été construit. C'était un démonstrateur.",
+         a_show="Faux ! Un seul exemplaire a été construit. C'était un démonstrateur."),
+    dict(img='f117', stmt="Le F-117 était un avion de chasse.", answer=1,
+         q_say="Dernière. Le F cent dix-sept était un avion de chasse.",
+         a_say="Faux ! Malgré son F, il ne faisait pas de combat aérien. Il bombardait des cibles au sol.",
+         a_show="Faux ! Malgré son « F », il ne faisait pas de combat aérien. Il bombardait des cibles au sol."),
+]
