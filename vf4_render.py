@@ -255,7 +255,7 @@ def question_frame(c, t, i):
     if not revealed:
         # léger tremblement dans la dernière seconde
         if q['rev'] - t < 1.0:
-            cx += 3 * math.sin(t * 70)
+            pass
         draw_img(c, im['color'], im['w'], im['h'], cx, cy, zoom, 1)
     else:
         pop = 1.0 + 0.08 * math.sin(min(1, ru / 0.35) * math.pi)
@@ -332,11 +332,11 @@ _BEATS = sorted([q['q0'] for q in qs] + [q['cd0'] + k for q in qs for k in range
 
 def _cam(t):
     last = max([b for b in _BEATS if b <= t] or [-9])
-    punch = 0.05 * max(0.0, 1 - (t - last) / 0.18)
+    punch = 0.0
     sh = 0.0
     for q in qs:
         if 0 <= t - q['rev'] < 0.4: sh = 1 - (t - q['rev']) / 0.4
-    return 1.02 + 0.015 * math.sin(t * 0.7) + punch + 0.03 * sh, 16 * sh * math.sin(t * 90), 12 * sh * math.cos(t * 77)
+    return 1.02 + 0.012 * math.sin(t * 0.5), 0.0, 0.0
 
 
 def render(t, surf):

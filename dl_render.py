@@ -199,7 +199,7 @@ def sc_bars(c, t, s):
     win = 'A' if p['a'] > p['b'] else 'B'
     wc = CA if win == 'A' else CB
     background(c, t, tint=[(wc, 700, 1150 if win == 'B' else 750, 520, 0.25 * ease((u - 0.75) / 0.1))], streak=2.0 if p.get('race', True) else 0.3)
-    shake = math.sin(t * 40) * 3 if p.get('race', True) else 0
+    shake = 0
     run = ease(u / 0.85)
     fa, fb = (40, 170) if win == 'B' else (170, 40)
     plane(c, 'a_side', 430 + run * fa + shake, 720, 640, glow=CA)
@@ -450,22 +450,22 @@ def draw_mascot(c, t, s):
     ph = (t + 0.7) % 3.4
     blink = 1 if ph < 0.1 else 0
     enter = ease_out((t - 0.1) / 0.45) if t < 0.6 else 1.0
-    bob = 5 * math.sin(t * 2.4) + (1 - enter) * 600 - 6 * m
+    bob = 5 * math.sin(t * 2.4) + (1 - enter) * 600
     if pose in ('celebrate', 'panic'): bob += 60
     _M.draw(c, 215, 1942 + bob, 560, pose=pose, mouth=m, blink=blink, pop=pop, tilt=-0.02 + 0.015 * math.sin(t * 1.1))
 
 def camera(t, s):
     """Mouvement de caméra permanent : dérive lente + coup de zoom à chaque groupe de sous-titres + secousse sur les points."""
     lt = t - s['t0']
-    drift = 1.0 + 0.06 * min(1.0, lt / max(1.0, s['end'] - s['t0']))
+    drift = 1.0 + 0.03 * min(1.0, lt / max(1.0, s['end'] - s['t0']))
     last = max([c0 for c0 in CAP_STARTS if c0 <= t] or [-9])
-    punch = 0.045 * max(0.0, 1 - (t - last) / 0.18)
+    punch = 0.0
     sh = 0.0
     for ts in SCORE_T:
         if 0 <= t - ts < 0.45: sh = 1 - (t - ts) / 0.45
-    dx = 18 * sh * math.sin(t * 90); dy = 14 * sh * math.cos(t * 77)
+    dx = 0.0; dy = 0.0
     rot = 0.006 * math.sin(t * 0.9)
-    return drift + punch + 0.03 * sh, dx, dy, rot
+    return drift, dx, dy, 0.0
 
 
 def render(t, surf):

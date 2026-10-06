@@ -8,6 +8,7 @@ Propriétaire : Olivier (veut rester anonyme : jamais son nom/visage/voix réell
 - Durée **65–110 s**. Faits vérifiés par recherche web ; préciser à l'écran ce que représente un chiffre (prix catalogue, record, coût programme…).
 - `tiktokData.isAigc = false`, `youtubeData.isAiGeneratedContent = false` (demande explicite d'Olivier). `tiktokData.title` obligatoire.
 - **Zéro bruit blanc** dans la musique/bruitages : sinus uniquement (`noise_check.py` bloque sinon). Bed à −30 LUFS, filigrane auto (eleven_prep.sh).
+- **Pas de tremblement** : aucune secousse ni coup de zoom rythmé (rejeté par Olivier le 06/10) ; seulement une dérive lente.
 - Voix principale : **Corentin IHngRooVccHyPqB4uQkG** (la plus rapide ; Olivier trouvait Yariq trop lent). Viser des vidéos de 61-75 s avec un débit rapide plutôt que de longues pauses ; si la voix fait < 58 s, allonger END_HOLD (carton final).
 - Voix : **ElevenLabs TTS direct uniquement** (eleven_multilingual_v2, 1 génération). Jamais de voice-changer. Lancer UNIQUEMENT le nœud composition (estimate_only d'abord = 0 crédit) — relancer le nœud voix facture deux fois.
 - Jamais de rendu cassé : planche de contrôle avant publication. Jamais deux fois le même sujet (`history.json`).

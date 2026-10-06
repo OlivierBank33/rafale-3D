@@ -331,6 +331,49 @@
     "tiktok": "-3747185026437592865",
     "youtube": "4312684703810863138",
     "facebook": "3742961572269932637"
+   },
+   "note": "v2 sans tremblement + mascotte"
+  },
+  {
+   "date": "2026-10-07 10:00",
+   "format": "vrai/faux",
+   "name": "Vrai ou faux : avions militaires",
+   "voice": "Corentin",
+   "duree": 94.1,
+   "flow": "x2qlKmOEozyfKEnHkWjN",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "6185422189970213337",
+    "youtube": "-3189135213433172776",
+    "facebook": "2145302914849720223"
+   }
+  },
+  {
+   "date": "2026-10-07 12:30",
+   "format": "quiz silhouettes",
+   "name": "Quiz silhouettes : spécial France",
+   "voice": "Corentin",
+   "duree": 91.1,
+   "flow": "Mm3YgKP3ABOmgy70Nlur",
+   "uuids": {
+    "tiktok": "3766660750061093537",
+    "youtube": "-8200464630543201447",
+    "facebook": "-4869399077382962749"
+   }
+  },
+  {
+   "date": "2026-10-07 18:00",
+   "format": "duel",
+   "name": "F-22 vs F-35",
+   "voice": "Corentin",
+   "duree": 61.7,
+   "flow": "Lop5SvquT2byPa4mAQOD",
+   "score": "3-2 F-35",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-8035458680367462626",
+    "youtube": "-5787668463120530856",
+    "facebook": "1636537936903160747"
    }
   }
  ],
@@ -352,7 +395,8 @@
   "2026-10-04 13:50 (tâche planifiée) : AUCUNE vidéo produite. Même blocage que le 01/10 : le classifieur de sécurité du sandbox a refusé (1) la copie de pipe/* vers /home/claude (« destruction locale »), (2) l'exécution de setup.sh puis de tout Python lancé depuis le clone (« code externe », même un simple test d'import). Cause probable de l'échec silencieux du 03/10. Les tâches planifiées ne peuvent pas exécuter le pipeline : production à faire depuis la session principale. Créneaux vides : 05/10 10:00, 12:30, 18:00 (duel prévu : F-16 vs MiG-21, toujours en tête du backlog). Bilan hebdo du 04/10 ajouté au RUNBOOK §1. 0 crédit ElevenLabs dépensé.",
   "2026-10-04 20:45: tâche planifiée trig_01RDWr… DÉSACTIVÉE (classifieur bloque le pipeline en session neuve). Remplacée par des rappels send_later dans la session principale (13:50).",
   "2026-10-04 21:20: Olivier : montages pas assez dynamiques, vues qui ne montent pas. dl_render : caméra permanente (dérive + coup de zoom à chaque sous-titre + secousse sur les points), VS et 'QUI GAGNE ?' dès la 1re seconde, lignes de vitesse partout, blancs entre scènes 0,65 s (au lieu de 1,1 s), carton final 'NOUVEAU DUEL CHAQUE JOUR · ABONNE-TOI'. Attention : avec Corentin la voix est ~15 % plus courte que Kokoro -> END_HOLD dans cfg pour rester > 60 s.",
-  "2026-10-05 stats TikTok 48h+: duel Rafale/F22 2381, duel Rafale/Typhoon 809, vf3 976, tournoi 562, prix (avions plus chers) 273 = sous 50% de la médiane -> pas de prix cette semaine"
+  "2026-10-05 stats TikTok 48h+: duel Rafale/F22 2381, duel Rafale/Typhoon 809, vf3 976, tournoi 562, prix (avions plus chers) 273 = sous 50% de la médiane -> pas de prix cette semaine",
+  "2026-10-06 : secousses caméra supprimées partout (Olivier : 'ça tremble, horrible'). Stats 48h: VF4 553, quiz silhouettes combat 666, F16/MiG 257 (pas de camp français)."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
