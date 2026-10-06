@@ -479,11 +479,6 @@
    "angle": "France vs USA, les pionniers"
   },
   {
-   "match": "F-22 vs F-35",
-   "models": "fg/F-22, fg/F-35B",
-   "angle": "les deux furtifs américains"
-  },
-  {
    "match": "P-51 Mustang vs A6M Zero",
    "models": "fg/p51d, fg/A6M2",
    "angle": "Pacifique 1942-45"
