@@ -406,7 +406,7 @@ for _s in SEG:
 
 
 # ---------------------------------------------------------------- mascotte (pilote)
-MASCOT = getattr(CFG, 'MASCOT', True)
+MASCOT = getattr(CFG, 'MASCOT', False)
 CAP_CX = 680
 if MASCOT:
     import mascot as _M
