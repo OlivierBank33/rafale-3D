@@ -27,6 +27,14 @@ Analyse de nos chiffres TikTok (au 06/10) : Rafale vs F-22 2 381 · VF avions l�
 - **Ce qui tue la portée** : intro lente, image qui tremble (secousses supprimées le 06/10), vidéo sans camp français, fait contestable (perte de crédibilité en commentaires), > 90 s sans relance, même format 2 jours de suite au même créneau.
 - **Tester** : 1 variable à la fois sur 3 vidéos (ex. accroche question vs accroche chiffre choc) et comparer vues 48 h + taux de commentaires.
 
+## 1ter. Veille vidIQ (06/10) — ce qui explose en aviation FR (TikTok/Reels, 3 derniers mois)
+- Récits racontés sur images cinématiques (simulateur/3D) : interception d'un A330 par un Rafale en Auvergne 1,5 M (4x la médiane du compte) ; mission DCS « le missile Harpoon » 281 k et 129 k (18x).
+- Anecdote radio vraie : la Patrouille de France appelée « Air France » 4,5 M (28x) et 1,5 M.
+- Montage cinématique calé sur la musique (F-16) 1,2 M ; cockpit expliqué (737) 2,2 M (accès réel, non copiable).
+- → Nos animations de stats sont un bon format « jeu », mais ce qui fait des millions = HISTOIRE VRAIE + IMAGES RÉALISTES + voix dramatique dès la 1re seconde.
+- Nouveau format « RÉCIT » (2x/semaine à 12:30) : anecdote vraie et sourcée (SR-71 « ground speed check », F-15 israélien rentré avec une seule aile en 1983, Gimli Glider, Hudson…), plans 3D animés dans Blender (nos modèles), stock Pexels via vidIQ (1 crédit), plan IA ElevenLabs seulement pour l'accroche si besoin (~7 300 crédits / 8 s).
+- vidIQ = 150 crédits/mois (plan gratuit, renouvellement le 06/11) : 1 recherche d'outliers par semaine (5 crédits) + mots-clés en hausse ; ne pas utiliser vidiq_compose (1 crédit / 4 s) sauf test.
+
 ## 1. Stratégie éditoriale (décidée le 02/10 sur les stats)
 Stats semaine 1 (TikTok, 36,9 k abonnés) : vrai/faux 1 968 et 1 240 vues, quiz niveau pilote 1 069, tournoi 731, top vitesse 313, partages ≈ 0.
 - **DUEL TOUS LES JOURS à 18:00** (demande d'Olivier le 04/10 : le duel Rafale vs F-22 a été la meilleure vidéo). Moteur générique : écrire `dl/<slug>/cfg.py` (A, B, FLIP, SCENES ; copier dl/rafale_typhoon/cfg.py comme modèle), rendre 4 vues par avion `a_34/a_side/a_front/a_top.png` et `b_*.png` (render3d.py / render_fg.py / render_glb.py, az 215/180|270/270|180/88 selon l'orientation du modèle — contrôler la planche, retirer train/feux via skip), `DL=dl/<slug> python3 dl_tts.py`, `python3 pipe/el_sync.py plan dl:<slug>`, voix ElevenLabs, `el_sync.py apply dl:<slug> <durée>`, `DL=dl/<slug> python3 dl_render.py`, `DL=dl/<slug> python3 dl_audio.py`, `eleven_prep.sh dl/<slug> <nom>`. 5 rounds factuels sourcés, score qui reste serré jusqu'au bout, verdict nuancé + « Et toi, tu mets qui ? ». Choisir dans `history.json > duel_backlog` (rayer après usage).
