@@ -334,7 +334,7 @@ def sc_verdict(c, t, s):
         yy = 1250 + 12 * math.sin(t * 6)
         c.move_to(W / 2 - 30, yy); c.line_to(W / 2, yy + 34); c.line_to(W / 2 + 30, yy); c.stroke()
         if t > s['vt'] + s['dur'] + 0.3:
-            pill(c, "NOUVEAU DUEL CHAQUE JOUR · ABONNE-TOI", W / 2, 1420, 40, YEL, fg=INK, s=back_out((t - s['vt'] - s['dur'] - 0.3) / 0.3))
+            pill(c, "NOUVEAU DUEL CHAQUE JOUR · ABONNE-TOI", W / 2, 1385, 40, YEL, fg=INK, s=back_out((t - s['vt'] - s['dur'] - 0.3) / 0.3))
 
 
 SCN = dict(hook=sc_hook, bars=sc_bars, chips=sc_chips, counters=sc_counters, list=sc_list, radar=sc_radar, verdict=sc_verdict)
@@ -406,7 +406,7 @@ for _s in SEG:
 
 
 # ---------------------------------------------------------------- mascotte (pilote)
-MASCOT = getattr(CFG, 'MASCOT', False)
+MASCOT = getattr(CFG, 'MASCOT', True)
 CAP_CX = 680
 if MASCOT:
     import mascot as _M
@@ -427,26 +427,31 @@ if MASCOT:
     MOUTH = np.maximum(MOUTH, np.roll(MOUTH, 1) * 0.6)   # adoucit
 
 
+def _mascot_state(t, s):
+    """(pose, début de la pose) selon le moment du duel."""
+    if s['scene'] == 'hook' and t < 1.5: return 'shocked', 0.0
+    REACT = ['point_up', 'laugh', 'celebrate', 'shocked', 'point_up', 'laugh']
+    for i, ts in enumerate(SCORE_T):
+        if 0 <= t - ts < 1.15: return REACT[i % len(REACT)], ts
+    if s['scene'] == 'verdict' and t > s['vt'] + s['dur'] + 0.15: return 'wink_thumb', s['vt'] + s['dur'] + 0.15
+    if s['scene'] == 'bars' and t - s['t0'] < 1.0: return 'skeptical', s['t0']
+    return 'neutral', None
+
+
 def draw_mascot(c, t, s):
     f = min(len(MOUTH) - 1, int(t * FPS))
     m = float(MOUTH[f])
-    expr, pose = 'smile', None
-    lt = t - s['t0']
-    if s['scene'] == 'hook' and t < 1.4: expr = 'surprised'
-    for ts in SCORE_T:
-        if 0 <= t - ts < 1.0: expr = 'happy'
-    if s['scene'] == 'verdict' and t > s['vt'] + s['dur'] + 0.2: expr, pose, m = 'wink', 'thumb', 0.0
-    if s['scene'] == 'bars' and lt < 1.2 and m < 0.1: expr = 'think'
-    # clignement toutes les ~3,3 s
-    ph = (t + 0.7) % 3.3
-    blink = 1.0 if ph < 0.06 else (0.5 if ph < 0.12 else 0.0)
-    # regard vers le centre de l'écran
-    look = (0.6, -0.3)
-    enter = ease_out((t - 0.15) / 0.45) if t < 0.6 else 1.0
-    bob = 6 * math.sin(t * 2.6) + (1 - enter) * 500
-    punch = 1.0 + 0.04 * m
-    _M.draw(c, 190, 1950 + bob, 510 * punch, expr=expr, mouth=m, blink=blink, look=look, pose=pose, tilt=-0.03 + 0.02 * math.sin(t * 1.3))
-
+    pose, t0 = _mascot_state(t, s)
+    pop = 0.0
+    if t0 is not None: pop = max(0.0, 1 - (t - t0) / 0.28)
+    # petit pop aussi au retour en « neutral »
+    pp, pt0 = _mascot_state(t - 0.25, s)
+    if pose == 'neutral' and pp != 'neutral': pop = max(pop, 0.5 * (1 - min(1, (t % 1e9) * 0)))
+    ph = (t + 0.7) % 3.4
+    blink = 1 if ph < 0.1 else 0
+    enter = ease_out((t - 0.1) / 0.45) if t < 0.6 else 1.0
+    bob = 5 * math.sin(t * 2.4) + (1 - enter) * 600 - 6 * m
+    _M.draw(c, 215, 1942 + bob, 560, pose=pose, mouth=m, blink=blink, pop=pop, tilt=-0.02 + 0.015 * math.sin(t * 1.1))
 
 def camera(t, s):
     """Mouvement de caméra permanent : dérive lente + coup de zoom à chaque groupe de sous-titres + secousse sur les points."""
