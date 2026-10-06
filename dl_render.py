@@ -3,6 +3,7 @@ Usage : DL=dl/<slug> python3 dl_render.py [stills t1 t2 ...]
 Le dossier contient cfg.py (A, B, SCENES), durs.json (durées Kokoro par scène s0..sN, recalées par el_sync), a_*.png / b_*.png (34, side, front, top).
 """
 import cairo, json, math, os, subprocess, sys, re, random, importlib.util
+import numpy as np
 
 W, H, FPS = 1080, 1920, 30
 D = os.environ.get('DL', 'dl/rafale_typhoon').rstrip('/') + '/'
@@ -376,12 +377,14 @@ def captions(c, t):
     words = [w_.upper() for w_ in cap['words']]
     sp = c.text_extents(' ').x_advance; widths = [c.text_extents(w_).x_advance for w_ in words]
     total = sum(widths) + sp * (len(words) - 1)
-    if total > 880:
-        size *= 880 / total; font(c, size); widths = [c.text_extents(w_).x_advance for w_ in words]; sp = c.text_extents(' ').x_advance
+    MW = 660 if MASCOT else 880
+    if total > MW:
+        size *= MW / total; font(c, size); widths = [c.text_extents(w_).x_advance for w_ in words]; sp = c.text_extents(' ').x_advance
         total = sum(widths) + sp * (len(words) - 1)
     pop = back_out((t - cap['t0']) / 0.15); y = 1610
-    c.save(); c.translate(W / 2, y); c.scale(0.85 + 0.15 * pop, 0.85 + 0.15 * pop); c.translate(-W / 2, -y)
-    x = W / 2 - total / 2
+    cxx = CAP_CX if MASCOT else W / 2
+    c.save(); c.translate(cxx, y); c.scale(0.85 + 0.15 * pop, 0.85 + 0.15 * pop); c.translate(-cxx, -y)
+    x = (CAP_CX if MASCOT else W / 2) - total / 2
     for w_, wd, (a, b) in zip(words, widths, cap['times']):
         c.move_to(x, y); c.text_path(w_)
         c.set_source_rgba(0, 0, 0, 0.9); c.set_line_width(13); c.set_line_join(cairo.LINE_JOIN_ROUND); c.stroke_preserve()
@@ -400,6 +403,49 @@ _prev = (0, 0)
 for _s in SEG:
     if _s['score'] != _prev: SCORE_T.append(_s['vt'] + _s['dur'] * 0.86)
     _prev = _s['score']
+
+
+# ---------------------------------------------------------------- mascotte (pilote)
+MASCOT = getattr(CFG, 'MASCOT', True)
+CAP_CX = 680
+if MASCOT:
+    import mascot as _M
+    import soundfile as _sf
+    _env = np.zeros(int(TOTAL * FPS) + FPS)
+    for _s in SEG:
+        try:
+            _a, _sr = _sf.read(D + _s['k'] + '.wav')
+        except Exception:
+            continue
+        if _a.ndim > 1: _a = _a.mean(1)
+        _hop = _sr / FPS
+        for _i in range(int(len(_a) / _hop)):
+            _j = int(_s['vt'] * FPS) + _i
+            if _j < len(_env): _env[_j] = np.sqrt(np.mean(_a[int(_i * _hop):int((_i + 1) * _hop)] ** 2))
+    _ref = np.percentile(_env[_env > 1e-4], 85) if (_env > 1e-4).any() else 1.0
+    MOUTH = np.clip((_env / _ref - 0.15) * 1.4, 0, 1)
+    MOUTH = np.maximum(MOUTH, np.roll(MOUTH, 1) * 0.6)   # adoucit
+
+
+def draw_mascot(c, t, s):
+    f = min(len(MOUTH) - 1, int(t * FPS))
+    m = float(MOUTH[f])
+    expr, pose = 'smile', None
+    lt = t - s['t0']
+    if s['scene'] == 'hook' and t < 1.4: expr = 'surprised'
+    for ts in SCORE_T:
+        if 0 <= t - ts < 1.0: expr = 'happy'
+    if s['scene'] == 'verdict' and t > s['vt'] + s['dur'] + 0.2: expr, pose, m = 'wink', 'thumb', 0.0
+    if s['scene'] == 'bars' and lt < 1.2 and m < 0.1: expr = 'think'
+    # clignement toutes les ~3,3 s
+    ph = (t + 0.7) % 3.3
+    blink = 1.0 if ph < 0.06 else (0.5 if ph < 0.12 else 0.0)
+    # regard vers le centre de l'écran
+    look = (0.6, -0.3)
+    enter = ease_out((t - 0.15) / 0.45) if t < 0.6 else 1.0
+    bob = 6 * math.sin(t * 2.6) + (1 - enter) * 500
+    punch = 1.0 + 0.04 * m
+    _M.draw(c, 190, 1950 + bob, 510 * punch, expr=expr, mouth=m, blink=blink, look=look, pose=pose, tilt=-0.03 + 0.02 * math.sin(t * 1.3))
 
 
 def camera(t, s):
@@ -428,6 +474,7 @@ def render(t, surf):
     c.save(); c.translate(W / 2 + dx, H / 2 + dy); c.rotate(rot); c.scale(z, z); c.translate(-W / 2, -H / 2)
     c.set_source_surface(_LAYER, 0, 0); c.paint(); c.restore()
     scoreboard(c, t, s)
+    if MASCOT: draw_mascot(c, t, s)
     captions(c, t)
     lt = t - s['t0']
     if lt < 0.12 and s['t0'] > 0:
