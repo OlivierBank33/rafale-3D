@@ -375,6 +375,48 @@
     "youtube": "-5787668463120530856",
     "facebook": "1636537936903160747"
    }
+  },
+  {
+   "date": "2026-10-08 10:00",
+   "format": "vrai-faux",
+   "name": "Vrai ou faux : pilotes de chasse (VF7)",
+   "voice": "Corentin",
+   "duree": 95.4,
+   "flow": "J5F6p1FICaxzeLh15RVb",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "2961663328661491175",
+    "youtube": "-7654334734590260748",
+    "facebook": "-8726910295295899423"
+   }
+  },
+  {
+   "date": "2026-10-08 12:30",
+   "format": "recit",
+   "name": "Récit SR-71 : la vitesse sol (Aspen 20)",
+   "voice": "Corentin",
+   "flow": "TvUiFln3AtCFJ4OSTNr3",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "8077267074368553880",
+    "youtube": "-114822669325088672",
+    "facebook": "4201285857692699520"
+   }
+  },
+  {
+   "date": "2026-10-08 18:00",
+   "format": "duel",
+   "name": "Rafale vs F-35",
+   "voice": "Corentin",
+   "duree": 61.6,
+   "flow": "BAHWymTQCuYaPuWOmu6C",
+   "score": "3-2 Rafale",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-3158866993980947431",
+    "youtube": "-5611937393160336598",
+    "facebook": "7815631170221196507"
+   }
   }
  ],
  "notes": [
@@ -502,11 +544,6 @@
   "log": []
  },
  "duel_backlog": [
-  {
-   "match": "Rafale vs F-35",
-   "models": "rafale.glb, fg/F-35B",
-   "angle": "le choix des pays européens"
-  },
   {
    "match": "Mirage 2000 vs F-16",
    "models": "fg/Mirage-2000, fg/f16",
