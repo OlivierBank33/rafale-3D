@@ -1,0 +1,1 @@
+{"ac": "/home/claude/fg/SR71-Blackbird/Models/SR-71A-BigTail.ac", "texdirs": ["Texture-USAF"], "W": 1200, "H": 1200, "samples": 32, "dist": 1.2, "skip": ["gear", "wheel", "tire", "strut", "light", "nav", "strobe", "beacon", "chute", "pilot", "train", "roue", "chute"], "az": 270, "el": 3, "out": "/home/claude/dl/recit_sr71/sr_side.png"}

@@ -196,7 +196,7 @@ def bar(c, x, y, w, h, frac, col, label, val, a):
 def sc_bars(c, t, s):
     """p: a, b (valeurs), max, fmt ('MACH {:.1f}'), dec (virgule), race (bool)."""
     p = s['p']; lt = t - s['t0']; u = (t - s['vt']) / s['dur']
-    win = 'A' if p['a'] > p['b'] else 'B'
+    win = 'A' if (p['a'] > p['b']) != bool(p.get('low_wins')) else 'B'
     wc = CA if win == 'A' else CB
     background(c, t, tint=[(wc, 700, 1150 if win == 'B' else 750, 520, 0.25 * ease((u - 0.75) / 0.1))], streak=2.0 if p.get('race', True) else 0.3)
     shake = 0
@@ -344,7 +344,7 @@ SCN = dict(hook=sc_hook, bars=sc_bars, chips=sc_chips, counters=sc_counters, lis
 def build_caps():
     caps = []
     for s in SEG:
-        words = s['p']['show'].split(' ')
+        words = re.sub(r' ([?!:;»])', '\u00a0\\1', s['p']['show']).split(' ')
 
         def wt(w_):
             n = len(re.sub(r'[^\w]', '', w_)) + 3 * sum(ch.isdigit() for ch in w_)

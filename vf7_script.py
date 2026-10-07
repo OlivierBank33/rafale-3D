@@ -1,0 +1,41 @@
+# Vrai ou faux : la vie de pilote de chasse (faits : F-16 premier chasseur conçu pour 9 G ; siège Martin-Baker Mk16 du Rafale « zéro-zéro » ;
+# casque du F-35 + caméras DAS = voir à travers l'avion ; pas de toilettes dans un chasseur ; Mirage 2000 Mach 2,2 vs Rafale Mach 1,8 ;
+# formation de pilote de chasse = plusieurs années ; ravitaillement Rafale-Rafale (nounou) ; G-LOC = perte de connaissance due aux G)
+INTRO = dict(say="Vrai ou faux, spécial pilotes de chasse ! Huit affirmations, trois secondes pour répondre. La dernière piège tout le monde.",
+             show="Vrai ou faux : pilotes de chasse ! 8 affirmations, 3 secondes pour répondre.")
+OUTRO = dict(say="Alors, combien sur huit ? Écris ton score en commentaire !",
+             show="Alors, combien sur 8 ? Écris ton score en commentaire !")
+Q = [
+    dict(img='f16', stmt="Un pilote de F-16 peut encaisser 9\u00a0G.", answer=0,
+         q_say="Numéro un. Un pilote de F seize peut encaisser neuf G.",
+         a_say="Vrai ! Il pèse alors neuf fois son poids, grâce à une combinaison qui se gonfle autour des jambes.",
+         a_show="Vrai ! Il pèse alors 9 fois son poids, grâce à une combinaison anti-G qui se gonfle."),
+    dict(img='rafale', stmt="Le siège éjectable du Rafale ne marche qu'en vol.", answer=1,
+         q_say="Numéro deux. Le siège éjectable du Rafale ne marche qu'en vol.",
+         a_say="Faux ! Il peut éjecter le pilote même au sol, à l'arrêt.",
+         a_show="Faux ! Il peut éjecter le pilote même au sol, à l'arrêt."),
+    dict(img='f35', stmt="Le casque du F-35 permet de voir à travers l'avion.", answer=0,
+         q_say="Numéro trois. Le casque du F trente-cinq permet de voir à travers l'avion.",
+         a_say="Vrai ! Des caméras tout autour de l'avion projettent l'image dans la visière.",
+         a_show="Vrai ! Des caméras tout autour de l'avion projettent l'image dans la visière."),
+    dict(img='f22', stmt="Les avions de chasse ont des toilettes à bord.", answer=1,
+         q_say="Numéro quatre. Les avions de chasse ont des toilettes à bord.",
+         a_say="Faux ! Les pilotes utilisent des poches spéciales. Pas très glamour.",
+         a_show="Faux ! Les pilotes utilisent des poches spéciales. Pas très glamour."),
+    dict(img='m2000', stmt="Le Mirage 2000 est plus rapide que le Rafale.", answer=0,
+         q_say="Numéro cinq. Le Mirage deux mille est plus rapide que le Rafale.",
+         a_say="Vrai ! Mach deux virgule deux, contre Mach un virgule huit pour le Rafale.",
+         a_show="Vrai ! Mach 2,2, contre Mach 1,8 pour le Rafale."),
+    dict(img='alphajet', stmt="On devient pilote de chasse en moins d'un an.", answer=1,
+         q_say="Numéro six. On devient pilote de chasse en moins d'un an.",
+         a_say="Faux ! Il faut plusieurs années de formation avant de voler en mission.",
+         a_show="Faux ! Il faut plusieurs années de formation avant de voler en mission."),
+    dict(img='rafale', stmt="Un Rafale peut ravitailler un autre Rafale en vol.", answer=0,
+         q_say="Numéro sept. Un Rafale peut ravitailler un autre Rafale en vol.",
+         a_say="Vrai ! Avec une nacelle spéciale, il devient un avion nounou.",
+         a_show="Vrai ! Avec une nacelle spéciale, il devient un « avion nounou »."),
+    dict(img='su37', stmt="Un pilote de chasse peut s'évanouir à cause des G.", answer=0,
+         q_say="Dernière. Un pilote de chasse peut s'évanouir à cause des G.",
+         a_say="Vrai ! Le sang quitte le cerveau. Ça s'appelle le G-LOC, et c'est le grand danger des virages serrés.",
+         a_show="Vrai ! Le sang quitte le cerveau. Ça s'appelle le G-LOC, le grand danger des virages serrés."),
+]

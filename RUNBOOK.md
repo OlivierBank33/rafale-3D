@@ -32,7 +32,7 @@ Analyse de nos chiffres TikTok (au 06/10) : Rafale vs F-22 2 381 · VF avions l�
 - Anecdote radio vraie : la Patrouille de France appelée « Air France » 4,5 M (28x) et 1,5 M.
 - Montage cinématique calé sur la musique (F-16) 1,2 M ; cockpit expliqué (737) 2,2 M (accès réel, non copiable).
 - → Nos animations de stats sont un bon format « jeu », mais ce qui fait des millions = HISTOIRE VRAIE + IMAGES RÉALISTES + voix dramatique dès la 1re seconde.
-- Nouveau format « RÉCIT » (2x/semaine à 12:30) : anecdote vraie et sourcée (SR-71 « ground speed check », F-15 israélien rentré avec une seule aile en 1983, Gimli Glider, Hudson…), plans 3D animés dans Blender (nos modèles), stock Pexels via vidIQ (1 crédit), plan IA ElevenLabs seulement pour l'accroche si besoin (~7 300 crédits / 8 s).
+- Nouveau format « RÉCIT » (2x/semaine à 12:30) — moteur rc_render.py (DL=dl/<slug>, cfg type hook/story/radio/ask/punch/verdict, mascotte narratrice, ciel haute altitude ; voix via dl_tts.py, musique dl_audio.py, el_sync rc:<slug>) : anecdote vraie et sourcée (SR-71 « ground speed check », F-15 israélien rentré avec une seule aile en 1983, Gimli Glider, Hudson…), plans 3D animés dans Blender (nos modèles), stock Pexels via vidIQ (1 crédit), plan IA ElevenLabs seulement pour l'accroche si besoin (~7 300 crédits / 8 s).
 - vidIQ = 150 crédits/mois (plan gratuit, renouvellement le 06/11) : 1 recherche d'outliers par semaine (5 crédits) + mots-clés en hausse ; ne pas utiliser vidiq_compose (1 crédit / 4 s) sauf test.
 
 ## 1. Stratégie éditoriale (décidée le 02/10 sur les stats)
