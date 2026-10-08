@@ -69,3 +69,9 @@ Modèles 3D : `r3d/*.png` + dépôts FGMEMBERS (render_fg.py / render3d.py / ren
 
 ## 5. Journal
 Mettre à jour `history.json` (sujet, format, voix, uuids, flow) et pousser `minuteaero-pipeline`. Compte rendu court à Olivier (SendUserMessage) : vidéos programmées, enseignement des stats, problèmes, crédits ElevenLabs dépensés.
+
+## 1quater. Innovation (demande d'Olivier le 08/10)
+- « Innove, teste des choses, reste pas tunnel sur un truc. » → au moins 1 format nouveau/expérimental par semaine, mesuré à 48 h.
+- Pistes : facteurs humains / cerveau du pilote (effet tunnel, hypoxie, désorientation spatiale, voile noir, fatigue, biais de confirmation), toujours lié à un vrai cas aviation sourcé.
+- Moteur PIXEL ART : `pa_render.py` (rendu 180x320 agrandi x6 sans lissage, polices pipe/fonts Silkscreen/PressStart2P, tramage, vignette « tunnel », mascotte pixelisée). Scènes codées par type dans le fichier (ajouter un `sc_<type>` par nouveau sujet). Chaîne : cfg dans dl/<slug>, `DL=… dl_tts.py`, `el_sync.py plan pa:<slug>`, voix EL, `apply pa:<slug> <durée>`, `pa_render.py`, `dl_audio.py`, `eleven_prep.sh`.
+- Ne pas utiliser le caractère % avec Silkscreen (glyphe illisible).
