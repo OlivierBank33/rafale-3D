@@ -1,0 +1,1 @@
+{"glb": "/home/claude/fg/rafale.glb", "out": "/home/claude/gz/rear.png", "W": 1200, "H": 1200, "samples": 40, "az": 90, "el": 14, "dist": 1.15, "skip": ["door","strut","hub","wheel","gearbox","lights","hook","damocles","exocet","gbu","meteor","mica","fueltank","pylon"]}
