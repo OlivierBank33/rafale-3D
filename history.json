@@ -488,6 +488,18 @@
     "youtube": "-9211617705825384842",
     "facebook": "9101717570793718363"
    }
+  },
+  {
+   "date": "2026-10-08 21:30",
+   "format": "coupes-3d-sans-voix",
+   "name": "1 coupe VS un Rafale (1 → 12 coupes, Blender Workbench)",
+   "voice": "aucune",
+   "duree": 64.0,
+   "uuids": {
+    "tiktok": "-1447007196844242991",
+    "youtube": "8291071683806973487",
+    "facebook": "2184329541154390961"
+   }
   }
  ],
  "notes": [
@@ -513,7 +525,8 @@
   "08/10 : Olivier veut qu'on INNOVE et TESTE des formats variés (pas tunnel sur un seul) : sujets cerveau/facteurs humains liés à l'aviation, animations sympas. 1er test pixel art (pa_render.py) le 09/10 12:30.",
   "08/10 : crédits ElevenLabs serrés (narration ~0,9 crédit/caractère : duel ~1 000, VF 6 affirmations ~1 500, VF 8 ~2 000). Garder les VF à 6 affirmations. r3d/a380.png est cassé (volets en blocs blancs) : ne pas l'utiliser. Pill du round 5 du duel légèrement masquée par la mascotte.",
   "08/10 : Metricool accepte directement l'URL raw GitHub (branche minuteaero-media) -> les formats SANS voix n'ont pas besoin d'ElevenLabs (0 crédit). Mix local : ffmpeg filigrane + loudnorm -15 LUFS.",
-  "08/10 : Olivier trouve « oiseaux vs A320 » pas assez visuel (« pas foufou ») -> privilégier des effets plein écran forts (visage déformé, vision qui se grise/noircit, horizon qui bascule) plutôt que des décalques sur image fixe."
+  "08/10 : Olivier trouve « oiseaux vs A320 » pas assez visuel (« pas foufou ») -> privilégier des effets plein écran forts (visage déformé, vision qui se grise/noircit, horizon qui bascule) plutôt que des décalques sur image fixe.",
+  "08/10 : format « N coupes » en vraie 3D (cut_scene.py : bisect + coque intérieure retournée orange + backface culling, Workbench 720x1280, ~2,5 s/image, 2 process en parallèle = ~50 min pour 64 s). Attention : pgrep -f sur un motif présent dans sa propre commande boucle à l'infini."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
