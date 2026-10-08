@@ -432,6 +432,35 @@
     "youtube": "-4766477871473802481",
     "facebook": "-4070166713869448469"
    }
+  },
+  {
+   "date": "2026-10-09 18:00",
+   "format": "duel",
+   "name": "Mirage 2000 vs F-16",
+   "voice": "Corentin",
+   "duree": 61.3,
+   "flow": "Tfe9OYrWh5iYJT6ddT7x",
+   "score": "3-2 F-16",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-3288905220602706065",
+    "youtube": "5637849907757796584",
+    "facebook": "1269817965686702980"
+   }
+  },
+  {
+   "date": "2026-10-09 10:00",
+   "format": "vrai-faux",
+   "name": "Vrai ou faux : le corps du pilote (VF8, 6 affirmations)",
+   "voice": "Corentin",
+   "duree": 84.1,
+   "flow": "i7uGJXOyRtYZmaYxKl30",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "3167969457006854681",
+    "youtube": "8035779041400864875",
+    "facebook": "-7952572444058826814"
+   }
   }
  ],
  "notes": [
@@ -454,7 +483,8 @@
   "2026-10-04 21:20: Olivier : montages pas assez dynamiques, vues qui ne montent pas. dl_render : caméra permanente (dérive + coup de zoom à chaque sous-titre + secousse sur les points), VS et 'QUI GAGNE ?' dès la 1re seconde, lignes de vitesse partout, blancs entre scènes 0,65 s (au lieu de 1,1 s), carton final 'NOUVEAU DUEL CHAQUE JOUR · ABONNE-TOI'. Attention : avec Corentin la voix est ~15 % plus courte que Kokoro -> END_HOLD dans cfg pour rester > 60 s.",
   "2026-10-05 stats TikTok 48h+: duel Rafale/F22 2381, duel Rafale/Typhoon 809, vf3 976, tournoi 562, prix (avions plus chers) 273 = sous 50% de la médiane -> pas de prix cette semaine",
   "2026-10-06 : secousses caméra supprimées partout (Olivier : 'ça tremble, horrible'). Stats 48h: VF4 553, quiz silhouettes combat 666, F16/MiG 257 (pas de camp français).",
-  "08/10 : Olivier veut qu'on INNOVE et TESTE des formats variés (pas tunnel sur un seul) : sujets cerveau/facteurs humains liés à l'aviation, animations sympas. 1er test pixel art (pa_render.py) le 09/10 12:30."
+  "08/10 : Olivier veut qu'on INNOVE et TESTE des formats variés (pas tunnel sur un seul) : sujets cerveau/facteurs humains liés à l'aviation, animations sympas. 1er test pixel art (pa_render.py) le 09/10 12:30.",
+  "08/10 : crédits ElevenLabs serrés (narration ~0,9 crédit/caractère : duel ~1 000, VF 6 affirmations ~1 500, VF 8 ~2 000). Garder les VF à 6 affirmations. r3d/a380.png est cassé (volets en blocs blancs) : ne pas l'utiliser. Pill du round 5 du duel légèrement masquée par la mascotte."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -560,11 +590,6 @@
   "log": []
  },
  "duel_backlog": [
-  {
-   "match": "Mirage 2000 vs F-16",
-   "models": "fg/Mirage-2000, fg/f16",
-   "angle": "France vs USA années 80"
-  },
   {
    "match": "Mirage III vs MiG-21",
    "models": "fg/MirageIII, fg/MiG-21bis",
