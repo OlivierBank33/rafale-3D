@@ -513,6 +513,46 @@
     "youtube": "501461839862385465",
     "facebook": "1008644756772504682"
    }
+  },
+  {
+   "date": "2026-10-10 10:00",
+   "format": "vrai-faux",
+   "name": "Vrai ou faux : avions de ligne (VF9, 6 affirmations)",
+   "voice": "Corentin",
+   "duree": 74.0,
+   "flow": "vwB6QidzvRCDOQRv43Ql",
+   "uuids": {
+    "tiktok": "-2524527244570245325",
+    "youtube": "-2330230882713908939",
+    "facebook": "-6891806340955552512"
+   }
+  },
+  {
+   "date": "2026-10-10 12:30",
+   "format": "decode",
+   "name": "Décodé 02 : les hublots (Comet, trou de respiration)",
+   "voice": "Corentin",
+   "duree": 65.5,
+   "flow": "Ggv4GkVCEadcMmmxBzGL",
+   "uuids": {
+    "tiktok": "5548485938118803850",
+    "youtube": "-1281114272759985907",
+    "facebook": "328693360573826699"
+   }
+  },
+  {
+   "date": "2026-10-10 18:00",
+   "format": "duel",
+   "name": "Mirage III vs MiG-21",
+   "voice": "Corentin",
+   "duree": 61.5,
+   "flow": "VaTJsD0CIsjOU1Xh4y0n",
+   "score": "3-2 Mirage",
+   "uuids": {
+    "tiktok": "-231745802573623369",
+    "youtube": "-3443033990763297161",
+    "facebook": "830544178220319353"
+   }
   }
  ],
  "notes": [
@@ -540,7 +580,8 @@
   "08/10 : Metricool accepte directement l'URL raw GitHub (branche minuteaero-media) -> les formats SANS voix n'ont pas besoin d'ElevenLabs (0 crédit). Mix local : ffmpeg filigrane + loudnorm -15 LUFS.",
   "08/10 : Olivier trouve « oiseaux vs A320 » pas assez visuel (« pas foufou ») -> privilégier des effets plein écran forts (visage déformé, vision qui se grise/noircit, horizon qui bascule) plutôt que des décalques sur image fixe.",
   "08/10 : format « N coupes » en vraie 3D (cut_scene.py : bisect + coque intérieure retournée orange + backface culling, Workbench 720x1280, ~2,5 s/image, 2 process en parallèle = ~50 min pour 64 s). Attention : pgrep -f sur un motif présent dans sa propre commande boucle à l'infini.",
-  "08/10 : série « DÉCODÉ » (dc_render.py, inspirée de @systemesdecodes mais habillage à nous : orange cockpit, Oswald + Space Mono, traits isométriques lumineux, HUD 01 MENACE/02 AUTOPSIE/03 RÉPONSE, sous-titres géants colorés, tampon HISTOIRE VRAIE, vue éclatée, chrono, teaser fiche suivante). Fiche 02 annoncée : les hublots ronds (Comet)."
+  "08/10 : série « DÉCODÉ » (dc_render.py, inspirée de @systemesdecodes mais habillage à nous : orange cockpit, Oswald + Space Mono, traits isométriques lumineux, HUD 01 MENACE/02 AUTOPSIE/03 RÉPONSE, sous-titres géants colorés, tampon HISTOIRE VRAIE, vue éclatée, chrono, teaser fiche suivante). Fiche 02 annoncée : les hublots ronds (Comet).",
+  "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -646,11 +687,6 @@
   "log": []
  },
  "duel_backlog": [
-  {
-   "match": "Mirage III vs MiG-21",
-   "models": "fg/MirageIII, fg/MiG-21bis",
-   "angle": "guerre des Six Jours 1967"
-  },
   {
    "match": "Blériot XI vs Wright Flyer",
    "models": "r3d bleriot_*, fg/wrightFlyer1903",
