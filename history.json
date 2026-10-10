@@ -578,6 +578,18 @@
     "tiktok": "9199572503021440255",
     "youtube+facebook": "3910482192185508478"
    }
+  },
+  {
+   "date": "2026-10-11 10:00",
+   "format": "vrai_faux",
+   "name": "VF10 : aviation française (6 affirmations)",
+   "voice": "Corentin",
+   "duree": 69.5,
+   "flow": "DS8yVQlruZgc2l5btm1A",
+   "uuids": {
+    "tiktok": "-4739265066159749246",
+    "youtube+facebook": "1883805160439238054"
+   }
   }
  ],
  "notes": [
