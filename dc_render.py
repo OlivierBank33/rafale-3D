@@ -17,7 +17,7 @@ TOTAL = t
 json.dump(dict(seg=[{k: v for k, v in x.items() if k != 'p'} for x in SEG], total=TOTAL), open(D + 'timeline.json', 'w'))
 
 BG = (0.024, 0.031, 0.043); AMB = (1.0, 0.62, 0.12); CYA = (0.30, 0.86, 1.0); RED = (1.0, 0.25, 0.22); GRN = (0.30, 0.95, 0.50); WHT = (0.93, 0.95, 0.98); DIM = (0.45, 0.50, 0.58)
-PHASE = dict(hook=0, story=0, alarm=0, open=1, chrono=1, heat=1, bag=1, descent=2, helios=2, outro=2, window=0, comet=0, tank=0, crack=0, stress=1, panes=1, round=2, outro2=2)
+PHASE = dict(hook=0, story=0, alarm=0, open=1, chrono=1, heat=1, bag=1, descent=2, helios=2, outro=2, window=0, comet=0, tank=0, crack=0, stress=1, panes=1, round=2, outro2=2, bbhook=0, af447=0, search=0, bbopen=1, armor=1, beacon=1, pitot=2, bboutro=2)
 
 
 def ease(u):
@@ -123,8 +123,8 @@ def hud(c, t, sg, readout):
 
 
 # ---------- sous-titres ----------
-KEY = dict(AMB=['hublot', 'trou', 'vitre', 'vitres', 'coin', 'cercle', 'ballon', 'comet', 'cycles', 'arrondis', 'secours', 'oxygène', 'lucidité', 'masque', 'chlorate', 'goupille', 'percuteur', 'amorce', 'bougie', 'pur', 'sac', 'trente', 'trentaine', 'douze', 'vingt', 'trois', 'normal', 'normalement', 'quinze', 'minutes'],
-           RED=['désintègrent', 'cède', 'fissure', 'carrée', 'tonnes', 'vide', 'bang', 'alarme', 'manuel', 'brûler', 'brûlé', 'degrés', 'morts', 'sèche', '121', '200', 'confondent', 'panne'],
+KEY = dict(AMB=['orange', 'deux', 'enregistreurs', 'balise', 'bip', 'mémoire', 'blindage', 'sondes', 'hublot', 'trou', 'vitre', 'vitres', 'coin', 'cercle', 'ballon', 'comet', 'cycles', 'arrondis', 'secours', 'oxygène', 'lucidité', 'masque', 'chlorate', 'goupille', 'percuteur', 'amorce', 'bougie', 'pur', 'sac', 'trente', 'trentaine', 'douze', 'vingt', 'trois', 'normal', 'normalement', 'quinze', 'minutes'],
+           RED=['disparaît', 'noir', 'glace', 'décrochage', 'feu', 'désintègrent', 'cède', 'fissure', 'carrée', 'tonnes', 'vide', 'bang', 'alarme', 'manuel', 'brûler', 'brûlé', 'degrés', 'morts', 'sèche', '121', '200', 'confondent', 'panne'],
            CYA=['respire', 'respirable', 'air', 'descendent'])
 
 
@@ -260,10 +260,10 @@ def generator(c, I, lt, explode=0.0, burn=-1.0, heat=0.0, labels=0.0, flow=0.0):
             callout(c, px, py, px + ox * 0.6, py + oy * 0.55, lab, AMB if key != 'core' else RED, a)
 
 
-def gauge(c, x, y, r, val, vmax, lab, unit, col, a=1.0):
+def gauge(c, x, y, r, val, vmax, lab, unit, col, a=1.0, fs=74):
     c.set_line_width(14); c.set_source_rgba(1, 1, 1, 0.12 * a); c.arc(x, y, r, math.pi * 0.75, math.pi * 2.25); c.stroke()
     f = min(1, val / vmax); c.set_source_rgba(*col, a); c.arc(x, y, r, math.pi * 0.75, math.pi * (0.75 + 1.5 * f)); c.stroke()
-    txt(c, f"{val:.0f}{unit}", x, y + 20, 74, (*col, a), 'Oswald', 'c')
+    txt(c, f"{val:.0f}{unit}", x, y + 20, fs, (*col, a), 'Oswald', 'c')
     txt(c, lab, x, y + 80, 26, (*DIM, a), 'Space Mono', 'c')
 
 
@@ -622,7 +622,176 @@ def sc_outro2(c, t, sg, lt, u):
     return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
 
 
-SC = dict(window=sc_window, comet=sc_comet, tank=sc_tank, crack=sc_crack, stress=sc_stress, panes=sc_panes, round=sc_round, outro2=sc_outro2, hook=sc_hook, story=sc_story, alarm=sc_alarm, open=sc_open, chrono=sc_chrono, heat=sc_heat, bag=sc_bag, descent=sc_descent, helios=sc_helios, outro=sc_outro)
+
+def ocean(c, t, depth_frac):
+    g = cairo.LinearGradient(0, 300, 0, 1500)
+    k = depth_frac
+    g.add_color_stop_rgb(0, 0.02 + 0.06 * (1 - k), 0.06 + 0.12 * (1 - k), 0.12 + 0.2 * (1 - k)); g.add_color_stop_rgb(1, 0.0, 0.01, 0.03)
+    c.rectangle(0, 300, W, 1200); c.set_source(g); c.fill()
+    r = random.Random(2)
+    for k2 in range(50):
+        x = r.uniform(0, W); y = (r.uniform(300, 1500) - t * 40 * r.uniform(0.5, 1.5)) % 1200 + 300
+        c.set_source_rgba(0.7, 0.85, 1, 0.25 * r.random()); c.arc(x, y, r.uniform(1, 3), 0, 2 * math.pi); c.fill()
+
+
+def orange_box(c, I, x, y, z, lab, a=1.0, glow=0.0):
+    box(c, I, x, y, z, 1.4, 0.9, 0.8, (1.0, 0.45, 0.1), a, 0.35)
+    P = I.p; px, py = P(x + 0.7, y, z + 0.4)
+    if lab: txt(c, lab, px, py + 8, 22, (*BG, a), 'Space Mono', 'c')
+
+
+def sc_bbhook(c, t, sg, lt, u):
+    d = ease(u / 0.8); ocean(c, t, d)
+    jet_side(c, W / 2 + 120 * math.sin(lt * 0.3), 500 + 650 * d, 220, DIM, 0.6, 0.25 + 0.1 * d)
+    I = Iso(W / 2 - 80, 1240, 70)
+    if u > 0.6:
+        a = ease((u - 0.6) / 0.1); pu = 0.5 + 0.5 * math.sin(lt * 6)
+        orange_box(c, I, 0, 0, 0, None, a)
+        px, py = I.p(0.7, 0.45, 0.8); g = cairo.RadialGradient(px, py, 2, px, py, 180)
+        g.add_color_stop_rgba(0, 1, 0.5, 0.1, 0.4 * a * pu); g.add_color_stop_rgba(1, 1, 0.5, 0.1, 0); c.set_source(g); c.arc(px, py, 180, 0, 2 * math.pi); c.fill()
+    if lt < 1.3:
+        a = 1 - ease((lt - 1.0) / 0.3); c.set_source_rgba(*BG, 0.88 * a); c.paint()
+        txt(c, "LA BOÎTE", W / 2, 800, 150, (*WHT, a), 'Oswald', 'c'); txt(c, "NOIRE", W / 2, 990, 200, (1.0, 0.45, 0.1, a), 'Oswald', 'c')
+        txt(c, "FICHE 03 · DÉCODÉ", W / 2, 1070, 34, (*DIM, a), 'Space Mono', 'c')
+    return ("PROFONDEUR", f"{int(3900 * d):,} M".replace(',', ' '), CYA)
+
+
+def sc_af447(c, t, sg, lt, u):
+    stamp(c, W / 2, 470, "HISTOIRE VRAIE · 1ER JUIN 2009", RED, ease(lt / 0.3), 1 + 0.3 * max(0, 1 - lt / 0.2))
+    x0, y0, x1, y1 = 170, 1200, 900, 640
+    def arc():
+        c.move_to(x0, y0); c.curve_to(x0 + 200, y0 - 300, x1 - 300, y1 + 50, x1, y1)
+    c.set_dash([10, 10]); glow_path(c, arc, DIM, 0.8, 2); c.set_dash([])
+    c.set_source_rgba(*WHT, 1); c.arc(x0, y0, 9, 0, 2 * math.pi); c.fill(); txt(c, "RIO", x0, y0 + 50, 30, (*WHT, 1), 'Space Mono', 'c')
+    c.arc(x1, y1, 9, 0, 2 * math.pi); c.fill(); txt(c, "PARIS", x1, y1 - 25, 30, (*WHT, 1), 'Space Mono', 'c')
+    f = min(0.38, u * 0.6)
+    bx = (1 - f) ** 3 * x0 + 3 * (1 - f) ** 2 * f * (x0 + 200) + 3 * (1 - f) * f * f * (x1 - 300) + f ** 3 * x1
+    by = (1 - f) ** 3 * y0 + 3 * (1 - f) ** 2 * f * (y0 - 300) + 3 * (1 - f) * f * f * (y1 + 50) + f ** 3 * y1
+    vis = 1 if u < 0.62 else max(0, 1 - (u - 0.62) / 0.05) * (1 if int(lt * 6) % 2 else 0.3)
+    c.save(); c.translate(bx, by); c.rotate(-0.7); poly(c, [(0, -24), (13, 12), (0, 4), (-13, 12)]); c.set_source_rgba(*AMB, vis); c.fill(); c.restore()
+    if u > 0.62:
+        a = ease((u - 0.62) / 0.08)
+        for rr in range(3):
+            c.set_source_rgba(*RED, a * (0.7 - 0.2 * rr)); c.set_line_width(3); c.arc(bx, by, 30 + rr * 25 + 8 * math.sin(lt * 4), 0, 2 * math.pi); c.stroke()
+        txt(c, "CONTACT PERDU", bx, by + 120, 30, (*RED, a), 'Space Mono', 'c')
+    return ("À BORD", "228", RED if u > 0.62 else AMB)
+
+
+def sc_search(c, t, sg, lt, u):
+    ocean(c, t, 1)
+    cx, cy = W / 2, 1150
+    for k in range(4):
+        rr = ((lt * 0.6 + k / 4) % 1) * 600
+        c.set_source_rgba(*CYA, 0.5 * (1 - rr / 600)); c.set_line_width(3); c.arc(cx, cy - 300, rr, 0.2, math.pi - 0.2); c.stroke()
+    c.set_source_rgba(0.3, 0.32, 0.36, 1); c.rectangle(0, 1300, W, 80); c.fill()
+    rx = 200 + 600 * ease(u / 0.6); ry = 900 + 30 * math.sin(lt * 2)
+    rrect_ = lambda: (c.rectangle(rx - 70, ry - 35, 140, 70))
+    glow_path(c, rrect_, AMB, 1, 3)
+    c.move_to(rx, ry - 35); c.line_to(rx, 300); c.set_source_rgba(*DIM, 0.6); c.set_line_width(2); c.stroke()
+    g = cairo.LinearGradient(rx, ry + 35, rx, 1300); g.add_color_stop_rgba(0, 1, 1, 0.8, 0.35); g.add_color_stop_rgba(1, 1, 1, 0.8, 0)
+    c.move_to(rx - 20, ry + 35); c.line_to(rx - 160, 1300); c.line_to(rx + 160, 1300); c.line_to(rx + 20, ry + 35); c.close_path(); c.set_source(g); c.fill()
+    if u > 0.6:
+        I = Iso(820, 1290, 55); a = ease((u - 0.6) / 0.1)
+        orange_box(c, I, 0, 0, 0, None, a); orange_box(c, I, 2.0, 0.5, 0, None, a)
+        stamp(c, W / 2, 470, "RETROUVÉS · MAI 2011", GRN, a)
+    return ("PROFONDEUR", "≈ 3 900 M", CYA)
+
+
+def sc_bbopen(c, t, sg, lt, u):
+    I = Iso(W / 2, 980, 150)
+    ex = ease(u / 0.35)
+    orange_box(c, I, -2.4 - 0.6 * ex, 0, 0, "CVR", 1)
+    orange_box(c, I, 0.8 + 0.6 * ex, 0, 0, "FDR", 1)
+    P = I.p
+    a = ease((u - 0.4) / 0.1)
+    if a > 0:
+        px, py = P(-1.7 - 0.6 * ex, 0, 1.0); txt(c, "VOIX DU COCKPIT", px, py - 140, 34, (*WHT, a), 'Oswald', 'c'); txt(c, "2 DERNIÈRES HEURES", px, py - 100, 24, (*DIM, a), 'Space Mono', 'c')
+        for k in range(14):
+            h = 20 + 40 * abs(math.sin(lt * 7 + k)); c.set_source_rgba(*CYA, a); c.rectangle(px - 120 + k * 17, py - 60 - h / 2, 8, h); c.fill()
+    b = ease((u - 0.6) / 0.1)
+    if b > 0:
+        px, py = P(1.5 + 0.6 * ex, 0, 1.0); txt(c, "PARAMÈTRES DE VOL", px, py - 140, 34, (*WHT, b), 'Oswald', 'c'); txt(c, "PLUS DE 2 800 (A380)", px, py - 100, 24, (*DIM, b), 'Space Mono', 'c')
+        def wv():
+            for k in range(61):
+                x = px - 130 + k * 4.3; y = py - 60 + 25 * math.sin(k * 0.3 + lt * 3) * math.sin(k * 0.05)
+                (c.move_to if k == 0 else c.line_to)(x, y)
+        glow_path(c, wv, GRN, b, 2)
+    if u < 0.4: stamp(c, W / 2, 470, "ELLE EST ORANGE", (1.0, 0.45, 0.1), ease((u - 0.15) / 0.08))
+    return ("ENREGISTREURS", "2", AMB)
+
+
+def sc_armor(c, t, sg, lt, u):
+    cx, cy = W / 2, 760
+    layers = [(300, DIM, "BOÎTIER ACIER"), (220, AMB, "ISOLANT THERMIQUE"), (130, GRN, "MÉMOIRE")]
+    for k, (r, col, lab) in enumerate(layers):
+        a = ease((u - 0.08 * k) / 0.12)
+        if a <= 0: continue
+        glow_path(c, lambda r=r: c.rectangle(cx - r, cy - r * 0.6, 2 * r, 1.2 * r), col, a, 3)
+        txt(c, lab, cx - r + 14, cy - r * 0.6 + 34, 22, (*col, a), 'Space Mono')
+    for k, (val, vmax, lab, unit, col, d0) in enumerate(((3400, 3400, "CHOC", " G", RED, 0.3), (1100, 1100, "FEU · 1 H", "°", AMB, 0.5), (6000, 6000, "PROFONDEUR", " M", CYA, 0.7))):
+        a = ease((u - d0) / 0.1)
+        if a > 0: gauge(c, 190 + k * 350, 1240, 110, val * ease((u - d0) / 0.2), vmax, lab, unit, col, a, fs=48)
+    return ("TESTÉE À", "3 400 G", RED)
+
+
+def sc_beacon(c, t, sg, lt, u):
+    ocean(c, t, 1)
+    I = Iso(W / 2 - 50, 980, 120); orange_box(c, I, -0.7, -0.45, -0.4, None, 1)
+    px, py = I.p(0, 0, 0.4)
+    ph = lt % 1.0
+    for k in range(4):
+        rr = ((ph + k * 0.25) % 1) * 520
+        c.set_source_rgba(*CYA, 0.7 * (1 - rr / 520)); c.set_line_width(4); c.arc(px, py, rr, 0, 2 * math.pi); c.stroke()
+    if ph < 0.12: c.set_source_rgba(*CYA, 1); c.arc(px, py, 14, 0, 2 * math.pi); c.fill()
+    days = int(90 * ease(u))
+    return ("BALISE", f"J+{days}", CYA)
+
+
+def sc_pitot(c, t, sg, lt, u):
+    cx, cy = W / 2 - 60, 760
+    def tube(): c.move_to(cx - 260, cy); c.line_to(cx + 200, cy); c.move_to(cx - 260, cy + 50); c.line_to(cx + 200, cy + 50)
+    glow_path(c, tube, WHT, 1, 3)
+    def mast(): c.move_to(cx + 120, cy + 50); c.line_to(cx + 200, cy + 220)
+    glow_path(c, mast, WHT, 1, 3)
+    ice = ease(u / 0.3)
+    if ice > 0:
+        c.set_source_rgba(0.75, 0.9, 1, 0.85 * ice); c.arc(cx - 260, cy + 25, 60 * ice, math.pi / 2, 3 * math.pi / 2); c.fill()
+    r = random.Random(1)
+    for k in range(30):
+        ph = (lt * 1.4 + r.random()) % 1; x = cx - 600 + ph * 360; y = cy + r.uniform(-10, 60)
+        if x < cx - 260 - 55 * ice or ice < 0.3:
+            c.set_source_rgba(*CYA, 0.7); c.arc(x, y, 4, 0, 2 * math.pi); c.fill()
+    txt(c, "SONDE PITOT", cx - 260, cy - 60, 26, (*DIM, 1), 'Space Mono')
+    spd = 272 if u < 0.25 else (int(272 * (1 - ease((u - 0.25) / 0.15))) if u < 0.4 else 0)
+    c.rectangle(170, 1050, 330, 160); c.set_source_rgba(1, 1, 1, 0.04); c.fill(); c.rectangle(170, 1050, 330, 160); c.set_source_rgba(*DIM, 1); c.set_line_width(2); c.stroke()
+    txt(c, "VITESSE (KT)", 190, 1090, 24, (*DIM, 1), 'Space Mono')
+    txt(c, f"{spd}" if spd > 0 else "– – –", 480, 1180, 70, (*(AMB if spd > 0 else RED), 1), 'Oswald', 'r')
+    if u > 0.45:
+        bl = 1 if int(lt * 3) % 2 else 0.4
+        c.rectangle(580, 1050, 330, 160); c.set_source_rgba(*RED, 0.15 * bl); c.fill(); c.rectangle(580, 1050, 330, 160); c.set_source_rgba(*RED, bl); c.stroke()
+        txt(c, "STALL", 745, 1160, 80, (*RED, bl), 'Oswald', 'c')
+    if u > 0.72: stamp(c, W / 2, 470, "SONDES CHANGÉES · FORMATION REVUE", GRN, ease((u - 0.72) / 0.08))
+    return ("CAUSE", "GIVRE + DÉCROCHAGE" if u > 0.45 else "GIVRE", RED)
+
+
+def sc_bboutro(c, t, sg, lt, u):
+    I = Iso(W / 2, 1000, 140)
+    orange_box(c, I, -2.0, 0, 0, "CVR"); orange_box(c, I, 0.6, 0, 0, "FDR")
+    if u < 0.55:
+        stamp(c, W / 2, 470, "ELLES SONT ORANGE", (1.0, 0.45, 0.1), ease(lt / 0.3), 1 + 0.3 * max(0, 1 - lt / 0.2))
+    else:
+        a = ease((u - 0.55) / 0.1)
+        c.set_source_rgba(*BG, 0.7 * a); c.paint()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(1, 1, 1, 0.04 * a); c.fill()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(*AMB, a); c.set_line_width(3); c.stroke()
+        nf = int(getattr(CFG, 'FICHE', '01')) + 1
+        txt(c, f"FICHE {nf:02d}", W / 2, 720, 40, (*DIM, a), 'Space Mono', 'c')
+        txt(c, getattr(CFG, 'NEXT', ''), W / 2, 840, 80, (*WHT, a), 'Oswald', 'c')
+        stamp(c, W / 2, 930, "CLASSÉ", RED, a)
+    return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
+
+
+SC = dict(bbhook=sc_bbhook, af447=sc_af447, search=sc_search, bbopen=sc_bbopen, armor=sc_armor, beacon=sc_beacon, pitot=sc_pitot, bboutro=sc_bboutro, window=sc_window, comet=sc_comet, tank=sc_tank, crack=sc_crack, stress=sc_stress, panes=sc_panes, round=sc_round, outro2=sc_outro2, hook=sc_hook, story=sc_story, alarm=sc_alarm, open=sc_open, chrono=sc_chrono, heat=sc_heat, bag=sc_bag, descent=sc_descent, helios=sc_helios, outro=sc_outro)
 
 
 def frame(t):

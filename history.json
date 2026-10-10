@@ -553,6 +553,31 @@
     "youtube": "-3443033990763297161",
     "facebook": "830544178220319353"
    }
+  },
+  {
+   "date": "2026-10-11 12:30",
+   "format": "decode",
+   "name": "Décodé 03 : la boîte noire (orange, 3 400 G, AF447)",
+   "voice": "Corentin",
+   "duree": 63.4,
+   "flow": "sOeHjEB5TTcgeDmCaYPd",
+   "uuids": {
+    "tiktok": "-7384635067184560245",
+    "youtube+facebook": "-7752678047382287796"
+   }
+  },
+  {
+   "date": "2026-10-11 18:00",
+   "format": "duel",
+   "name": "Blériot XI vs Wright Flyer",
+   "voice": "Corentin",
+   "duree": 63.2,
+   "flow": "29WPGbHpyd3qlU5hMZgZ",
+   "score": "3-2 Blériot",
+   "uuids": {
+    "tiktok": "9199572503021440255",
+    "youtube+facebook": "3910482192185508478"
+   }
   }
  ],
  "notes": [
@@ -581,7 +606,8 @@
   "08/10 : Olivier trouve « oiseaux vs A320 » pas assez visuel (« pas foufou ») -> privilégier des effets plein écran forts (visage déformé, vision qui se grise/noircit, horizon qui bascule) plutôt que des décalques sur image fixe.",
   "08/10 : format « N coupes » en vraie 3D (cut_scene.py : bisect + coque intérieure retournée orange + backface culling, Workbench 720x1280, ~2,5 s/image, 2 process en parallèle = ~50 min pour 64 s). Attention : pgrep -f sur un motif présent dans sa propre commande boucle à l'infini.",
   "08/10 : série « DÉCODÉ » (dc_render.py, inspirée de @systemesdecodes mais habillage à nous : orange cockpit, Oswald + Space Mono, traits isométriques lumineux, HUD 01 MENACE/02 AUTOPSIE/03 RÉPONSE, sous-titres géants colorés, tampon HISTOIRE VRAIE, vue éclatée, chrono, teaser fiche suivante). Fiche 02 annoncée : les hublots ronds (Comet).",
-  "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire."
+  "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire.",
+  "10/10 : prod du 11/10 = VF10 aviation française (10:00), Décodé 03 boîte noire (12:30), duel Blériot vs Wright (18:00). ~3 700 crédits EL. Prochain Décodé 04 : le train d'atterrissage."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -687,11 +713,6 @@
   "log": []
  },
  "duel_backlog": [
-  {
-   "match": "Blériot XI vs Wright Flyer",
-   "models": "r3d bleriot_*, fg/wrightFlyer1903",
-   "angle": "France vs USA, les pionniers"
-  },
   {
    "match": "P-51 Mustang vs A6M Zero",
    "models": "fg/p51d, fg/A6M2",
