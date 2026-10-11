@@ -590,6 +590,51 @@
     "tiktok": "-4739265066159749246",
     "youtube+facebook": "1883805160439238054"
    }
+  },
+  {
+   "date": "2026-10-12 10:00",
+   "format": "vrai_faux",
+   "name": "VF11 : Seconde Guerre mondiale (Spitfire F, Me 262 V, Zero blindé F, Mustang/Merlin V, V1 basculés à l'aile V, Avia S-199 israélien V)",
+   "voice": "Corentin",
+   "duree": 78.5,
+   "flow": "6EfvN13gAjVY4l7yauwa",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "2213257953878033076",
+    "youtube+facebook": "5879614030930920335"
+   }
+  },
+  {
+   "date": "2026-10-12 12:30",
+   "format": "decode",
+   "name": "Décodé 04 : le train d'atterrissage (JetBlue 292, amortisseur huile+azote, pneus 14 bars à l'azote, sortie par gravité)",
+   "voice": "Corentin",
+   "duree": 67.0,
+   "flow": "X8bN0iVaMyGJvb8RpO8c",
+   "uuids": {
+    "tiktok": "-3515866105063718357",
+    "youtube+facebook": "-4617896437467364948"
+   },
+   "next": "Décodé 05 : le siège éjectable"
+  },
+  {
+   "date": "2026-10-12 18:00",
+   "format": "duel",
+   "name": "Eurofighter Typhoon vs F-35",
+   "voice": "Corentin",
+   "duree": 64.4,
+   "flow": "TOoOowA3CuA2eEt2DUl6",
+   "score": "3-2 Typhoon",
+   "mascotte": true,
+   "sources": [
+    "euro-sd.com 01/2026 : 769 Eurofighter commandés",
+    "Lockheed Martin 07/01/2026 : 191 F-35 livrés en 2025",
+    "The Aviationist 06/08/2025 : l'Espagne abandonne le F-35"
+   ],
+   "uuids": {
+    "tiktok": "-8528619256588972676",
+    "youtube+facebook": "8737240844579195911"
+   }
   }
  ],
  "notes": [
@@ -749,11 +794,6 @@
    "match": "F-15 vs F-22",
    "models": "fg/F-15C, fg/F-22",
    "angle": "104 victoires 0 défaite vs successeur"
-  },
-  {
-   "match": "Eurofighter vs F-35",
-   "models": "fg/Eurofighter, fg/F-35B",
-   "angle": "Europe vs USA"
   }
  ]
 }

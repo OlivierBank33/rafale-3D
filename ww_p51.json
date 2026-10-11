@@ -1,0 +1,1 @@
+{"xml": "fg/p51d/Models/p51d-jw-jsbsim.xml", "out": "/home/claude/r3d/ww_p51.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 18, "dist": 1.3, "exclude": ["disk", "disc", "blur", "gun", "bullet", "smoke", "tracer", "canopy-ice", "propdisk", "hvar", "m64", "tank", "rack", "rocket", "stores"], "skip": ["disk", "disc", "blur", "light", "shadow"], "clip": 12}

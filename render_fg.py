@@ -121,6 +121,10 @@ if __name__ == '__main__':
         parts.append((extra['ac'], Matrix.Translation(extra.get('off', (0, 0, 0)))))
     print('PARTS', [os.path.relpath(p, FG) for p, _ in parts])
     ob = build(parts, cfg)
+    if cfg.get('clip'):
+        bm = bmesh.new(); bm.from_mesh(ob.data); L = cfg['clip']
+        bad = [v for v in bm.verts if max(abs(v.co.x), abs(v.co.y), abs(v.co.z)) > L]
+        bmesh.ops.delete(bm, geom=bad, context='VERTS'); bm.to_mesh(ob.data); bm.free(); print('CLIP', len(bad))
     ob.rotation_euler = (math.radians(cfg.get('roll', 0)), math.radians(cfg.get('pitch', 0)), 0)
     bpy.context.view_layer.update()
     mn, mx = R.frame_camera(ob, cfg, W, H)

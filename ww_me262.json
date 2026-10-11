@@ -1,0 +1,1 @@
+{"xml": "fg/Me-262/Models/me262.xml", "out": "/home/claude/r3d/ww_me262.png", "W": 1400, "H": 1400, "samples": 48, "az": 215, "el": 18, "dist": 1.3, "exclude": ["disk", "disc", "blur", "gun", "bullet", "smoke", "tracer", "canopy-ice", "propdisk"], "skip": ["disk", "disc", "blur", "light", "shadow"]}

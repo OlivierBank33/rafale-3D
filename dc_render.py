@@ -794,6 +794,227 @@ def sc_bboutro(c, t, sg, lt, u):
 SC = dict(bbhook=sc_bbhook, af447=sc_af447, search=sc_search, bbopen=sc_bbopen, armor=sc_armor, beacon=sc_beacon, pitot=sc_pitot, bboutro=sc_bboutro, window=sc_window, comet=sc_comet, tank=sc_tank, crack=sc_crack, stress=sc_stress, panes=sc_panes, round=sc_round, outro2=sc_outro2, hook=sc_hook, story=sc_story, alarm=sc_alarm, open=sc_open, chrono=sc_chrono, heat=sc_heat, bag=sc_bag, descent=sc_descent, helios=sc_helios, outro=sc_outro)
 
 
+# ================= FICHE 04 : TRAIN D'ATTERRISSAGE =================
+def wheel2d(c, x, y, r, turn, col, a=1.0, spin=0.0):
+    """Roue vue de face (turn=0 : tranche fine) -> de profil (turn=1 : disque)."""
+    w = max(0.18, abs(math.sin(turn * math.pi / 2)))
+    c.save(); c.translate(x, y); c.scale(w, 1)
+    def d(): c.new_sub_path(); c.arc(0, 0, r, 0, 2 * math.pi)
+    c.restore()
+    c.save(); c.translate(x, y); c.scale(w, 1); c.arc(0, 0, r, 0, 2 * math.pi); c.restore()
+    c.set_source_rgba(*col, 0.10 * a); c.fill()
+    for lw, al in ((14, 0.1), (6, 0.25), (2.6, 1)):
+        c.save(); c.translate(x, y); c.scale(w, 1); c.arc(0, 0, r, 0, 2 * math.pi); c.restore()
+        c.set_source_rgba(*col, a * al); c.set_line_width(lw); c.stroke()
+    if w > 0.5:
+        c.save(); c.translate(x, y); c.scale(w, 1)
+        c.arc(0, 0, r * 0.45, 0, 2 * math.pi); c.restore(); c.set_source_rgba(*col, a * 0.8); c.set_line_width(2); c.stroke()
+        for k in range(5):
+            an = spin + k * 2 * math.pi / 5
+            c.move_to(x + r * 0.45 * w * math.cos(an), y + r * 0.45 * math.sin(an)); c.line_to(x + r * 0.85 * w * math.cos(an), y + r * 0.85 * math.sin(an))
+        c.set_source_rgba(*col, a * 0.5); c.set_line_width(2); c.stroke()
+
+
+def nose_front(c, cx, cy, s, turn, col_g, a=1.0):
+    """Nez d'A320 vu de face + train avant (2 roues)."""
+    def fus(): c.new_sub_path(); c.arc(cx, cy, 200 * s, 0, 2 * math.pi)
+    glow_path(c, fus, DIM, a, 3)
+    def win(): c.move_to(cx - 110 * s, cy - 90 * s); c.line_to(cx - 40 * s, cy - 120 * s); c.line_to(cx + 40 * s, cy - 120 * s); c.line_to(cx + 110 * s, cy - 90 * s)
+    glow_path(c, win, CYA, a * 0.8, 2)
+    def strut(): c.move_to(cx, cy + 200 * s); c.line_to(cx, cy + 380 * s)
+    glow_path(c, strut, WHT, a, 4)
+    for dx in (-1, 1):
+        if turn < 0.5: wheel2d(c, cx + dx * 55 * s, cy + 420 * s, 60 * s, turn, col_g, a)
+        else: wheel2d(c, cx + dx * 40 * s * (1 - turn) , cy + 420 * s, 60 * s, turn, col_g, a)
+
+
+def sc_lghook(c, t, sg, lt, u):
+    turn = ease((lt - 1.6) / 1.2)
+    blink = 1 if int(lt * 3) % 2 else 0.35
+    col = RED if turn > 0.5 else AMB
+    nose_front(c, W / 2, 640, 1.3, turn, col)
+    if turn > 0.6:
+        def arcw(): c.new_sub_path(); c.arc(W / 2, 640 + 546, 150, math.pi * 1.1, math.pi * 1.9)
+        glow_path(c, arcw, RED, blink, 2)
+        txt(c, "90°", W / 2 + 190, 1150, 80, (*RED, blink), 'Oswald', 'l')
+        stamp(c, W / 2, 1320, "NOSE GEAR · UNSAFE", RED, blink)
+    if lt < 1.3:
+        a = 1 - ease((lt - 1.0) / 0.3); c.set_source_rgba(*BG, 0.88 * a); c.paint()
+        txt(c, "LE TRAIN", W / 2, 800, 150, (*WHT, a), 'Oswald', 'c'); txt(c, "D'ATTERRISSAGE", W / 2, 970, 130, (*AMB, a), 'Oswald', 'c')
+        txt(c, "FICHE 04 · DÉCODÉ", W / 2, 1050, 34, (*DIM, a), 'Space Mono', 'c')
+    return ("ROUE AVANT", f"{int(90 * turn)}°", RED if turn > 0.5 else AMB)
+
+
+def sc_jb292(c, t, sg, lt, u):
+    stamp(c, W / 2, 440, "HISTOIRE VRAIE · 21 SEPT. 2005", RED, ease(lt / 0.3), 1 + 0.3 * max(0, 1 - lt / 0.2))
+    # sol + décollage
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(0, 1220, W, 3); c.fill()
+    climb = ease((u - 0.1) / 0.35)
+    x = 260 + 420 * climb; y = 1150 - 380 * climb
+    jet_side(c, x, y, 230, WHT, 1, -0.22 * climb)
+    gx, gy = x + 150 * math.cos(-0.22 * climb), y + 40
+    turn = ease((u - 0.72) / 0.12)
+    if u > 0.55:
+        a = ease((u - 0.55) / 0.08)
+        wheel2d(c, gx, gy + 30, 22, turn, RED if turn > 0.5 else AMB, a)
+        callout(c, gx, gy + 30, gx + 160, gy + 200, "TRAIN AVANT : 90°" if turn > 0.5 else "TRAIN SORTI", RED if turn > 0.5 else AMB, a)
+    a = ease((u - 0.05) / 0.1)
+    txt(c, "AIRBUS A320 · JETBLUE 292", W / 2, 560, 40, (*WHT, a), 'Oswald', 'c')
+    txt(c, "BURBANK → NEW YORK", W / 2, 610, 30, (*DIM, a), 'Space Mono', 'c')
+    return ("À BORD", f"{int(146 * ease((u - 0.25) / 0.15))}", AMB)
+
+
+def sc_circle(c, t, sg, lt, u):
+    cx, cy = W / 2, 760
+    def eight():
+        for k in range(121):
+            th = k / 120 * 2 * math.pi
+            x = cx + 330 * math.sin(th); y = cy + 170 * math.sin(th) * math.cos(th) * 2
+            (c.move_to if k == 0 else c.line_to)(x, y)
+    c.set_dash([14, 12]); glow_path(c, eight, DIM, 0.7, 2); c.set_dash([])
+    th = lt * 1.3; x = cx + 330 * math.sin(th); y = cy + 340 * math.sin(th) * math.cos(th)
+    dx = 330 * math.cos(th); dy = 340 * math.cos(2 * th)
+    c.save(); c.translate(x, y); c.rotate(math.atan2(dy, dx) + math.pi / 2); poly(c, [(0, -26), (14, 14), (0, 5), (-14, 14)]); c.set_source_rgba(*AMB, 1); c.fill(); c.restore()
+    txt(c, "LOS ANGELES", cx, cy + 260, 30, (*DIM, 1), 'Space Mono', 'c')
+    fuel = 100 - 70 * ease(u / 0.6)
+    gauge(c, 260, 1230, 110, fuel, 100, "CARBURANT", " %", AMB, 1, fs=56)
+    if u > 0.5:
+        a = ease((u - 0.5) / 0.1)
+        x0, y0 = 520, 1110
+        c.rectangle(x0, y0, 440, 250); c.set_source_rgba(0.05, 0.07, 0.1, 0.9 * a); c.fill()
+        glow_path(c, lambda: c.rectangle(x0, y0, 440, 250), WHT, a, 2)
+        c.set_source_rgba(*RED, a * (1 if int(lt * 2) % 2 else 0.3)); c.arc(x0 + 30, y0 + 30, 9, 0, 2 * math.pi); c.fill()
+        txt(c, "EN DIRECT", x0 + 50, y0 + 41, 28, (*RED, a), 'Space Mono')
+        jet_side(c, x0 + 220 + 30 * math.sin(lt), y0 + 150, 120, WHT, a, 0.0)
+        wheel2d(c, x0 + 220 + 30 * math.sin(lt) + 75, y0 + 172, 10, 1, RED, a)
+        txt(c, "TV À BORD", x0 + 220, y0 + 290, 26, (*DIM, a), 'Space Mono', 'c')
+    m = int(130 * ease(u / 0.6))
+    return ("EN L'AIR", f"{m // 60} H {m % 60:02d}", AMB)
+
+
+def sc_touch(c, t, sg, lt, u):
+    # piste en perspective latérale
+    c.set_source_rgba(0.12, 0.13, 0.15, 1); c.rectangle(0, 1080, W, 120); c.fill()
+    off = (lt * 900) % 160
+    for k in range(9):
+        c.set_source_rgba(*WHT, 0.6); c.rectangle(k * 160 - off, 1136, 80, 8); c.fill()
+    pitch = 0.16 * (1 - ease((u - 0.3) / 0.15)); x = W / 2 - 30
+    yb = 1060
+    jet_side(c, x, yb - 60 + 40 * (1 - ease(u / 0.2)), 330, WHT, 1, -pitch)
+    nx = x + 290; ny = yb + 2 - 70 * pitch * 3
+    wheel2d(c, x - 60, yb + 6, 26, 1 if False else 0.15, AMB, 1)
+    wheel2d(c, nx, ny, 22, 1, RED, 1)
+    if u > 0.45:
+        r = random.Random(int(lt * 30))
+        inten = 1 - ease((u - 0.85) / 0.1)
+        for k in range(40):
+            ang = r.uniform(math.pi * 0.9, math.pi * 1.15); sp = r.uniform(40, 260)
+            sx = nx + math.cos(ang) * sp; sy = ny + 15 + math.sin(ang) * sp * 0.4 - r.uniform(0, 40)
+            c.set_source_rgba(1, r.uniform(0.6, 0.95), 0.2, inten * r.uniform(0.4, 1)); c.arc(sx, sy, r.uniform(2, 5), 0, 2 * math.pi); c.fill()
+        g = cairo.RadialGradient(nx, ny, 5, nx, ny, 90); g.add_color_stop_rgba(0, 1, 0.55, 0.1, 0.7 * inten); g.add_color_stop_rgba(1, 1, 0.3, 0, 0)
+        c.set_source(g); c.arc(nx, ny, 90, 0, 2 * math.pi); c.fill()
+    if u < 0.45: stamp(c, W / 2, 470, "NEZ EN L'AIR", AMB, ease(u / 0.08))
+    elif u < 0.85: stamp(c, W / 2, 470, "ÉTINCELLES · FLAMMES", RED, 1)
+    else: stamp(c, W / 2, 470, "AUCUN BLESSÉ", GRN, ease((u - 0.85) / 0.05), 1.2)
+    kt = int(140 * (1 - ease((u - 0.2) / 0.7)))
+    return ("VITESSE", f"{kt} KT", RED if 0.45 < u < 0.85 else (GRN if u >= 0.85 else AMB))
+
+
+def sc_oleo(c, t, sg, lt, u):
+    I = Iso(W / 2, 1080, 115)
+    comp = 0.9 * math.exp(-((lt % 2.4)) * 2.2) * abs(math.cos((lt % 2.4) * 6)) if u > 0.15 else 0
+    cyl(c, I, 0, 0, 2.6, 0.75, 3.4, DIM, 1, 0.05)                      # cylindre extérieur
+    zp = 0.9 - comp
+    cyl(c, I, 0, 0, zp, 0.45, 2.4, WHT, 1, 0.06)                        # tige / piston
+    oil = ease((u - 0.3) / 0.1); n2 = ease((u - 0.45) / 0.1)
+    if oil > 0: cyl(c, I, 0, 0, 3.3, 0.7, 1.0 - comp * 0.3, AMB, oil, 0.35, w=1.5)
+    if n2 > 0: cyl(c, I, 0, 0, 4.3 - comp * 0.3, 0.7, 1.6 + comp * 0.3, CYA, n2, 0.2, w=1.5)
+    for dy in (-1.1, 1.1): cyl(c, I, 0, dy, zp - 0.55, 0.55, 0.35, WHT, 1, 0.1, axis='x', w=2) if False else None
+    P = I.p
+    for dy in (-1.0, 1.0):
+        x, y = P(0, dy, zp - 0.3); wheel2d(c, x, y, 70, 0.75, WHT, 1)
+    px, py = P(0, 0, 3.8); callout(c, px + 60, py, px + 260, py - 40, "HUILE", AMB, oil)
+    px, py = P(0, 0, 5.0); callout(c, px - 60, py + 40, px - 260, py + 120, "AZOTE", CYA, n2)
+    a = ease((u - 0.7) / 0.1)
+    if a > 0: stamp(c, W / 2, 1330, "LE CHOC EST AVALÉ", GRN, a)
+    return ("AMORTISSEUR", "HUILE + AZOTE" if u > 0.45 else "OLÉO", CYA)
+
+
+def sc_tyres(c, t, sg, lt, u):
+    a1 = ease((u - 0.25) / 0.12); a2 = ease((u - 0.38) / 0.12)
+    v1 = 2.3 * ease((u - 0.3) / 0.15)
+    c.set_line_width(14); c.set_source_rgba(1, 1, 1, 0.12 * a1); c.arc(290, 820, 150, math.pi * 0.75, math.pi * 2.25); c.stroke()
+    c.set_source_rgba(*DIM, a1); c.arc(290, 820, 150, math.pi * 0.75, math.pi * (0.75 + 1.5 * v1 / 14)); c.stroke()
+    txt(c, f"{v1:.1f}".replace('.', ','), 290, 840, 70, (*WHT, a1), 'Oswald', 'c'); txt(c, "VOITURE", 290, 900, 26, (*DIM, a1), 'Space Mono', 'c')
+    gauge(c, 790, 820, 150, 14 * ease((u - 0.42) / 0.2), 14, "AVION DE LIGNE", "", AMB, a2, fs=90)
+    txt(c, "BARS", 290, 960, 26, (*DIM, a1), 'Space Mono', 'c'); txt(c, "BARS", 790, 960, 26, (*AMB, a2), 'Space Mono', 'c')
+    if u > 0.55:
+        a = ease((u - 0.55) / 0.1); cx, cy = W / 2, 1230
+        def tyre(): c.new_sub_path(); c.arc(cx, cy, 170, 0, 2 * math.pi); c.new_sub_path(); c.arc(cx, cy, 80, 0, 2 * math.pi)
+        glow_path(c, tyre, WHT, a, 3)
+        r = random.Random(3)
+        for k in range(26):
+            an = r.uniform(0, 2 * math.pi) + lt * r.uniform(0.2, 0.6); rr = r.uniform(95, 155)
+            c.set_source_rgba(*CYA, a); c.arc(cx + rr * math.cos(an), cy + rr * math.sin(an), 6, 0, 2 * math.pi); c.fill()
+        txt(c, "N2", cx, cy + 22, 60, (*CYA, a), 'Oswald', 'c')
+    if u > 0.25: stamp(c, W / 2, 470, "× 6", AMB, ease((u - 0.45) / 0.06), 1.4)
+    return ("PRESSION", "14 BARS", AMB)
+
+
+def sc_gravity(c, t, sg, lt, u):
+    I = Iso(W / 2 - 40, 860, 120); P = I.p
+    box(c, I, -2.2, -1.4, 0, 4.4, 2.8, 0.5, DIM, 1, 0.05)                 # baie de train (soute)
+    unlock = ease((u - 0.12) / 0.08)
+    ang = (math.pi / 2) * (1 - min(1, ease((u - 0.2) / 0.22) * 1.05)) if u > 0.2 else math.pi / 2
+    ang = max(0.0, ang) + 0.06 * math.sin(lt * 9) * max(0, 1 - (u - 0.42) / 0.1) * (u > 0.42)
+    hx, hz = -1.6, 0.0; L = 3.4
+    ex, ez = hx + L * math.sin(ang), hz - L * math.cos(ang)
+    def leg(): c.move_to(*P(hx, 0, hz)); c.line_to(*P(ex, 0, ez))
+    glow_path(c, leg, AMB, 1, 5)
+    wx, wy = P(ex, 0, ez - 0.5); wheel2d(c, wx, wy, 60, 0.85, AMB, 1)
+    lx, ly = P(hx + 0.4, 0, 0.6)
+    c.set_source_rgba(*(GRN if unlock > 0.5 else RED), 1); c.arc(lx, ly, 14, 0, 2 * math.pi); c.fill()
+    callout(c, lx, ly, lx - 200, ly - 120, "VERROU OUVERT" if unlock > 0.5 else "VERROU", GRN if unlock > 0.5 else RED, 1)
+    if 0.2 < u < 0.6:
+        def arrow(): c.move_to(wx + 120, wy - 160); c.line_to(wx + 120, wy - 20); c.move_to(wx + 100, wy - 50); c.line_to(wx + 120, wy - 20); c.line_to(wx + 140, wy - 50)
+        glow_path(c, arrow, WHT, 1, 3); txt(c, "POIDS", wx + 150, wy - 90, 30, (*WHT, 1), 'Space Mono')
+    if u > 0.62:
+        a = ease((u - 0.62) / 0.08); cx, cy = W / 2, 1290
+        c.set_source_rgba(*BG, 0.75 * a); c.rectangle(0, 1130, W, 320); c.fill()
+        for k in range(30):
+            an0 = k / 30 * 2 * math.pi
+            if 0.3 < an0 < 0.75: continue
+            c.set_source_rgba(*RED, a); c.set_line_width(14); c.arc(cx, cy, 100, an0, an0 + 2 * math.pi / 30 * 0.8); c.stroke()
+        stamp(c, W / 2, 470, "CAUSE : JOINTS USÉS", RED, a)
+    return ("SORTIE", "PAR GRAVITÉ" if u > 0.2 else "HYDRAULIQUE", GRN if u > 0.42 else AMB)
+
+
+def sc_lgoutro(c, t, sg, lt, u):
+    if u < 0.55:
+        a = ease(lt / 0.3)
+        for k, (lab, col) in enumerate((("OUI, J'AURAIS REGARDÉ", CYA), ("NON, TROP STRESSANT", RED))):
+            y = 700 + k * 260; s = 1 + 0.03 * math.sin(lt * 5 + k)
+            glow_path(c, lambda y=y: c.rectangle(130, y - 90, 820, 170), col, a, 3)
+            txt(c, lab, W / 2, y + 22 * s, 64 * s, (*WHT, a), 'Oswald', 'c')
+        txt(c, "RÉPONDS EN COMMENTAIRE", W / 2, 1260, 40, (*AMB, a), 'Space Mono', 'c')
+    else:
+        a = ease((u - 0.55) / 0.1)
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(1, 1, 1, 0.04 * a); c.fill()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(*AMB, a); c.set_line_width(3); c.stroke()
+        nf = int(getattr(CFG, 'FICHE', '01')) + 1
+        txt(c, f"FICHE {nf:02d}", W / 2, 720, 40, (*DIM, a), 'Space Mono', 'c')
+        txt(c, getattr(CFG, 'NEXT', ''), W / 2, 850, 84, (*WHT, a), 'Oswald', 'c')
+        stamp(c, W / 2, 930, "CLASSÉ", RED, a)
+    return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
+
+
+SC.update(lghook=sc_lghook, jb292=sc_jb292, circle=sc_circle, touch=sc_touch, oleo=sc_oleo, tyres=sc_tyres, gravity=sc_gravity, lgoutro=sc_lgoutro)
+PHASE.update(lghook=0, jb292=0, circle=0, touch=1, oleo=1, tyres=1, gravity=2, lgoutro=2)
+KEY['AMB'] += ['train', 'azote', 'huile', 'amortisseur', '14', '90', '146', 'roue', 'roues', 'poids', 'télé', 'pneu', 'pneus', 'bars']
+KEY['RED'] += ['travers', 'flammes', 'étincelles', 'usés', 'fond', 'panne']
+KEY['CYA'] += ['aucun', 'droit']
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))
