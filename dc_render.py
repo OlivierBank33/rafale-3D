@@ -1015,6 +1015,200 @@ KEY['RED'] += ['travers', 'flammes', 'étincelles', 'usés', 'fond', 'panne']
 KEY['CYA'] += ['aucun', 'droit']
 
 
+# ================= FICHE 05 : SIÈGE ÉJECTABLE =================
+YLW = (1.0, 0.85, 0.15)
+
+
+def seat_iso(c, I, x, y, z, col, a=1.0, handle=True, rocket=0.0):
+    box(c, I, x - 0.9, y - 0.9, z, 1.8, 1.8, 0.45, col, a, 0.06)               # assise
+    box(c, I, x + 0.7, y - 0.9, z + 0.45, 0.4, 1.8, 2.6, col, a, 0.06)          # dossier
+    box(c, I, x + 0.6, y - 0.7, z + 3.05, 0.6, 1.4, 0.8, col, a, 0.08)          # appui-tête / parachute
+    if handle:
+        P = I.p
+        def h(): c.move_to(*P(x - 0.7, y - 0.25, z + 0.45)); c.line_to(*P(x - 1.1, y - 0.25, z + 0.85)); c.line_to(*P(x - 1.1, y + 0.25, z + 0.85)); c.line_to(*P(x - 0.7, y + 0.25, z + 0.45))
+        glow_path(c, h, YLW, a, 3)
+    if rocket > 0:
+        P = I.p; px, py = P(x, y, z - 0.1)
+        r = random.Random(int(rocket * 50))
+        for k in range(30):
+            dx = r.uniform(-30, 30); dy = r.uniform(10, 260) * rocket
+            c.set_source_rgba(1, r.uniform(0.5, 0.9), 0.2, a * r.uniform(0.3, 0.9)); c.arc(px + dx, py + dy, r.uniform(4, 12), 0, 2 * math.pi); c.fill()
+
+
+def chute(c, x, y, s, col, a=1.0, open_=1.0):
+    w = 160 * s * (0.25 + 0.75 * open_); h = 90 * s * (0.4 + 0.6 * open_)
+    def can(): c.move_to(x - w, y); c.curve_to(x - w, y - h * 1.3, x + w, y - h * 1.3, x + w, y); c.close_path()
+    can(); c.set_source_rgba(*col, 0.15 * a); c.fill()
+    glow_path(c, can, col, a, 2.5)
+    def lines():
+        for k in range(5):
+            c.move_to(x - w + k * w / 2, y); c.line_to(x, y + 170 * s)
+    glow_path(c, lines, WHT, a * 0.7, 1.2)
+    c.set_source_rgba(*WHT, a); c.arc(x, y + 180 * s, 10 * s, 0, 2 * math.pi); c.fill()
+
+
+def flame(c, x, y, s, a, lt):
+    r = random.Random(int(lt * 20))
+    for k in range(18):
+        dx = r.uniform(-1, 0) * 90 * s; dy = r.uniform(-25, 25) * s
+        c.set_source_rgba(1, r.uniform(0.3, 0.8), 0.1, a * r.uniform(0.3, 0.9)); c.arc(x + dx, y + dy, r.uniform(6, 16) * s, 0, 2 * math.pi); c.fill()
+
+
+def sc_ejhook(c, t, sg, lt, u):
+    I = Iso(W / 2, 1060, 120)
+    lift = 2.2 * ease((lt - 1.4) / 0.6)
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(80, 1250, W - 160, 3); c.fill()
+    seat_iso(c, I, 0, 0, lift, AMB, 1, True, rocket=min(1, max(0, (lt - 1.4) / 0.4)) if lt > 1.4 else 0)
+    if lt < 1.3:
+        a = 1 - ease((lt - 1.0) / 0.3); c.set_source_rgba(*BG, 0.88 * a); c.paint()
+        txt(c, "LE SIÈGE", W / 2, 800, 150, (*WHT, a), 'Oswald', 'c'); txt(c, "ÉJECTABLE", W / 2, 970, 150, (*AMB, a), 'Oswald', 'c')
+        txt(c, "FICHE 05 · DÉCODÉ", W / 2, 1050, 34, (*DIM, a), 'Space Mono', 'c')
+    return ("ALTITUDE", f"{int(3 + 40 * ease((lt - 1.4) / 0.6))} M", RED)
+
+
+def sc_bourget(c, t, sg, lt, u):
+    stamp(c, W / 2, 440, "HISTOIRE VRAIE · LE BOURGET 1989", RED, ease(lt / 0.3), 1 + 0.3 * max(0, 1 - lt / 0.2))
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(0, 1250, W, 3); c.fill()
+    for k in range(60):     # foule
+        c.set_source_rgba(*WHT, 0.35); c.arc(40 + k * 17, 1270 + (k % 3) * 8, 5, 0, 2 * math.pi); c.fill()
+    txt(c, "LA FOULE", 160, 1330, 26, (*DIM, 1), 'Space Mono', 'c')
+    x = 300 + 300 * ease(u / 0.9); y = 900 + 10 * math.sin(lt * 2)
+    jet_side(c, x, y, 250, WHT, 1, -0.45)
+    if u > 0.5:   # oiseau
+        bx = x + 320 - 400 * ease((u - 0.5) / 0.15); by = y - 160 + 120 * ease((u - 0.5) / 0.15)
+        if u < 0.66:
+            def bird(): c.move_to(bx - 22, by - 8); c.line_to(bx, by + 4); c.line_to(bx + 22, by - 8)
+            glow_path(c, bird, WHT, 1, 2.5)
+    if u > 0.72:
+        a = ease((u - 0.72) / 0.08)
+        ex, ey = x - 230 * math.cos(-0.45), y - 30 - 230 * math.sin(-0.45) * -1
+        flame(c, x - 210, y + 95, 1.2, a, lt)
+        callout(c, x - 210, y + 95, x - 120, y + 260, "MOTEUR DROIT EN FEU", RED, a)
+    return ("VITESSE", "≈ 180 KM/H", AMB if u < 0.72 else RED)
+
+
+def sc_ejdive(c, t, sg, lt, u):
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(0, 1300, W, 3); c.fill()
+    for k in range(30):
+        c.set_source_rgba(*WHT, 0.35); c.arc(30 + k * 15, 1320 + (k % 3) * 8, 5, 0, 2 * math.pi); c.fill()
+    d = ease(u / 0.9)
+    x = 420 + 380 * d; y = 700 + 480 * d
+    ej = 0.62
+    if u < ej + 0.25:
+        jet_side(c, x, y, 250, WHT, 1, 0.15 + 0.55 * d)
+        flame(c, x - 200, y - 40, 1.0, 1, lt)
+    if 0.25 < u < 0.6:
+        def arr(): c.move_to(500, 1180); c.line_to(820, 1180); c.move_to(790, 1160); c.line_to(820, 1180); c.line_to(790, 1200)
+        glow_path(c, arr, AMB, ease((u - 0.25) / 0.08), 3); txt(c, "LOIN DE LA FOULE", 660, 1150, 28, (*AMB, 1), 'Space Mono', 'c')
+    if u > ej:
+        s = ease((u - ej) / 0.2)
+        I = Iso(x - 40, y - 120 - 380 * s, 40); seat_iso(c, I, 0, 0, 0, AMB, 1, False, rocket=1 - s)
+        if u - ej < 0.04: c.set_source_rgba(1, 1, 1, 0.6); c.paint()
+    if u > ej + 0.25:
+        a = ease((u - ej - 0.25) / 0.05); g = cairo.RadialGradient(860, 1280, 10, 860, 1280, 260)
+        g.add_color_stop_rgba(0, 1, 0.6, 0.1, 0.9 * a); g.add_color_stop_rgba(1, 1, 0.2, 0, 0); c.set_source(g); c.arc(860, 1280, 260, 0, 2 * math.pi); c.fill()
+    left = max(0.0, 2.5 * (1 - (u - ej) / 0.3)) if u > ej else 2.5
+    return ("AVANT L'IMPACT", f"{left:.1f} S".replace('.', ','), RED)
+
+
+def sc_ejseq(c, t, sg, lt, u):
+    I = Iso(W / 2, 1180, 95); P = I.p
+    for dy in (-1.0, 1.0):
+        def rail(dy=dy): c.move_to(*P(1.2, dy, 0)); c.line_to(*P(1.2, dy, 9))
+        glow_path(c, rail, DIM, 1, 2)
+    can = ease((u - 0.12) / 0.15); cat = ease((u - 0.38) / 0.15); rk = ease((u - 0.62) / 0.2)
+    z = 4.0 * cat + 5.0 * rk
+    if can < 1:
+        box(c, I, -1.2 - 2 * can, -1.2, 4.2 + 6 * can, 2.6, 2.4, 0.3, CYA, 1 - can, 0.1)
+    seat_iso(c, I, 0, 0, z, AMB, 1, False, rocket=1 if 0.62 < u < 0.85 else 0)
+    steps = [("1 · VERRIÈRE", 0.12, CYA), ("2 · CATAPULTE", 0.38, AMB), ("3 · FUSÉE", 0.62, RED)]
+    for k, (lab, st, col) in enumerate(steps):
+        a = ease((u - st) / 0.06)
+        txt(c, lab, 90, 560 + k * 70, 44, (*col, 0.25 + 0.75 * a), 'Oswald', 'l')
+    ms = int(250 * ease(u / 0.85))
+    return ("DURÉE", f"0,{ms // 10:02d} S" if ms < 1000 else "1 S", AMB)
+
+
+def sc_ejg(c, t, sg, lt, u):
+    g = 15 * ease((u - 0.05) / 0.25)
+    gauge(c, 300, 820, 170, g, 20, "ACCÉLÉRATION", " G", RED, 1, fs=110)
+    comp = ease((u - 0.35) / 0.2)
+    cx = 790; top = 520; n = 9
+    for k in range(n):
+        y = top + k * (80 - 8 * comp)
+        def v(y=y): c.rectangle(cx - 60, y, 120, 50 - 3 * comp)
+        glow_path(c, v, WHT, 1, 2)
+        if k < n - 1:
+            c.set_source_rgba(*CYA, 0.6); c.rectangle(cx - 50, y + 52 - 3 * comp, 100, max(2, 22 - 10 * comp)); c.fill()
+    if comp > 0.5:
+        a = ease((comp - 0.5) / 0.3)
+        txt(c, "− 1 À 3 CM", cx, 1290, 70, (*RED, a), 'Oswald', 'c'); txt(c, "DE TAILLE", cx, 1340, 28, (*DIM, a), 'Space Mono', 'c')
+    return ("PIC", "> 15 G", RED)
+
+
+def sc_ejzero(c, t, sg, lt, u):
+    c.set_source_rgba(0.12, 0.13, 0.15, 1); c.rectangle(0, 1240, W, 90); c.fill()
+    for k in range(7): c.set_source_rgba(*WHT, 0.5); c.rectangle(k * 170, 1282, 90, 6); c.fill()
+    if u < 0.45:
+        jet_side(c, 520, 1205, 260, WHT, 1, 0)
+        s = ease((u - 0.1) / 0.2)
+        if 0 < s < 0.9:
+            I = Iso(560, 1100 - 400 * s, 38); seat_iso(c, I, 0, 0, 0, AMB, 1, False, rocket=1 - s)
+        if s > 0.9: chute(c, 560, 640, 1.1, GRN, ease((u - 0.3) / 0.08), ease((u - 0.3) / 0.1))
+        txt(c, "0 M · 0 KM/H", W / 2, 400, 70, (*AMB, ease(u / 0.1)), 'Oswald', 'c')
+        return ("ZÉRO-ZÉRO", "0 · 0", AMB)
+    a = ease((u - 0.45) / 0.08)
+    g = cairo.RadialGradient(820, 1220, 10, 820, 1220, 200); g.add_color_stop_rgba(0, 1, 0.5, 0.1, 0.8 * a); g.add_color_stop_rgba(1, 1, 0.2, 0, 0)
+    c.set_source(g); c.arc(820, 1220, 200, 0, 2 * math.pi); c.fill(); flame(c, 860, 1200, 1.5, a, lt)
+    d = ease((u - 0.5) / 0.35); py = 520 + 520 * d
+    chute(c, 400, py, 1.0, GRN, a, 1)
+    if u > 0.8:
+        b = ease((u - 0.8) / 0.06)
+        def m(): c.move_to(430, 1250); c.line_to(800, 1250)
+        c.set_dash([10, 10]); glow_path(c, m, WHT, b, 2); c.set_dash([])
+        txt(c, "≈ 30 M", 615, 1225, 34, (*WHT, b), 'Space Mono', 'c')
+        stamp(c, W / 2, 470, "VIVANT", GRN, b, 1.3)
+    return ("PARACHUTE", "OUVERT" if u > 0.5 else "…", GRN)
+
+
+def sc_ejsaved(c, t, sg, lt, u):
+    n = int(7800 * ease((u - 0.3) / 0.45))
+    for k in range(90):
+        on = k / 90 < ease((u - 0.3) / 0.45)
+        x = 150 + (k % 10) * 87; y = 560 + (k // 10) * 78
+        chute(c, x, y, 0.18, GRN if on else DIM, 1 if on else 0.3, 1)
+    txt(c, f"{n:,}".replace(',', ' '), W / 2, 1340, 150, (*GRN, 1), 'Oswald', 'c')
+    txt(c, "VIES SAUVÉES · MARTIN-BAKER", W / 2, 1395, 30, (*DIM, 1), 'Space Mono', 'c')
+    if u < 0.3: stamp(c, W / 2, 470, "1ER ESSAI EN VOL · 1946", AMB, ease(u / 0.06))
+    return ("DEPUIS 1946", f"+{n:,}".replace(',', ' '), GRN)
+
+
+def sc_ejoutro(c, t, sg, lt, u):
+    if u < 0.55:
+        a = ease(lt / 0.3)
+        for k, (lab, col) in enumerate((("OUI, JE TIRE", GRN), ("NON, J'HÉSITE", RED))):
+            y = 700 + k * 260; s = 1 + 0.03 * math.sin(lt * 5 + k)
+            glow_path(c, lambda y=y: c.rectangle(130, y - 90, 820, 170), col, a, 3)
+            txt(c, lab, W / 2, y + 22 * s, 72 * s, (*WHT, a), 'Oswald', 'c')
+        txt(c, "RÉPONDS EN COMMENTAIRE", W / 2, 1260, 40, (*AMB, a), 'Space Mono', 'c')
+    else:
+        a = ease((u - 0.55) / 0.1)
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(1, 1, 1, 0.04 * a); c.fill()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(*AMB, a); c.set_line_width(3); c.stroke()
+        nf = int(getattr(CFG, 'FICHE', '01')) + 1
+        txt(c, f"FICHE {nf:02d}", W / 2, 720, 40, (*DIM, a), 'Space Mono', 'c')
+        txt(c, getattr(CFG, 'NEXT', ''), W / 2, 850, 76, (*WHT, a), 'Oswald', 'c')
+        stamp(c, W / 2, 930, "CLASSÉ", RED, a)
+    return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
+
+
+SC.update(ejhook=sc_ejhook, bourget=sc_bourget, ejdive=sc_ejdive, ejseq=sc_ejseq, ejg=sc_ejg, ejzero=sc_ejzero, ejsaved=sc_ejsaved, ejoutro=sc_ejoutro)
+PHASE.update(ejhook=0, bourget=0, ejdive=0, ejseq=1, ejg=1, ejzero=1, ejsaved=2, ejoutro=2)
+KEY['AMB'] += ['poignée', 'siège', 'verrière', 'charge', 'rails', 'fusée', 'zéro-zéro', '2,5', 'secondes', 'parachute', 'oiseau', 'bourget']
+KEY['RED'] += ['feu', 'impact', 'tasse', 'centimètres', '15']
+KEY['CYA'] += ['vivant', '7', '800', 'sauvé']
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))

@@ -1,0 +1,1 @@
+{"W": 1200, "H": 1200, "samples": 32, "dist": 1.2, "exclude": ["disk", "disc", "blur", "gun", "bullet", "smoke", "tracer", "canopy-ice", "propdisk"], "skip": ["disk", "disc", "blur", "light", "shadow"], "clip": 15, "xml": "fg/SPAD-VII/Models/spadvii.xml", "out": "/home/claude/dl/spad_dr1/a_34.png", "az": 215, "el": 16}

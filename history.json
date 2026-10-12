@@ -635,6 +635,50 @@
     "tiktok": "-8528619256588972676",
     "youtube+facebook": "8737240844579195911"
    }
+  },
+  {
+   "date": "2026-10-13 10:00",
+   "format": "vrai_faux",
+   "name": "VF12 : spécial Rafale (Airbus F, biplace V, 1 réacteur F, nucléaire ASMP-A V, jamais en guerre F, ravitaille un A400M V)",
+   "voice": "Corentin",
+   "duree": 74.8,
+   "flow": "GMBiVlERcUgmlTRCa2LQ",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "8095562488664114087",
+    "youtube+facebook": "5675461035790714521"
+   }
+  },
+  {
+   "date": "2026-10-13 12:30",
+   "format": "decode",
+   "name": "Décodé 05 : le siège éjectable (MiG-29 du Bourget 1989, Kvotchour, 2,5 s, >15 G, zéro-zéro, 7 800 vies Martin-Baker)",
+   "voice": "Corentin",
+   "duree": 62.1,
+   "flow": "d3SrhNMbQcnqTN5haKa7",
+   "uuids": {
+    "tiktok": "-1741194875757444620",
+    "youtube+facebook": "-740277132479085568"
+   },
+   "next": "Décodé 06 : la combinaison anti-G"
+  },
+  {
+   "date": "2026-10-13 18:00",
+   "format": "duel",
+   "name": "SPAD VII vs Fokker Dr.I (Guynemer vs Baron rouge)",
+   "voice": "Corentin",
+   "duree": 68.6,
+   "flow": "NQ7fYGBvScyjsdQVjNJM",
+   "score": "3-2 SPAD",
+   "mascotte": true,
+   "sources": [
+    "Wikipedia SPAD S.VII",
+    "Wikipedia Fokker Dr.I"
+   ],
+   "uuids": {
+    "tiktok": "-8640190120944645192",
+    "youtube+facebook": "1823224652214845863"
+   }
   }
  ],
  "notes": [
@@ -664,7 +708,8 @@
   "08/10 : format « N coupes » en vraie 3D (cut_scene.py : bisect + coque intérieure retournée orange + backface culling, Workbench 720x1280, ~2,5 s/image, 2 process en parallèle = ~50 min pour 64 s). Attention : pgrep -f sur un motif présent dans sa propre commande boucle à l'infini.",
   "08/10 : série « DÉCODÉ » (dc_render.py, inspirée de @systemesdecodes mais habillage à nous : orange cockpit, Oswald + Space Mono, traits isométriques lumineux, HUD 01 MENACE/02 AUTOPSIE/03 RÉPONSE, sous-titres géants colorés, tampon HISTOIRE VRAIE, vue éclatée, chrono, teaser fiche suivante). Fiche 02 annoncée : les hublots ronds (Comet).",
   "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire.",
-  "10/10 : prod du 11/10 = VF10 aviation française (10:00), Décodé 03 boîte noire (12:30), duel Blériot vs Wright (18:00). ~3 700 crédits EL. Prochain Décodé 04 : le train d'atterrissage."
+  "10/10 : prod du 11/10 = VF10 aviation française (10:00), Décodé 03 boîte noire (12:30), duel Blériot vs Wright (18:00). ~3 700 crédits EL. Prochain Décodé 04 : le train d'atterrissage.",
+  "2026-10-12 : backlog duels complété avec des duels côté France (modèles disponibles) ; SPAD vs Fokker ajouté hors backlog pour respecter la règle 'camp français'."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -770,6 +815,21 @@
   "log": []
  },
  "duel_backlog": [
+  {
+   "match": "Mirage 2000 vs F-15",
+   "models": "fg/Mirage-2000, fg/F-15C",
+   "angle": "France vs USA, le delta contre l'aigle"
+  },
+  {
+   "match": "Rafale vs Su-37 (famille Su-35)",
+   "models": "rafale.glb, fg/Su-37",
+   "angle": "France vs Russie"
+  },
+  {
+   "match": "Concorde vs SR-71",
+   "models": "fg/Concorde, fg/SR71-Blackbird",
+   "angle": "les deux rois de Mach 2+ (France/UK vs USA)"
+  },
   {
    "match": "P-51 Mustang vs A6M Zero",
    "models": "fg/p51d, fg/A6M2",
