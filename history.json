@@ -679,6 +679,46 @@
     "tiktok": "-8640190120944645192",
     "youtube+facebook": "1823224652214845863"
    }
+  },
+  {
+   "date": "2026-10-14 10:00",
+   "format": "vrai_faux",
+   "name": "VF13 : géants du ciel (A380 Toulouse V, An-225 vole F, Beluga V, B-52 retiré F, C-130 sur porte-avions V, hélices A400M contrarotatives V)",
+   "voice": "Corentin",
+   "duree": 78.1,
+   "flow": "kSgh88Vz4VF4jQYS0D9u",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-7388447610416116379",
+    "youtube+facebook": "6117309990064245870"
+   }
+  },
+  {
+   "date": "2026-10-14 12:30",
+   "format": "decode",
+   "name": "Décodé 06 : la combinaison anti-G (G-LOC F-16 2016, Auto-GCAS, voile gris/noir, +1 G)",
+   "voice": "Corentin",
+   "duree": 61.8,
+   "flow": "DMteDfhwKAGB9TcfFbxV",
+   "uuids": {
+    "tiktok": "-4973370382037595106",
+    "youtube+facebook": "-7825696348789324730"
+   },
+   "next": "Décodé 07 : le casque du pilote"
+  },
+  {
+   "date": "2026-10-14 18:00",
+   "format": "duel",
+   "name": "Mirage 2000 vs F-15",
+   "voice": "Corentin",
+   "duree": 62.8,
+   "flow": "IoFI3ktuMCl7IyXj86qq",
+   "score": "3-2 F-15",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-9179889401391070209",
+    "youtube+facebook": "6135239179276275080"
+   }
   }
  ],
  "notes": [
@@ -815,11 +855,6 @@
   "log": []
  },
  "duel_backlog": [
-  {
-   "match": "Mirage 2000 vs F-15",
-   "models": "fg/Mirage-2000, fg/F-15C",
-   "angle": "France vs USA, le delta contre l'aigle"
-  },
   {
    "match": "Rafale vs Su-37 (famille Su-35)",
    "models": "rafale.glb, fg/Su-37",

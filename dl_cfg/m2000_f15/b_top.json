@@ -1,0 +1,1 @@
+{"ac": "fg/F-15C/Models/f-15C.ac", "out": "/home/claude/dl/m2000_f15/b_top.png", "W": 1200, "H": 1200, "samples": 32, "az": 180, "el": 88, "dist": 1.2, "skip": ["light", "strobe", "beacon", "nav", "parachute", "flash", "glow", "gear", "wheel", "tire", "tyre", "strut", "hook", "door", "oleo", "torque", "brake"]}

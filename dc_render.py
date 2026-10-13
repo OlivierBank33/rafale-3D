@@ -1209,6 +1209,165 @@ KEY['RED'] += ['feu', 'impact', 'tasse', 'centimètres', '15']
 KEY['CYA'] += ['vivant', '7', '800', 'sauvé']
 
 
+# ================= FICHE 06 : COMBINAISON ANTI-G =================
+def body(c, cx, top, s, col, a=1.0, blood=0.0, suit=0.0):
+    """Silhouette debout ; blood ∈[0,1] : 0 = sang réparti, 1 = sang dans les jambes ; suit : poches gonflées."""
+    def outline():
+        c.new_sub_path(); c.arc(cx, top + 45 * s, 45 * s, 0, 2 * math.pi)
+        c.rectangle(cx - 70 * s, top + 100 * s, 140 * s, 260 * s)
+        c.rectangle(cx - 65 * s, top + 370 * s, 55 * s, 300 * s); c.rectangle(cx + 10 * s, top + 370 * s, 55 * s, 300 * s)
+    glow_path(c, outline, col, a, 2.5)
+    # sang : densité tête / jambes
+    head = (1 - blood); legs = 0.35 + 0.65 * blood
+    c.set_source_rgba(*RED, 0.55 * a * head); c.arc(cx, top + 45 * s, 38 * s, 0, 2 * math.pi); c.fill()
+    c.set_source_rgba(*RED, 0.25 * a); c.rectangle(cx - 62 * s, top + 108 * s, 124 * s, 244 * s); c.fill()
+    c.set_source_rgba(*RED, 0.55 * a * legs); c.rectangle(cx - 58 * s, top + 378 * s, 41 * s, 285 * s); c.fill(); c.rectangle(cx + 17 * s, top + 378 * s, 41 * s, 285 * s); c.fill()
+    if suit > 0:
+        p = 6 * s * suit
+        for (x, y, w, h) in ((cx - 70, top + 250, 140, 100), (cx - 65, top + 400, 55, 110), (cx + 10, top + 400, 55, 110), (cx - 65, top + 540, 55, 110), (cx + 10, top + 540, 55, 110)):
+            c.rectangle(x * 1 - p, y - p, w * s + 2 * p, h * s + 2 * p) if False else None
+            def bl(x=x, y=y, w=w, h=h): c.rectangle(cx + (x - cx) * s - p, top + (y - top) * s - p, w * s + 2 * p, h * s + 2 * p)
+            bl(); c.set_source_rgba(*CYA, 0.25 * suit * a); c.fill()
+            glow_path(c, bl, CYA, suit * a, 2)
+
+
+def sc_aghook(c, t, sg, lt, u):
+    g = 1 + 8 * ease((lt - 1.3) / 2.0)
+    gauge(c, W / 2, 820, 220, g, 9, "FACTEUR DE CHARGE", " G", RED if g > 6 else AMB, 1, fs=150)
+    if lt > 2.6:
+        a = ease((lt - 2.6) / 0.6); c.set_source_rgba(0, 0, 0, 0.75 * a); c.paint()
+        g2 = cairo.RadialGradient(W / 2, 820, 50, W / 2, 820, 700); g2.add_color_stop_rgba(0, 0, 0, 0, 0); g2.add_color_stop_rgba(0.4, 0, 0, 0, 0.6 * a); g2.add_color_stop_rgba(1, 0, 0, 0, 1)
+        c.set_source(g2); c.paint()
+    if lt < 1.3:
+        a = 1 - ease((lt - 1.0) / 0.3); c.set_source_rgba(*BG, 0.9 * a); c.paint()
+        txt(c, "LA COMBINAISON", W / 2, 800, 120, (*WHT, a), 'Oswald', 'c'); txt(c, "ANTI-G", W / 2, 970, 170, (*AMB, a), 'Oswald', 'c')
+        txt(c, "FICHE 06 · DÉCODÉ", W / 2, 1050, 34, (*DIM, a), 'Space Mono', 'c')
+    return ("FACTEUR DE CHARGE", f"{g:.1f} G".replace('.', ','), RED if g > 6 else AMB)
+
+
+def sc_agturn(c, t, sg, lt, u):
+    stamp(c, W / 2, 440, "HISTOIRE VRAIE · 2016", RED, ease(lt / 0.3), 1 + 0.3 * max(0, 1 - lt / 0.2))
+    cx, cy, R = W / 2, 860, 300
+    def ring(): c.new_sub_path(); c.arc(cx, cy, R, 0, 2 * math.pi)
+    c.set_dash([12, 12]); glow_path(c, ring, DIM, 0.6, 2); c.set_dash([])
+    th = lt * 2.2; x = cx + R * math.cos(th); y = cy + R * math.sin(th) * 0.6
+    jet_side(c, x, y, 170, WHT, 1, th + math.pi / 2)
+    g = 1 + 7.4 * ease((u - 0.25) / 0.3)
+    gauge(c, W / 2, 1300, 120, g, 9, "G", "", RED if g > 6 else AMB, 1, fs=80)
+    if u > 0.8:
+        a = ease((u - 0.8) / 0.1); c.set_source_rgba(0, 0, 0, 0.85 * a); c.paint()
+        txt(c, "G-LOC", W / 2, 900, 200, (*RED, a), 'Oswald', 'c'); txt(c, "PERTE DE CONNAISSANCE", W / 2, 980, 34, (*WHT, a), 'Space Mono', 'c')
+    return ("PIC", f"{g:.1f} G".replace('.', ','), RED)
+
+
+def sc_agdive(c, t, sg, lt, u):
+    d = ease(u / 0.95)
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(0, 1380, W, 3); c.fill()
+    x = 260 + 420 * d; y = 520 + 640 * d
+    jet_side(c, x, y, 260, WHT, 1, 0.96)
+    r = random.Random(int(lt * 20))
+    for k in range(10):
+        c.set_source_rgba(1, 0.6, 0.2, r.uniform(0.3, 0.8)); c.arc(x - 150 * math.cos(0.96) - r.uniform(0, 40), y - 150 * math.sin(0.96) - r.uniform(0, 40), r.uniform(5, 12), 0, 2 * math.pi); c.fill()
+    alt = int(5180 - 2530 * d)
+    c.rectangle(720, 560, 280, 160); c.set_source_rgba(1, 1, 1, 0.04); c.fill(); c.rectangle(720, 560, 280, 160); c.set_source_rgba(*DIM, 1); c.set_line_width(2); c.stroke()
+    txt(c, "ALTITUDE (M)", 740, 600, 24, (*DIM, 1), 'Space Mono'); txt(c, f"{alt:,}".replace(',', ' '), 980, 690, 70, (*RED, 1), 'Oswald', 'r')
+    txt(c, "55°", 150, 700, 90, (*AMB, ease(u / 0.1)), 'Oswald', 'l')
+    return ("VITESSE", f"{int(800 + 320 * d)} KM/H", RED)
+
+
+def sc_aggcas(c, t, sg, lt, u):
+    c.set_source_rgba(*DIM, 0.6); c.rectangle(0, 1380, W, 3); c.fill()
+    s = ease((u - 0.15) / 0.45)
+    ang = 0.96 - 1.25 * s
+    x0, y0 = 300, 900
+    def path():
+        for k in range(41):
+            q = k / 40 * s; a_ = 0.96 - 1.25 * q
+            xx = x0 + 600 * q; yy = y0 + 220 * math.sin(math.pi * q * 0.9) - 120 * q
+            (c.move_to if k == 0 else c.line_to)(xx, yy)
+    c.set_dash([10, 10]); glow_path(c, path, GRN, 1, 2.5); c.set_dash([])
+    x = x0 + 600 * s; y = y0 + 220 * math.sin(math.pi * s * 0.9) - 120 * s
+    jet_side(c, x, y, 230, WHT, 1, ang)
+    if u > 0.12:
+        a = ease((u - 0.12) / 0.05)
+        stamp(c, W / 2, 470, "AUTO-GCAS · PULL UP", GRN, a, 1.2)
+    if u > 0.7: stamp(c, W / 2, 1250, "PILOTE RÉVEILLÉ · VIVANT", GRN, ease((u - 0.7) / 0.08))
+    return ("RECOUVREMENT", "≈ 2 650 M", GRN)
+
+
+def sc_agblood(c, t, sg, lt, u):
+    b = ease((u - 0.1) / 0.3)
+    body(c, 300, 520, 1.0, WHT, 1, blood=b)
+    def arr(): c.move_to(470, 640); c.line_to(470, 1100); c.move_to(450, 1070); c.line_to(470, 1100); c.line_to(490, 1070)
+    glow_path(c, arr, RED, b, 3); txt(c, "SANG", 500, 870, 30, (*RED, b), 'Space Mono')
+    cx, cy = 790, 860; R = 200
+    st = [(0.45, "GRIS"), (0.6, "TUNNEL"), (0.75, "NOIR"), (0.88, "G-LOC")]
+    stage = sum(1 for s_, _ in st if u > s_)
+    c.save(); c.arc(cx, cy, R, 0, 2 * math.pi); c.clip()
+    g = cairo.LinearGradient(cx, cy - R, cx, cy + R); g.add_color_stop_rgb(0, 0.35, 0.6, 0.9); g.add_color_stop_rgb(1, 0.6, 0.55, 0.45)
+    c.set_source(g); c.paint()
+    if stage >= 1: c.set_source_rgba(0.5, 0.5, 0.5, 0.6); c.paint()
+    if stage >= 2:
+        rg = cairo.RadialGradient(cx, cy, 30, cx, cy, R); rg.add_color_stop_rgba(0, 0, 0, 0, 0); rg.add_color_stop_rgba(0.5, 0, 0, 0, 0.9); rg.add_color_stop_rgba(1, 0, 0, 0, 1)
+        c.set_source(rg); c.paint()
+    if stage >= 3: c.set_source_rgba(0, 0, 0, 0.97); c.paint()
+    c.restore()
+    glow_path(c, lambda: (c.new_sub_path(), c.arc(cx, cy, R, 0, 2 * math.pi)), WHT, 1, 2)
+    txt(c, "TA VISION", cx, cy - R - 30, 28, (*DIM, 1), 'Space Mono', 'c')
+    if stage: txt(c, st[stage - 1][1], cx, cy + R + 80, 70, (*RED, 1), 'Oswald', 'c')
+    return ("CERVEAU", "MANQUE DE SANG" if b > 0.5 else "OK", RED if b > 0.5 else GRN)
+
+
+def sc_agsuit(c, t, sg, lt, u):
+    s = ease((u - 0.3) / 0.25)
+    pulse = 1 + 0.08 * math.sin(lt * 6) * s
+    body(c, W / 2, 470, 1.1, WHT, 1, blood=0.3 * (1 - s), suit=s * pulse)
+    if s > 0:
+        callout(c, W / 2 + 80, 470 + 330, W / 2 + 280, 470 + 250, "VENTRE", CYA, s)
+        callout(c, W / 2 + 70, 470 + 560, W / 2 + 280, 470 + 600, "JAMBES", CYA, s)
+    if u > 0.75: stamp(c, W / 2, 400, "LE SANG RESTE EN HAUT", GRN, ease((u - 0.75) / 0.08))
+    return ("POCHES D'AIR", "GONFLÉES" if s > 0.5 else "…", CYA)
+
+
+def sc_agstrain(c, t, sg, lt, u):
+    a = ease(u / 0.1); b = ease((u - 0.2) / 0.15)
+    # barres : tolérance
+    for k, (lab, v, col, st) in enumerate((("AU REPOS", 4, DIM, 0.0), ("+ COMBINAISON", 5, CYA, 0.15), ("+ CONTRACTION", 9, GRN, 0.45))):
+        f = ease((u - st) / 0.15); y = 600 + k * 220
+        txt(c, lab, 90, y, 40, (*WHT, f), 'Oswald', 'l')
+        c.set_source_rgba(1, 1, 1, 0.08 * f); c.rectangle(90, y + 30, 900, 50); c.fill()
+        c.set_source_rgba(*col, f); c.rectangle(90, y + 30, 900 * (v / 10) * f, 50); c.fill()
+        txt(c, f"≈ {v} G" if k < 2 else "≈ 9 G", 990, y, 46, (*col, f), 'Oswald', 'r')
+    if u > 0.7: stamp(c, W / 2, 470, "MUSCLES + RESPIRATION", AMB, ease((u - 0.7) / 0.08))
+    return ("COMBINAISON", "≈ + 1 G", CYA)
+
+
+def sc_agoutro(c, t, sg, lt, u):
+    if u < 0.55:
+        a = ease(lt / 0.3)
+        for k, (lab, col) in enumerate((("4 G", DIM), ("6 G", AMB), ("9 G", RED))):
+            y = 640 + k * 210; s = 1 + 0.03 * math.sin(lt * 5 + k)
+            glow_path(c, lambda y=y: c.rectangle(230, y - 80, 620, 150), col, a, 3)
+            txt(c, lab, W / 2, y + 30 * s, 100 * s, (*WHT, a), 'Oswald', 'c')
+        txt(c, "RÉPONDS EN COMMENTAIRE", W / 2, 1290, 40, (*AMB, a), 'Space Mono', 'c')
+    else:
+        a = ease((u - 0.55) / 0.1)
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(1, 1, 1, 0.04 * a); c.fill()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(*AMB, a); c.set_line_width(3); c.stroke()
+        nf = int(getattr(CFG, 'FICHE', '01')) + 1
+        txt(c, f"FICHE {nf:02d}", W / 2, 720, 40, (*DIM, a), 'Space Mono', 'c')
+        txt(c, getattr(CFG, 'NEXT', ''), W / 2, 850, 80, (*WHT, a), 'Oswald', 'c')
+        stamp(c, W / 2, 930, "CLASSÉ", RED, a)
+    return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
+
+
+SC.update(aghook=sc_aghook, agturn=sc_agturn, agdive=sc_agdive, aggcas=sc_aggcas, agblood=sc_agblood, agsuit=sc_agsuit, agstrain=sc_agstrain, agoutro=sc_agoutro)
+PHASE.update(aghook=0, agturn=0, agdive=0, aggcas=1, agblood=1, agsuit=2, agstrain=2, agoutro=2)
+KEY['AMB'] += ['g', 'g.', 'g,', 'combinaison', 'anti-g.', 'anti-g', 'poches', 'muscles', 'respiration', '8', '55']
+KEY['RED'] += ['évanouir', 'connaissance', 'piqué', 'pique', 'noir', 'gris', 'tunnel', 'sang']
+KEY['CYA'] += ['ordinateur', 'vivant', 'redresse']
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))
