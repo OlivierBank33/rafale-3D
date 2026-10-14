@@ -759,6 +759,20 @@
     "tiktok": "1467513741134677182",
     "youtube+facebook": "6921167145076933750"
    }
+  },
+  {
+   "date": "2026-10-15 20:30",
+   "format": "science du vol (ns_render, style @aerospace.inge)",
+   "name": "LA SCIENCE DU VOL 01 — Pourquoi les avions volent à 11 000 m",
+   "voice": "Corentin",
+   "duree": 70.8,
+   "flow": "dt9pZueeBDvtbbsyklsA",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "2893367868771812684",
+    "youtube+facebook": "2217663848105264397"
+   },
+   "note": "bonus test du nouveau style néon"
   }
  ],
  "notes": [
@@ -935,5 +949,14 @@
    "models": "fg/F-15C, fg/F-22",
    "angle": "104 victoires 0 défaite vs successeur"
   }
+ ],
+ "ns_backlog": [
+  "02 Le mur du son (Mach 1, cône de condensation, bang, Concorde interdit en supersonique au-dessus des terres)",
+  "03 Comment une aile porte (Bernoulli + Newton, angle d'attaque, décrochage)",
+  "04 Pourquoi les avions ne volent pas en ligne droite (orthodromie, Paris-New York par le Groenland)",
+  "05 Les traînées blanches (condensation, pas de produits chimiques)",
+  "06 Comment un avion freine (inverseurs, spoilers, freins carbone)",
+  "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
+  "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
  ]
 }

@@ -64,6 +64,10 @@ def segments(fmt):
         os.environ['DL'] = 'dl/' + fmt[3:]
         R = importlib.import_module('pa_render')
         return 'dl/' + fmt[3:], [(sg['k'], sg['p']['say'], sg['vt']) for sg in R.SEG]
+    if fmt.startswith('ns:'):
+        os.environ['DL'] = 'dl/' + fmt[3:]
+        R = importlib.import_module('ns_render')
+        return 'dl/' + fmt[3:], [(sg['k'], sg['p']['say'], sg['vt']) for sg in R.SEG]
     if fmt.startswith('rc:'):
         os.environ['DL'] = 'dl/' + fmt[3:]
         R = importlib.import_module('rc_render')
