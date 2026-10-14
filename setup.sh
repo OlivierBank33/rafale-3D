@@ -10,3 +10,4 @@ mkdir -p tts qa tn mc/v r3d fg
 cd fg
 for r in "$@"; do [ -d "$r" ] || GIT_TERMINAL_PROMPT=0 git clone -q --depth 1 https://github.com/FGMEMBERS/$r; done
 echo "setup ok"
+mkdir -p ~/.fonts && cp $(dirname "$0")/fonts/*.ttf ~/.fonts/ 2>/dev/null; fc-cache -f >/dev/null 2>&1
