@@ -1368,6 +1368,150 @@ KEY['RED'] += ['évanouir', 'connaissance', 'piqué', 'pique', 'noir', 'gris', '
 KEY['CYA'] += ['ordinateur', 'vivant', 'redresse']
 
 
+# ================= FICHE 07 : CASQUE DU PILOTE =================
+def helmet(c, cx, cy, s, col, a=1.0, visor=CYA, visor_a=0.25):
+    def shell():
+        c.new_sub_path(); c.arc(cx, cy, 170 * s, math.pi * 0.95, math.pi * 2.15)
+        c.line_to(cx + 175 * s, cy + 120 * s); c.curve_to(cx + 120 * s, cy + 200 * s, cx - 60 * s, cy + 210 * s, cx - 150 * s, cy + 150 * s); c.close_path()
+    shell(); c.set_source_rgba(*col, 0.06 * a); c.fill()
+    glow_path(c, shell, col, a, 3)
+    def vis(): c.move_to(cx + 20 * s, cy - 40 * s); c.curve_to(cx + 200 * s, cy - 40 * s, cx + 215 * s, cy + 90 * s, cx + 150 * s, cy + 140 * s); c.line_to(cx + 60 * s, cy + 120 * s); c.curve_to(cx + 90 * s, cy + 60 * s, cx + 70 * s, cy, cx + 20 * s, cy - 40 * s); c.close_path()
+    vis(); c.set_source_rgba(*visor, visor_a * a); c.fill(); glow_path(c, vis, visor, a, 2)
+
+
+def sc_hehook(c, t, sg, lt, u):
+    helmet(c, W / 2 - 60, 820, 1.6, WHT, 1)
+    v = int(400000 * ease((lt - 1.4) / 1.8))
+    if lt > 1.4: txt(c, f"{v:,} $".replace(',', ' '), W / 2, 1330, 120, (*AMB, 1), 'Oswald', 'c')
+    if lt > 3.4: stamp(c, W / 2, 470, "LE PRIX D'UNE MAISON", RED, ease((lt - 3.4) / 0.2), 1.2)
+    if lt < 1.3:
+        a = 1 - ease((lt - 1.0) / 0.3); c.set_source_rgba(*BG, 0.9 * a); c.paint()
+        txt(c, "LE CASQUE", W / 2, 800, 150, (*WHT, a), 'Oswald', 'c'); txt(c, "DU PILOTE", W / 2, 970, 150, (*AMB, a), 'Oswald', 'c')
+        txt(c, "FICHE 07 · DÉCODÉ", W / 2, 1050, 34, (*DIM, a), 'Space Mono', 'c')
+    return ("PRIX (F-35)", "≈ 400 000 $", AMB)
+
+
+def sc_hexray(c, t, sg, lt, u):
+    I = Iso(W / 2, 900, 95); P = I.p
+    # sol quadrillé
+    for k in range(-6, 7):
+        c.move_to(*P(k, -6, -3)); c.line_to(*P(k, 6, -3)); c.move_to(*P(-6, k, -3)); c.line_to(*P(6, k, -3))
+    c.set_source_rgba(*GRN, 0.35); c.set_line_width(1.5); c.stroke()
+    xr = ease((u - 0.55) / 0.15)
+    pts = [(4.5, 0), (1, 0.8), (-1, 4), (-2, 4), (-1.5, 0.8), (-3.5, 0.6), (-4, 2), (-4.6, 2), (-4.3, 0), (-4.6, -2), (-4, -2), (-3.5, -0.6), (-1.5, -0.8), (-2, -4), (-1, -4), (1, -0.8)]
+    def plan(): poly(c, [P(x, y, 0) for x, y in pts])
+    plan(); c.set_source_rgba(*DIM, 0.55 * (1 - xr)); c.fill()
+    glow_path(c, plan, WHT, 1, 2.2)
+    cams = [(4.2, 0), (2, 0.6), (2, -0.6), (-1, 2.5), (-1, -2.5), (-4.3, 0)]
+    for k, (x, y) in enumerate(cams):
+        a = ease((u - 0.1 - k * 0.04) / 0.06)
+        if a <= 0: continue
+        px, py = P(x, y, 0.3); c.set_source_rgba(*RED, a); c.arc(px, py, 10, 0, 2 * math.pi); c.fill()
+        ang = math.atan2(py - 900, px - W / 2)
+        c.move_to(px, py); c.arc(px, py, 140, ang - 0.4, ang + 0.4); c.close_path(); c.set_source_rgba(*RED, 0.12 * a); c.fill()
+    txt(c, "6 CAMÉRAS", 140, 520, 50, (*RED, ease((u - 0.1) / 0.1)), 'Oswald', 'l')
+    if xr > 0: stamp(c, W / 2, 1320, "VUE À TRAVERS LE PLANCHER", GRN, xr)
+    return ("VISION", "360°", CYA)
+
+
+def sc_hehud(c, t, sg, lt, u):
+    cx, cy, R = W / 2, 850, 380
+    c.save(); c.arc(cx, cy, R, 0, 2 * math.pi); c.clip()
+    g = cairo.LinearGradient(0, cy - R, 0, cy + R); g.add_color_stop_rgb(0, 0.25, 0.45, 0.7); g.add_color_stop_rgb(0.55, 0.55, 0.65, 0.75); g.add_color_stop_rgb(0.56, 0.35, 0.4, 0.3); g.add_color_stop_rgb(1, 0.25, 0.28, 0.22)
+    c.set_source(g); c.paint()
+    hc = GRN
+    a1 = ease((u - 0.15) / 0.1); a2 = ease((u - 0.3) / 0.1); a3 = ease((u - 0.45) / 0.1)
+    c.set_source_rgba(*hc, a1); c.rectangle(cx - 300, cy - 150, 90, 300); c.set_line_width(3); c.stroke()
+    txt(c, f"{int(480 + 20 * math.sin(lt))}", cx - 255, cy + 10, 40, (*hc, a1), 'Space Mono', 'c'); txt(c, "KT", cx - 255, cy + 190, 26, (*hc, a1), 'Space Mono', 'c')
+    c.set_source_rgba(*hc, a2); c.rectangle(cx + 210, cy - 150, 110, 300); c.stroke()
+    txt(c, f"{int(15000 + 300 * math.sin(lt * 0.7))}", cx + 265, cy + 10, 34, (*hc, a2), 'Space Mono', 'c'); txt(c, "FT", cx + 265, cy + 190, 26, (*hc, a2), 'Space Mono', 'c')
+    if a3 > 0:
+        tx = cx + 120 * math.sin(lt * 0.8); ty = cy - 80 + 50 * math.cos(lt * 1.1)
+        c.set_source_rgba(*RED, a3); c.set_line_width(4); c.rectangle(tx - 45, ty - 45, 90, 90); c.stroke()
+        txt(c, "CIBLE", tx, ty - 60, 26, (*RED, a3), 'Space Mono', 'c')
+        c.set_source_rgba(*hc, a3); c.arc(cx, cy, 30, 0, 2 * math.pi); c.stroke()
+    c.restore()
+    glow_path(c, lambda: (c.new_sub_path(), c.arc(cx, cy, R, 0, 2 * math.pi)), WHT, 1, 2.5)
+    txt(c, "DANS LA VISIÈRE", cx, cy + R + 60, 34, (*DIM, 1), 'Space Mono', 'c')
+    return ("AFFICHAGE", "VISIÈRE", GRN)
+
+
+def sc_hefit(c, t, sg, lt, u):
+    cx, cy = W / 2, 820
+    for k in range(-6, 7):
+        ry = 220 * math.cos(k / 7 * math.pi / 2)
+        c.new_sub_path(); c.save(); c.translate(cx, cy + k * 30); c.scale(1, 0.25); c.arc(0, 0, ry, 0, 2 * math.pi); c.restore()
+    c.set_source_rgba(*CYA, 0.5); c.set_line_width(1.5); c.stroke()
+    for k in range(8):
+        a_ = k / 8 * math.pi
+        c.save(); c.translate(cx, cy); c.scale(math.cos(a_), 1); c.arc(0, 0, 220, 0, 2 * math.pi); c.restore()
+    c.set_source_rgba(*CYA, 0.3); c.set_line_width(1.2); c.stroke()
+    sy = cy - 240 + 480 * ((lt * 0.6) % 1)
+    if u < 0.45:
+        c.set_source_rgba(*RED, 0.9); c.rectangle(cx - 300, sy, 600, 4); c.fill()
+        txt(c, "SCAN 3D", W / 2, 470, 60, (*RED, 1), 'Oswald', 'c')
+    else:
+        a = ease((u - 0.45) / 0.15)
+        for k in range(10):
+            an = k / 10 * 2 * math.pi
+            x = cx + 250 * math.cos(an); y = cy + 250 * math.sin(an)
+            c.save(); c.translate(x, y); c.rotate(an); c.rectangle(-18 * a, -45, 36 * a, 90); c.restore()
+            c.set_source_rgba(*AMB, 0.5 * a); c.fill()
+        stamp(c, W / 2, 470, "MOUSSE DÉCOUPÉE AU LASER", AMB, a)
+    if u > 0.75: stamp(c, W / 2, 1300, "COUPE DE CHEVEUX = RÉGLAGE", RED, ease((u - 0.75) / 0.08))
+    return ("SUR MESURE", "1 PILOTE = 1 CASQUE", CYA)
+
+
+def sc_heg(c, t, sg, lt, u):
+    g = 1 + 8 * ease((u - 0.3) / 0.3)
+    w = 2.3 * g
+    helmet(c, 330, 760, 1.0, WHT, 1)
+    def neck(): c.move_to(300, 980); c.line_to(300, 1160); c.move_to(390, 980); c.line_to(390, 1160)
+    glow_path(c, neck, RED if g > 5 else WHT, 1, 4)
+    def arr(): c.move_to(345, 560); c.line_to(345, 520 + 40 + 60 * (g / 9)); c.move_to(325, 540 + 60 * (g / 9)); c.line_to(345, 580 + 60 * (g / 9)); c.line_to(365, 540 + 60 * (g / 9))
+    gauge(c, 790, 820, 150, w, 21, "SUR LA NUQUE", " KG", RED if g > 5 else AMB, 1, fs=70)
+    txt(c, f"{g:.0f} G", 790, 1100, 90, (*AMB, 1), 'Oswald', 'c')
+    return ("POIDS RESSENTI", f"{w:.1f} KG".replace('.', ','), RED if g > 5 else AMB)
+
+
+def sc_herafale(c, t, sg, lt, u):
+    jet_side(c, W / 2, 1150, 320, WHT, 1, -0.05)
+    helmet(c, W / 2 - 40, 700, 1.1, WHT, 1, visor=(0.2, 0.9, 0.5), visor_a=0.35)
+    a = ease((u - 0.25) / 0.1)
+    if a > 0:
+        for k, col in enumerate((GRN, AMB, CYA, RED)):
+            c.set_source_rgba(*col, a); c.rectangle(W / 2 + 60 + k * 26, 700 + 10, 18, 40); c.fill()
+        callout(c, W / 2 + 120, 730, W / 2 + 300, 600, "COULEUR", AMB, a)
+    stamp(c, W / 2, 470, "RAFALE F4 · SCORPION (THALES)", CYA, ease(u / 0.1))
+    return ("STANDARD", "RAFALE F4", CYA)
+
+
+def sc_heoutro(c, t, sg, lt, u):
+    if u < 0.55:
+        a = ease(lt / 0.3)
+        for k, (lab, col) in enumerate((("CASQUE DU F-35", RED), ("CASQUE DU RAFALE", CYA))):
+            y = 700 + k * 260; s = 1 + 0.03 * math.sin(lt * 5 + k)
+            glow_path(c, lambda y=y: c.rectangle(130, y - 90, 820, 170), col, a, 3)
+            txt(c, lab, W / 2, y + 22 * s, 72 * s, (*WHT, a), 'Oswald', 'c')
+        txt(c, "RÉPONDS EN COMMENTAIRE", W / 2, 1260, 40, (*AMB, a), 'Space Mono', 'c')
+    else:
+        a = ease((u - 0.55) / 0.1)
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(1, 1, 1, 0.04 * a); c.fill()
+        c.rectangle(110, 620, 860, 360); c.set_source_rgba(*AMB, a); c.set_line_width(3); c.stroke()
+        nf = int(getattr(CFG, 'FICHE', '01')) + 1
+        txt(c, f"FICHE {nf:02d}", W / 2, 720, 40, (*DIM, a), 'Space Mono', 'c')
+        txt(c, getattr(CFG, 'NEXT', ''), W / 2, 850, 90, (*WHT, a), 'Oswald', 'c')
+        stamp(c, W / 2, 930, "CLASSÉ", RED, a)
+    return ("ABONNE-TOI", f"FICHE {int(getattr(CFG, 'FICHE', '01')) + 1:02d}", AMB)
+
+
+SC.update(hehook=sc_hehook, hexray=sc_hexray, hehud=sc_hehud, hefit=sc_hefit, heg=sc_heg, herafale=sc_herafale, heoutro=sc_heoutro)
+PHASE.update(hehook=0, hexray=0, hehud=1, hefit=1, heg=1, herafale=2, heoutro=2)
+KEY['AMB'] += ['casque', 'visière', 'caméras', '400', '000', 'mesure', 'laser', 'scorpion', 'couleur', 'nuque']
+KEY['RED'] += ['maison', 'plancher', 'cible', 'kilos', 'dérégler']
+KEY['CYA'] += ['rafale', 'f4', 'thales']
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))

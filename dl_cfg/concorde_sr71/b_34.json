@@ -1,0 +1,1 @@
+{"ac": "fg/SR71-Blackbird/Models/SR-71A-BigTail.ac", "az": 215, "el": 16, "texdirs": ["Texture-USAF"], "out": "/home/claude/dl/concorde_sr71/b_34.png", "W": 1200, "H": 1200, "samples": 32, "dist": 1.2, "skip": ["gear", "wheel", "tire", "tyre", "strut", "door", "oleo", "bogie", "light", "strobe", "beacon"]}

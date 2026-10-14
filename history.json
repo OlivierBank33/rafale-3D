@@ -719,6 +719,46 @@
     "tiktok": "-9179889401391070209",
     "youtube+facebook": "6135239179276275080"
    }
+  },
+  {
+   "date": "2026-10-15 10:00",
+   "format": "vrai_faux",
+   "name": "VF14 : premières fois de l'aviation (Wright >1 min F, Garros V, Earhart avion français F, mur du son 1960 F, Concorde 1er vol en France V, X-15 > 7 000 km/h V)",
+   "voice": "Corentin",
+   "duree": 84.0,
+   "flow": "QvTMwqWoW7IZSv6CWFTy",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-4285817995324666181",
+    "youtube+facebook": "2624019356466039033"
+   }
+  },
+  {
+   "date": "2026-10-15 12:30",
+   "format": "decode",
+   "name": "Décodé 07 : le casque du pilote (F-35 400 000 $, 6 caméras, scan 3D, 9 G = 20 kg, Rafale F4 Scorpion)",
+   "voice": "Corentin",
+   "duree": 61.4,
+   "flow": "TrrItR300jIML0FHWiTB",
+   "uuids": {
+    "tiktok": "-3470258791952396605",
+    "youtube+facebook": "-4717835969170028442"
+   },
+   "next": "Décodé 08 : la verrière"
+  },
+  {
+   "date": "2026-10-15 18:00",
+   "format": "duel",
+   "name": "Concorde vs SR-71",
+   "voice": "Corentin",
+   "duree": 61.8,
+   "flow": "KSL3gEuLXJ8NamAHhFqX",
+   "score": "3-2 Concorde",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "1467513741134677182",
+    "youtube+facebook": "6921167145076933750"
+   }
   }
  ],
  "notes": [
@@ -856,14 +896,19 @@
  },
  "duel_backlog": [
   {
+   "match": "Rafale vs F-15",
+   "models": "vues dl/rafale_f35 (a_*) + dl/m2000_f15 (b_*)",
+   "angle": "France vs USA, nouvelle génération contre l'aigle invaincu"
+  },
+  {
+   "match": "Rafale vs F-16",
+   "models": "vues dl/rafale_f35 (a_*) + dl/m2000_f16 (b_*)",
+   "angle": "France vs USA, le plus vendu"
+  },
+  {
    "match": "Rafale vs Su-37 (famille Su-35)",
    "models": "rafale.glb, fg/Su-37",
    "angle": "France vs Russie"
-  },
-  {
-   "match": "Concorde vs SR-71",
-   "models": "fg/Concorde, fg/SR71-Blackbird",
-   "angle": "les deux rois de Mach 2+ (France/UK vs USA)"
   },
   {
    "match": "P-51 Mustang vs A6M Zero",
