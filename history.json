@@ -773,6 +773,46 @@
     "youtube+facebook": "2217663848105264397"
    },
    "note": "bonus test du nouveau style néon"
+  },
+  {
+   "date": "2026-10-16 10:00",
+   "format": "vrai_faux",
+   "name": "VF15 : avions mythiques (F-117 jamais abattu F, B-2 2 Md$ V, A-10 autour d'un missile F, Harrier idée française Wibault V, Mirage III jamais combattu F, SR-71 4 000 missiles V)",
+   "voice": "Corentin",
+   "duree": 86.0,
+   "flow": "QhdRPFI5tI7MXjxSA6MT",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-3627447628561102230",
+    "youtube+facebook": "-8924175490230170211"
+   }
+  },
+  {
+   "date": "2026-10-16 12:30",
+   "format": "science du vol (ns_render)",
+   "name": "LA SCIENCE DU VOL 02 — Le mur du son (ondes, cône de Mach, bang continu, Yeager 1947, vapor cone ≠ Mach 1, Concorde subsonique au-dessus des terres)",
+   "voice": "Corentin",
+   "duree": 71.6,
+   "flow": "OfrsUtBSY7S1aNarZOaA",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "3660947790416398274",
+    "youtube+facebook": "5058351542689416397"
+   }
+  },
+  {
+   "date": "2026-10-16 18:00",
+   "format": "duel",
+   "name": "Rafale vs F-15",
+   "voice": "Corentin",
+   "duree": 67.8,
+   "flow": "8tafunWgSWyjn6QJPEP3",
+   "score": "3-2 Rafale",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "8029999750030444695",
+    "youtube+facebook": "4302096603399277382"
+   }
   }
  ],
  "notes": [
@@ -910,11 +950,6 @@
  },
  "duel_backlog": [
   {
-   "match": "Rafale vs F-15",
-   "models": "vues dl/rafale_f35 (a_*) + dl/m2000_f15 (b_*)",
-   "angle": "France vs USA, nouvelle génération contre l'aigle invaincu"
-  },
-  {
    "match": "Rafale vs F-16",
    "models": "vues dl/rafale_f35 (a_*) + dl/m2000_f16 (b_*)",
    "angle": "France vs USA, le plus vendu"
@@ -951,7 +986,6 @@
   }
  ],
  "ns_backlog": [
-  "02 Le mur du son (Mach 1, cône de condensation, bang, Concorde interdit en supersonique au-dessus des terres)",
   "03 Comment une aile porte (Bernoulli + Newton, angle d'attaque, décrochage)",
   "04 Pourquoi les avions ne volent pas en ligne droite (orthodromie, Paris-New York par le Groenland)",
   "05 Les traînées blanches (condensation, pas de produits chimiques)",

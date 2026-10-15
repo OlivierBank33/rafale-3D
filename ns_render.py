@@ -208,7 +208,7 @@ def subtitles(c, t):
     if not cur: return
     ch = cur[-1]; size = 86
     F(c, size); words = [w.upper() for _, _, w in ch]
-    sp = size * 0.42
+    sp = size * 0.5
     ws = [c.text_extents(w).x_advance for w in words]
     lines = [[]]; lw = 0
     for i, w in enumerate(ws):
@@ -221,7 +221,7 @@ def subtitles(c, t):
         for i in ln:
             a0, a1, _ = ch[i]; act = a0 <= t < a1 or (i == len(ch) - 1 and t >= a0)
             col = YLW if act else WHT
-            s = size * (1.04 if act else 1.0) * pop0
+            s = size * ((1.04 * pop0) if act else 1.0)
             F(c, s); dw = c.text_extents(words[i]).x_advance
             xx = x + ws[i] / 2 - dw / 2
             c.move_to(xx, y); c.text_path(words[i]); c.set_source_rgba(0, 0, 0, 0.95); c.set_line_width(12); c.set_line_join(cairo.LINE_JOIN_ROUND); c.stroke()
@@ -236,13 +236,17 @@ def sc_hook(c, t, sg, lt, u):
     for k in range(2):
         x = W * (0.27 + 0.46 * k); col = YLW if k == 0 else WHT
         s = 1 + 0.05 * max(0, 1 - (lt - 0.15 * k) / 0.2)
-        txt(c, p['top'][k], x, 470, 150 * s, (*col, ease((lt - 0.15 * k) / 0.2)), BIG, 'c', glow=1)
+        F(c, 150, BIG); fs = 150 * min(1, 440 / max(1, c.text_extents(p['top'][k]).x_advance))
+        txt(c, p['top'][k], x, 470, fs * s, (*col, ease((lt - 0.15 * k) / 0.2)), BIG, 'c', glow=1)
         txt(c, p['sub'][k], x, 530, 32, (*CYA, ease((lt - 0.15 * k - 0.2) / 0.2)), FONT, 'c')
     c.set_source_rgba(*BLU, a * 0.8); c.rectangle(W / 2 - 1.5, 360, 3, 190); c.fill()
     b = ap(u, 0.08, 0.25)
     plane_side(c, W / 2 + 60 * (1 - b) - 30 * u, 830 - 8 * math.sin(lt * 1.3), 300, BLU, b, 3.5)
     g = ap(u, 0.45, 0.6)
-    if g > 0:
+    if g > 0 and p.get('gauges'):
+        for k, (lab, val, fr, col) in enumerate(p['gauges']):
+            gauge(c, W * (0.28 + 0.44 * k), 1150, 120, fr * ap(u, 0.45 + 0.15 * k, 0.65 + 0.15 * k), lab, val, col, ap(u, 0.45 + 0.15 * k, 0.55 + 0.15 * k))
+    elif g > 0:
         gauge(c, W * 0.28, 1150, 120, 0.30 * g, "DENSITÉ DE L'AIR", f"{int(30 * g)} %", CYA, g)
         gauge(c, W * 0.72, 1150, 120, 1 - 0.75 * ap(u, 0.75, 0.95), "CONSOMMATION", "MIN" if u > 0.8 else "", YLW, g)
         if u > 0.8:
@@ -449,8 +453,9 @@ def sc_concorde(c, t, sg, lt, u):
 def sc_outro(c, t, sg, lt, u):
     a = ap(u, 0.0, 0.15)
     plane_side(c, W / 2, 560, 260, BLU, a, 3)
-    txt(c, "L'ALTITUDE N'EST", W / 2, 820, 92, (*WHT, a), BIG, 'c')
-    txt(c, "JAMAIS UN HASARD", W / 2, 910, 92, (*YLW, a), BIG, 'c', glow=1)
+    l1, l2 = sg['p'].get('lines', ("L'ALTITUDE N'EST", "JAMAIS UN HASARD"))
+    txt(c, l1, W / 2, 820, 92, (*WHT, a), BIG, 'c')
+    txt(c, l2, W / 2, 910, 92, (*YLW, a), BIG, 'c', glow=1)
     b = ap(u, 0.45, 0.55)
     if b > 0:
         s = 1 + 0.06 * math.sin(lt * 6)
@@ -466,6 +471,142 @@ def sc_outro(c, t, sg, lt, u):
 
 
 SC = dict(hook=sc_hook, plan=sc_plan, air=sc_air, cold=sc_cold, weather=sc_weather, coffin=sc_coffin, steps=sc_steps, cabin=sc_cabin, concorde=sc_concorde, outro=sc_outro)
+
+
+# ---------- épisode 02 : le mur du son ----------
+def mach_waves(c, lt, m0, m1, T, px, py, cs=170, col=CYA, a=1.0, span=3.2):
+    """Ondes émises par l'avion (caméra qui suit l'avion, fixé en px). Mach passe de m0 à m1 en T secondes."""
+    M = lambda tau: m0 + (m1 - m0) * min(1, max(0, tau / T))
+    X = lambda tau: sum(M(tau * k / 40) for k in range(40)) * tau / 40 * cs
+    xn = X(lt)
+    te = lt - (lt % 0.22)
+    for k in range(int(span / 0.22)):
+        e = te - k * 0.22
+        if e < 0: break
+        r = cs * (lt - e); cx = px - (xn - X(e))
+        al = a * max(0, 1 - r / 900)
+        if al <= 0: continue
+        c.new_path(); c.arc(cx, py, r, 0, 6.283); c.set_source_rgba(*col, al * 0.85); c.set_line_width(3); c.stroke()
+    return M(lt)
+
+
+def sc_waves(c, t, sg, lt, u):
+    a = ap(u, 0, 0.08); T = max(1, sg['dur'] * 0.75)
+    m = mach_waves(c, lt, 0.45, 1.0, T, 640, 800, a=a)
+    plane_side(c, 640 - 90, 800, 90, BLU, a, 2.5)
+    txt(c, f"MACH {m:.2f}".replace('.', ','), W / 2, 1230, 120, (*(YLW if m > 0.97 else WHT), a), BIG, 'c', glow=1)
+    if m > 0.97:
+        b = ap(u, 0.8, 0.88)
+        glow(c, lambda: (c.new_path(), c.move_to(645, 560), c.line_to(645, 1040)), RED, b, 6)
+        txt(c, "LE MUR", 680, 560, 56, (*RED, b), BIG)
+
+
+def sc_cone(c, t, sg, lt, u):
+    a = ap(u, 0, 0.08)
+    m = mach_waves(c, lt + 3, 1.7, 1.7, 1, 820, 780, a=a, span=4.5)
+    plane_side(c, 820 - 90, 780, 90, BLU, a, 2.5)
+    b = ap(u, 0.3, 0.45); mu = math.asin(1 / 1.7); L = 900
+    for sgn in (-1, 1):
+        glow(c, lambda sgn=sgn: (c.new_path(), c.move_to(830, 780), c.line_to(830 - L * math.cos(mu), 780 + sgn * L * math.sin(mu))), YLW, b, 4)
+    txt(c, "CÔNE DE MACH", 300, 1180, 70, (*YLW, b), BIG, 'c', glow=1)
+    txt(c, "MACH 1,7", 820, 600, 60, (*WHT, a), BIG, 'c')
+
+
+def person(c, x, y, s, col, a):
+    c.new_path(); c.arc(x, y - 1.6 * s, 0.25 * s, 0, 6.283); c.set_source_rgba(*col, a); c.fill()
+    glow(c, lambda: poly(c, [(x, y - 1.35 * s), (x, y - 0.6 * s), (x - 0.3 * s, y), (x, y - 0.6 * s), (x + 0.3 * s, y), (x, y - 0.6 * s), (x, y - 1.1 * s), (x - 0.35 * s, y - 0.85 * s), (x, y - 1.1 * s), (x + 0.35 * s, y - 0.85 * s)]), col, a, 3)
+
+
+def sc_bang(c, t, sg, lt, u):
+    a = ap(u, 0, 0.08); gy = 1200; py = 560
+    glow(c, lambda: (c.new_path(), c.move_to(0, gy), c.line_to(W, gy)), BLU, a, 3)
+    for k in range(24):
+        c.move_to(k * 50, gy); c.line_to(k * 50 - 25, gy + 25)
+    c.set_source_rgba(*BLU, a * 0.4); c.set_line_width(2); c.stroke()
+    mu = math.asin(1 / 1.7); dx = (gy - py) / math.tan(mu)
+    xs = -300 + 1500 * ap(u, 0.05, 0.95)
+    for sgn in (-1, 1):
+        glow(c, lambda sgn=sgn: (c.new_path(), c.move_to(xs, py), c.line_to(xs - dx * 1.2, py + sgn * (gy - py) * 1.2)), YLW, a, 4)
+    plane_side(c, xs - 80, py, 80, BLU, a, 2.5)
+    xg = xs - dx
+    c.new_path(); c.arc(xg, gy, 16, 0, 6.283); c.set_source_rgba(*RED, a); c.fill()
+    for k, px in enumerate((260, 820)):
+        hit = xg >= px; f = min(1, max(0, (xg - px) / 120)) if hit else 0
+        person(c, px, gy - 4, 60, WHT if not hit else YLW, a)
+        if hit and f < 1:
+            sc_ = 1 + 0.4 * f
+            txt(c, "BANG !", px, gy - 160 - 40 * f, 90 * sc_, (*RED, 1 - f * 0.6), BIG, 'c', glow=1)
+    txt(c, "TOUT LE LONG DU VOL", W / 2, 1330, 54, (*YLW, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+def x1_side(c, x, y, s, col, a=1.0, w=3.0):
+    def body():
+        c.new_path(); c.move_to(x + 1.0 * s, y)
+        c.curve_to(x + 0.7 * s, y - 0.16 * s, x + 0.2 * s, y - 0.17 * s, x - 0.6 * s, y - 0.12 * s)
+        c.line_to(x - 0.95 * s, y - 0.05 * s); c.line_to(x - 0.95 * s, y + 0.05 * s); c.line_to(x - 0.6 * s, y + 0.12 * s)
+        c.curve_to(x + 0.2 * s, y + 0.17 * s, x + 0.7 * s, y + 0.16 * s, x + 1.0 * s, y); c.close_path()
+    body(); c.set_source_rgba(*col, a * 0.08); c.fill(); glow(c, body, col, a, w)
+    glow(c, lambda: poly(c, [(x - 0.55 * s, y - 0.1 * s), (x - 0.8 * s, y - 0.42 * s), (x - 0.92 * s, y - 0.42 * s), (x - 0.85 * s, y - 0.06 * s)]), col, a, w)
+    glow(c, lambda: poly(c, [(x + 0.15 * s, y + 0.05 * s), (x - 0.05 * s, y + 0.2 * s), (x - 0.25 * s, y + 0.2 * s), (x - 0.15 * s, y + 0.05 * s)]), col, a, w)
+    c.new_path(); c.arc(x + 0.55 * s, y - 0.09 * s, 0.05 * s, 0, 6.283); c.set_source_rgba(*col, a * 0.6); c.fill()
+
+
+def sc_yeager(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    txt(c, "14 OCTOBRE 1947", W / 2, 520, 120, (*YLW, a), BIG, 'c', glow=1)
+    b = ap(u, 0.25, 0.4)
+    x1_side(c, 200 + 500 * b + 60 * u, 820, 230, BLU, b, 3)
+    for k in range(5):
+        L = 60 + 40 * k
+        glow(c, lambda k=k, L=L: (c.new_path(), c.move_to(200 + 500 * b + 60 * u - 230 * 0.95 - 10, 820 + (k - 2) * 8), c.line_to(200 + 500 * b + 60 * u - 230 * 0.95 - 10 - L * (0.6 + 0.4 * math.sin(lt * 20 + k)), 820 + (k - 2) * 8)), ORG, b * 0.8, 3)
+    txt(c, "BELL X-1", W / 2, 1060, 90, (*WHT, ap(u, 0.45, 0.55)), BIG, 'c')
+    txt(c, "MACH 1,06", W / 2, 1190, 110, (*CYA, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+def sc_vapor(c, t, sg, lt, u):
+    a = ap(u, 0, 0.08); cx, cy = W / 2, 760
+    b = ap(u, 0.15, 0.3)
+    for k in range(6):
+        rr = 1 + 0.08 * math.sin(lt * 7 + k)
+        c.save(); c.translate(cx - 40 + k * 18, cy); c.scale(0.45, 1)
+        c.new_path(); c.arc(0, 0, (230 - k * 25) * rr, 0, 6.283); c.restore()
+        c.set_source_rgba(0.9, 0.95, 1, b * 0.10); c.fill()
+    plane_side(c, cx, cy, 300, BLU, a, 3)
+    txt(c, "CONDENSATION", cx, 450, 80, (*CYA, ap(u, 0.35, 0.45)), BIG, 'c', glow=1)
+    d = ap(u, 0.62, 0.72)
+    if d > 0:
+        c.save(); c.translate(cx, 1150); c.rotate(-0.08); s_ = 1 + 0.2 * (1 - d)
+        c.scale(s_, s_)
+        glow(c, lambda: (c.new_path(), c.rectangle(-380, -70, 760, 120)), RED, d, 5)
+        txt(c, "PAS UNE PREUVE DE MACH 1", 0, 20, 60, (*RED, d), BIG, 'c')
+        c.restore()
+
+
+def sc_ban(c, t, sg, lt, u):
+    a = ap(u, 0, 0.08); gy = 1100; coast = 560
+    c.new_path(); poly(c, [(0, gy), (coast - 40, gy), (coast, gy + 30), (coast - 60, gy + 120), (0, gy + 120)], True)
+    c.set_source_rgba(*BLU, a * 0.15); c.fill()
+    glow(c, lambda: poly(c, [(0, gy), (coast - 40, gy), (coast, gy + 30), (coast - 60, gy + 120)]), BLU, a, 3)
+    for k in range(6):
+        y = gy + 20 + k * 18; ph = lt * 2 + k
+        c.new_path()
+        for j in range(30):
+            x = coast + 20 + j * 18; c.line_to(x, y + 6 * math.sin(ph + j * 0.6))
+        c.set_source_rgba(*CYA, a * 0.5); c.set_line_width(2); c.stroke()
+    txt(c, "TERRE", coast / 2, gy + 190, 60, (*WHT, a), BIG, 'c')
+    txt(c, "OCÉAN", (coast + W) / 2, gy + 190, 60, (*CYA, a), BIG, 'c')
+    f = ap(u, 0.1, 0.85); x = 120 + 860 * f; sup = x > coast + 40
+    if sup:
+        mu = math.asin(1 / 2.0)
+        for sgn in (-1, 1):
+            glow(c, lambda sgn=sgn: (c.new_path(), c.move_to(x + 60, 700), c.line_to(x + 60 - 500 * math.cos(mu), 700 + sgn * 500 * math.sin(mu))), YLW, 0.8, 3)
+    delta_side(c, x, 700, 110, YLW if sup else WHT, a, 3)
+    txt(c, "MACH 2" if sup else "MACH 0,95", x, 600, 70, (*(YLW if sup else WHT), a), BIG, 'c', glow=1)
+    if not sup:
+        txt(c, "SUPERSONIQUE INTERDIT", coast / 2 + 60, 470, 56, (*RED, ap(u, 0.2, 0.3)), BIG, 'c', glow=1)
+
+
+SC.update(waves=sc_waves, cone=sc_cone, bang=sc_bang, yeager=sc_yeager, vapor=sc_vapor, ban=sc_ban)
 
 
 def frame(t):
