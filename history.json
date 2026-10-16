@@ -798,11 +798,12 @@
    "uuids": {
     "tiktok": "3660947790416398274",
     "youtube+facebook": "5058351542689416397"
-   }
+   },
+   "note": "recoloré palette minuteaero (turquoise/orange) le 16/10 matin"
   },
   {
    "date": "2026-10-16 18:00",
-   "format": "duel",
+   "format": "duel (nd_render néon)",
    "name": "Rafale vs F-15",
    "voice": "Corentin",
    "duree": 67.8,
@@ -812,7 +813,8 @@
    "uuids": {
     "tiktok": "8029999750030444695",
     "youtube+facebook": "4302096603399277382"
-   }
+   },
+   "note": "refait en style néon le 16/10 matin"
   }
  ],
  "notes": [
@@ -992,5 +994,6 @@
   "06 Comment un avion freine (inverseurs, spoilers, freins carbone)",
   "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
   "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
- ]
+ ],
+ "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)"
 }

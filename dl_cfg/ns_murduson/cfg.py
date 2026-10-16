@@ -4,7 +4,7 @@
 SERIES = "LA SCIENCE DU VOL"; EP = "02"; NEXT = "COMMENT UNE AILE PORTE"
 SCENES = [
     dict(type='hook', top=("1 225 KM/H", "1 060 KM/H"), sub=("au niveau de la mer", "à 11 000 mètres"),
-         gauges=[("VITESSE DU SON · SOL", "340 M/S", 0.85, (0.30, 0.70, 1.0)), ("À 11 000 M", "295 M/S", 0.72, (1.0, 0.86, 0.0))],
+         gauges=[("VITESSE DU SON · SOL", "340 M/S", 0.85, (0.45, 1.0, 0.92)), ("À 11 000 M", "295 M/S", 0.72, (1.0, 0.55, 0.0))],
          say="Mille deux cent vingt-cinq kilomètres-heure au sol. Mille soixante à onze mille mètres. Le mur du son n'est pas à la même vitesse partout. Alors, c'est quoi, vraiment ?",
          show="1 225 km/h au sol. 1 060 à 11 000 mètres. Le mur du son n'est pas à la même vitesse partout. Alors, c'est quoi, vraiment ?"),
     dict(type='plan', items=["LE SON", "LE CÔNE", "LE BANG", "L'INTERDIT"],

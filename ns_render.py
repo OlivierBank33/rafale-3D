@@ -16,14 +16,15 @@ for i, s in enumerate(SCENES):
 TOTAL = t
 json.dump(dict(seg=[{k: v for k, v in x.items() if k != 'p'} for x in SEG], total=TOTAL), open(D + 'timeline.json', 'w'))
 
-BG = (0.020, 0.027, 0.055)                 # #05070E
-BLU = (0.165, 0.46, 1.0)                   # #2A75FF
-CYA = (0.30, 0.70, 1.0)                    # #4DB3FF
-YLW = (1.0, 0.86, 0.0)                     # #FFDB00
-RED = (1.0, 0.23, 0.19)                    # #FF3B30
-ORG = (1.0, 0.48, 0.0)
-WHT = (0.97, 0.98, 1.0)
-DIM = (0.45, 0.55, 0.75)
+# Palette @minuteaero (style néon, couleurs propres) : turquoise néon + orange néon
+BG = (0.012, 0.035, 0.042)                 # #03090B
+BLU = (0.0, 0.88, 0.78)                    # turquoise néon #00E0C7 (traits)
+CYA = (0.45, 1.0, 0.92)                    # turquoise clair #73FFEB (légendes)
+YLW = (1.0, 0.55, 0.0)                     # orange néon #FF8C00 (mots clés, chiffres)
+RED = (1.0, 0.18, 0.33)                    # rouge-rose #FF2E55 (alertes)
+ORG = (1.0, 0.82, 0.25)                    # ambre (2e couleur d'accent)
+WHT = (0.96, 1.0, 0.99)
+DIM = (0.40, 0.62, 0.60)
 FONT = 'Montserrat'; BIG = 'Bebas Neue'
 
 
@@ -75,7 +76,7 @@ def background(c, t):
     for x, y, r, ph, sp in STARS:
         yy = (y + t * (6 + 14 * sp)) % H
         a = 0.25 + 0.55 * (0.5 + 0.5 * math.sin(t * (1 + 2 * sp) + ph))
-        c.set_source_rgba(0.8, 0.88, 1, a * (0.5 + r / 5)); c.arc(x, yy, r, 0, 6.283); c.fill()
+        c.set_source_rgba(0.8, 1, 0.96, a * (0.5 + r / 5)); c.arc(x, yy, r, 0, 6.283); c.fill()
 
 
 # ---------- éléments ----------
