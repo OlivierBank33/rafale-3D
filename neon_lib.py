@@ -154,8 +154,9 @@ STK = {}
 
 # ---------- sous-titres karaoké (mot actif en orange) ----------
 def chunks(show, n=3):
-    show = re.sub(r' ([?!:;»])', ' \\1', show)
-    w = show.split(); out = []; cur = []
+    show = re.sub(r' ([?!:;»])', '\u00a0\\1', show)
+    show = re.sub(r'(\d) (\d{3})', '\\1\u00a0\\2', show)
+    w = [x for x in show.split(' ') if x]; out = []; cur = []
     for x in w:
         cur.append(x)
         if len(cur) >= n or x.endswith(('.', '?', '!', ',', ':')): out.append(cur); cur = []

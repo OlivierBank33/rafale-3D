@@ -181,8 +181,9 @@ def header(c, t, sg, lt):
 
 # ---------- sous-titres karaoké ----------
 def chunks(show, n=3):
-    show = re.sub(r' ([?!:;»])', ' \\1', show)
-    w = show.split(); out = []; cur = []
+    show = re.sub(r' ([?!:;»])', '\u00a0\\1', show)
+    show = re.sub(r'(\d) (\d{3})', '\\1\u00a0\\2', show)
+    w = [x for x in show.split(' ') if x]; out = []; cur = []
     for x in w:
         cur.append(x)
         if len(cur) >= n or x.endswith(('.', '?', '!', ',', ':')): out.append(cur); cur = []
@@ -455,8 +456,9 @@ def sc_outro(c, t, sg, lt, u):
     a = ap(u, 0.0, 0.15)
     plane_side(c, W / 2, 560, 260, BLU, a, 3)
     l1, l2 = sg['p'].get('lines', ("L'ALTITUDE N'EST", "JAMAIS UN HASARD"))
-    txt(c, l1, W / 2, 820, 92, (*WHT, a), BIG, 'c')
-    txt(c, l2, W / 2, 910, 92, (*YLW, a), BIG, 'c', glow=1)
+    for k, (ln, col) in enumerate(((l1, WHT), (l2, YLW))):
+        F(c, 92, BIG); fs = 92 * min(1, 980 / max(1, c.text_extents(ln).x_advance))
+        txt(c, ln, W / 2, 820 + k * 90, fs, (*col, a), BIG, 'c', glow=k)
     b = ap(u, 0.45, 0.55)
     if b > 0:
         s = 1 + 0.06 * math.sin(lt * 6)
@@ -468,7 +470,8 @@ def sc_outro(c, t, sg, lt, u):
         c.restore()
         sticker(c, 'point_right', 150, 1110, 230, b, -0.05)
     d = ap(u, 0.7, 0.8)
-    txt(c, f"ÉP. {int(getattr(CFG, 'EP', '01')) + 1:02d} : {getattr(CFG, 'NEXT', '')}", W / 2, 1270, 44, (*CYA, d), FONT, 'c')
+    nx = f"ÉP. {int(getattr(CFG, 'EP', '01')) + 1:02d} : {getattr(CFG, 'NEXT', '')}"; F(c, 44); fs = 44 * min(1, 980 / max(1, c.text_extents(nx).x_advance))
+    txt(c, nx, W / 2, 1270, fs, (*CYA, d), FONT, 'c')
 
 
 SC = dict(hook=sc_hook, plan=sc_plan, air=sc_air, cold=sc_cold, weather=sc_weather, coffin=sc_coffin, steps=sc_steps, cabin=sc_cabin, concorde=sc_concorde, outro=sc_outro)
@@ -608,6 +611,164 @@ def sc_ban(c, t, sg, lt, u):
 
 
 SC.update(waves=sc_waves, cone=sc_cone, bang=sc_bang, yeager=sc_yeager, vapor=sc_vapor, ban=sc_ban)
+
+
+# ---------- épisode 03 : comment une aile porte ----------
+def rot_pt(cx, cy, x, y, a):
+    dx, dy = x - cx, y - cy
+    return cx + dx * math.cos(a) + dy * math.sin(a), cy - dx * math.sin(a) + dy * math.cos(a)
+
+
+def airfoil(c, cx, cy, chord, aoa, col=None, a=1.0, w=3.5):
+    col = col or BLU; up, lo = [], []
+    n = 60
+    for k in range(n + 1):
+        x = (1 - math.cos(math.pi * k / n)) / 2
+        yt = 5 * 0.13 * (0.2969 * math.sqrt(x) - 0.126 * x - 0.3516 * x * x + 0.2843 * x ** 3 - 0.1015 * x ** 4)
+        p = 0.4; yc = 0.04 / p ** 2 * (2 * p * x - x * x) if x < p else 0.04 / (1 - p) ** 2 * (1 - 2 * p + 2 * p * x - x * x)
+        X = cx + (x - 0.3) * chord
+        up.append(rot_pt(cx, cy, X, cy - (yc + yt) * chord, math.radians(-aoa)))
+        lo.append(rot_pt(cx, cy, X, cy - (yc - yt) * chord, math.radians(-aoa)))
+    def path():
+        c.new_path(); poly(c, up + lo[::-1], True)
+    path(); c.set_source_rgba(*col, a * 0.10); c.fill(); glow(c, path, col, a, w)
+    return up, lo
+
+
+def streamlines(c, cx, cy, chord, aoa, t, a=1.0, stall=0.0, n=9, speed=1.0, col=None):
+    """Lignes de courant stylisées : contournent le profil, déviées vers le bas derrière (downwash). stall>0 : décollement turbulent sur l'extrados."""
+    col = col or CYA; ar = math.radians(aoa)
+    for k in range(n):
+        h = (k - (n - 1) / 2) * 52
+        pts = []
+        for j in range(80):
+            x = -560 + j * 15
+            u = (x + 0.3 * chord) / chord          # 0 = bord d'attaque, 1 = bord de fuite
+            bump = math.exp(-((u - 0.35) / 0.45) ** 2) * (42 if h < 0 else 18) * math.exp(-abs(h) / 220)
+            y = h + (-bump if h < 0 else bump * 0.6)
+            dw = math.tan(ar) * 0.9 * max(0, x + 0.3 * chord) * math.exp(-abs(h) / 400) if u > 0 else math.tan(ar) * 0.25 * (x + 0.3 * chord) * math.exp(-abs(h) / 300)
+            y += dw
+            if stall > 0 and h < 0 and u > 0.25 and abs(h) < 200:
+                y += stall * 30 * math.sin(x * 0.05 + t * 9 + k) * min(1, (u - 0.25) * 2)
+            if -0.08 < u < 1.08:
+                xr = x
+                if h < 0: y = min(y, xr * math.tan(ar) - 0.075 * chord - abs(h) * 0.55)
+                else: y = max(y, xr * math.tan(ar) + 0.03 * chord + h * 0.55)
+            pts.append([cx + x, cy + y])
+        for _ in range(3):
+            pts = [pts[0]] + [[p[0], (pts[i - 1][1] + 2 * p[1] + pts[i + 1][1]) / 4] for i, p in enumerate(pts[1:-1], 1)] + [pts[-1]]
+        pts = [tuple(p) for p in pts]
+        cc = RED if (stall > 0.3 and h < 0 and abs(h) < 200) else col
+        c.new_path(); poly(c, pts); c.set_source_rgba(*cc, a * 0.55); c.set_line_width(2.5); c.stroke()
+        ph = (t * 0.6 * speed * (1.25 if h < 0 else 1.0) + k * 0.13) % 1
+        px, py = pts[int(ph * (len(pts) - 1))]
+        c.new_path(); c.arc(px, py, 7, 0, 6.283); c.set_source_rgba(*(YLW if h < 0 else WHT), a); c.fill()
+
+
+def sc_angle(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy = W / 2 + 40, 800
+    streamlines(c, cx, cy, 520, 7, t, a)
+    airfoil(c, cx, cy, 520, 7, BLU, a)
+    b = ap(u, 0.35, 0.5)
+    for k in range(4):
+        arrow(c, cx + 300 + k * 30, cy + 70 + k * 22, cx + 360 + k * 30, cy + 170 + k * 22, CYA, b * 0.8, 4, 18)
+    txt(c, "L'AIR EST POUSSÉ VERS LE BAS", W / 2, 1110, 50, (*CYA, b), BIG, 'c')
+    d = ap(u, 0.6, 0.72)
+    arrow(c, cx - 40, cy - 30, cx - 40, cy - 30 - 260 * d, YLW, d, 9, 40)
+    txt(c, "PORTANCE", cx + 10, cy - 250, 70, (*YLW, d), BIG, glow=1)
+    txt(c, "ACTION = RÉACTION", W / 2, 1190, 60, (*YLW, ap(u, 0.75, 0.85)), BIG, 'c', glow=1)
+
+
+def sc_forme(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy = W / 2 + 40, 800
+    b = ap(u, 0.3, 0.45)
+    g = cairo.RadialGradient(cx, cy - 120, 20, cx, cy - 120, 360); g.add_color_stop_rgba(0, *BLU, 0.35 * b); g.add_color_stop_rgba(1, *BLU, 0)
+    c.set_source(g); c.paint()
+    g = cairo.RadialGradient(cx, cy + 110, 20, cx, cy + 110, 300); g.add_color_stop_rgba(0, *RED, 0.25 * b); g.add_color_stop_rgba(1, *RED, 0)
+    c.set_source(g); c.paint()
+    streamlines(c, cx, cy, 520, 4, t, a, speed=1.6)
+    airfoil(c, cx, cy, 520, 4, BLU, a)
+    txt(c, "DÉPRESSION  −", cx, cy - 230, 66, (*CYA, b), BIG, 'c', glow=1)
+    txt(c, "SURPRESSION  +", cx, cy + 260, 66, (*RED, ap(u, 0.42, 0.55)), BIG, 'c', glow=1)
+    txt(c, "L'AIR ACCÉLÈRE AU-DESSUS", W / 2, 1180, 50, (*YLW, ap(u, 0.62, 0.72)), BIG, 'c')
+
+
+def sc_piege(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy = W / 2 + 40, 760; chord = 600
+    airfoil(c, cx, cy, chord, 3, BLU, a)
+    f = ap(u, 0.15, 0.55)
+    x0 = cx - 0.3 * chord - 30; x1 = cx + 0.7 * chord + 30
+    xt = x0 + (x1 - x0) * min(1, f * 1.35); xb = x0 + (x1 - x0) * f
+    c.new_path(); c.arc(xt, cy - 95 * math.sin(math.pi * min(1, (xt - x0) / (x1 - x0))) - 10, 14, 0, 6.283); c.set_source_rgba(*YLW, a); c.fill()
+    c.new_path(); c.arc(xb, cy + 40 * math.sin(math.pi * (xb - x0) / (x1 - x0)) + 10, 14, 0, 6.283); c.set_source_rgba(*WHT, a); c.fill()
+    txt(c, "DESSUS", x0 - 20, cy - 60, 36, (*YLW, a), BIG, 'r'); txt(c, "DESSOUS", x0 - 20, cy + 70, 36, (*WHT, a), BIG, 'r')
+    d = ap(u, 0.5, 0.6)
+    if d > 0:
+        txt(c, "ARRIVE EN PREMIER", x1 - 40, cy - 150, 46, (*YLW, d), BIG, 'c', glow=1)
+    e = ap(u, 0.68, 0.78)
+    if e > 0:
+        c.save(); c.translate(W / 2, 1150); c.rotate(-0.06); s_ = 1 + 0.2 * (1 - e); c.scale(s_, s_)
+        glow(c, lambda: (c.new_path(), c.rectangle(-420, -70, 840, 120)), RED, e, 5)
+        txt(c, "ELLES NE SE RETROUVENT PAS", 0, 20, 62, (*RED, e), BIG, 'c'); c.restore()
+
+
+def sc_vitesse(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); x0 = 90
+    x = x0 + txt(c, "PORTANCE = ½ × ", x0, 520, 72, (*WHT, a), BIG)
+    x += txt(c, "ρ", x, 520, 72, (*WHT, a), 'DejaVu Sans')
+    x += txt(c, " × ", x, 520, 72, (*WHT, a), BIG)
+    x += txt(c, "V²", x, 520, 90, (*YLW, a), BIG, glow=1)
+    txt(c, " × S × Cz", x, 520, 72, (*WHT, a), BIG)
+    for k, (lab, mult, st) in enumerate((("VITESSE × 1", 1, 0.25), ("VITESSE × 2", 4, 0.5))):
+        b = ap(u, st, st + 0.15); y = 680 + k * 260
+        txt(c, lab, 110, y, 56, (*WHT, b), BIG)
+        L = 170 * mult * ap(u, st + 0.05, st + 0.2)
+        c.new_path(); c.rectangle(110, y + 30, L, 70); c.set_source_rgba(*(YLW if mult > 1 else BLU), b * 0.85); c.fill()
+        txt(c, f"PORTANCE × {mult}", (110 + L - 20) if mult > 1 else (110 + 194), y + 86 + (90 if mult > 1 else 0), 60, (*(YLW if mult > 1 else CYA), ap(u, st + 0.15, st + 0.25)), BIG, glow=1 if mult > 1 else 0)
+
+
+def sc_limite(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy = W / 2 + 40, 780
+    aoa = 4 + 15 * ap(u, 0.1, 0.7)
+    st = ap(u, 0.55, 0.72)
+    streamlines(c, cx, cy, 500, aoa, t, a, stall=st)
+    airfoil(c, cx, cy, 500, aoa, RED if st > 0.3 else BLU, a)
+    txt(c, f"{aoa:.0f}°", cx - 380, cy - 120, 110, (*(RED if st > 0.3 else YLW), a), BIG, 'c', glow=1)
+    txt(c, "ANGLE", cx - 380, cy - 40, 40, (*CYA, a), FONT, 'c')
+    gauge(c, W / 2, 1180, 110, (0.3 + 0.6 * ap(u, 0.1, 0.55)) * (1 - 0.7 * st), "PORTANCE", "", RED if st > 0.3 else YLW, a)
+    if st > 0.3:
+        txt(c, "DÉCROCHAGE", W / 2, 470, 110, (*RED, ap(u, 0.62, 0.7)), BIG, 'c', glow=1)
+
+
+def sc_astuce(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy = W / 2, 780; f = ap(u, 0.2, 0.6)
+    airfoil(c, cx, cy, 460, 4, BLU, a)
+    # volet (bord de fuite) et bec (bord d'attaque) qui sortent
+    fx, fy = cx + 0.7 * 460 - 10 + 8 * f, cy + 22 + 14 * f
+    def flap():
+        c.new_path(); poly(c, [(fx - 10, fy - 8), (fx + 150, fy + 40 * f + 4), (fx + 140, fy + 40 * f + 22), (fx - 14, fy + 10)], True)
+    flap(); c.set_source_rgba(*YLW, a * 0.15); c.fill(); glow(c, flap, YLW, a, 3)
+    sx, sy = cx - 0.3 * 460 - 24 * f, cy + 16 + 14 * f
+    def slat():
+        c.new_path(); poly(c, [(sx + 60, sy - 30), (sx - 10, sy - 6), (sx - 4, sy + 14), (sx + 60, sy - 8)], True)
+    slat(); c.set_source_rgba(*YLW, a * 0.15); c.fill(); glow(c, slat, YLW, a, 3)
+    txt(c, "VOLETS", fx + 80, fy + 140, 60, (*YLW, ap(u, 0.35, 0.45)), BIG, 'c', glow=1)
+    txt(c, "BECS", sx, sy + 140, 60, (*YLW, ap(u, 0.45, 0.55)), BIG, 'c', glow=1)
+    txt(c, "PLUS DE PORTANCE À BASSE VITESSE", W / 2, 1180, 50, (*CYA, ap(u, 0.62, 0.72)), BIG, 'c')
+
+
+def sc_dos(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    c.save(); c.translate(W / 2, 780); c.rotate(math.pi + 0.08); c.scale(-1, 1)
+    plane_side(c, 0, 0, 300, BLU, a, 3.5); c.restore()
+    d = ap(u, 0.4, 0.55)
+    arrow(c, W / 2 - 20, 720, W / 2 - 20, 720 - 220 * d, YLW, d, 9, 40)
+    txt(c, "PORTANCE", W / 2 + 30, 560, 64, (*YLW, d), BIG, glow=1)
+    txt(c, "SUR LE DOS, ÇA PORTE", W / 2, 1080, 76, (*WHT, ap(u, 0.2, 0.3)), BIG, 'c')
+    txt(c, "AVEC LE BON ANGLE", W / 2, 1170, 76, (*YLW, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+SC.update(angle=sc_angle, forme=sc_forme, piege=sc_piege, vitesse=sc_vitesse, limite=sc_limite, astuce=sc_astuce, dos=sc_dos)
 
 
 def frame(t):
