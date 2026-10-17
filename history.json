@@ -855,6 +855,43 @@
     "tiktok": "7447938223494546789",
     "youtube+facebook": "5882401349622448165"
    }
+  },
+  {
+   "date": "2026-10-18 10:00",
+   "format": "vrai_faux néon (nv_render)",
+   "name": "VF17 : avions de ligne (An-225 plus lourd que l'A380 V, 787 moitié composites V, A320 grand manche F, Concorde > 15 000 m V, A330 Air Transat plané ~20 min V, Gimli 767 fuite F)",
+   "voice": "Corentin",
+   "duree": 90.2,
+   "flow": "esA9L8ldd8qS8g8Gb2gM",
+   "mascotte": true,
+   "uuids": {}
+  },
+  {
+   "date": "2026-10-18 12:30",
+   "format": "science du vol néon (ns_render)",
+   "name": "LA SCIENCE DU VOL 04 — Pourquoi les avions ne volent pas tout droit (CDG-LAX 9 100 vs 10 140 km, globe, jet-stream, NAT tracks, ETOPS)",
+   "voice": "Corentin",
+   "duree": 63.9,
+   "flow": "cEysqsBCSfjYDri2NhO9",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-6838666536770189443",
+    "youtube+facebook": "5201022103021174846"
+   }
+  },
+  {
+   "date": "2026-10-18 18:00",
+   "format": "duel néon (nd_render)",
+   "name": "Rafale vs Su-35 (modèle Su-37/Su-27M)",
+   "voice": "Corentin",
+   "duree": 66.0,
+   "flow": "A7cI6CS3WWvy1zfpTofW",
+   "score": "3-2 Rafale",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "6381572325315199572",
+    "youtube+facebook": "-3326600945331846304"
+   }
   }
  ],
  "notes": [
@@ -992,9 +1029,19 @@
  },
  "duel_backlog": [
   {
-   "match": "Rafale vs Su-37 (famille Su-35)",
-   "models": "rafale.glb, fg/Su-37",
-   "angle": "France vs Russie"
+   "match": "Mirage 2000 vs Su-35",
+   "models": "vues dl/m2000_f15 (a_*) + dl/rafale_su37 (b_*)",
+   "angle": "France vs Russie, le petit delta contre le Flanker"
+  },
+  {
+   "match": "Rafale Marine vs Harrier",
+   "models": "vues dl/rafale_f35 (a_*) + fg/Harrier-GR1 (à rendre)",
+   "angle": "porte-avions : catapulte contre décollage vertical"
+  },
+  {
+   "match": "Mirage 2000 vs F-35",
+   "models": "vues dl/m2000_f15 (a_*) + dl/rafale_f35 (b_*)",
+   "angle": "France vs USA, ancienne gloire contre furtif"
   },
   {
    "match": "P-51 Mustang vs A6M Zero",
@@ -1023,11 +1070,13 @@
   }
  ],
  "ns_backlog": [
-  "04 Pourquoi les avions ne volent pas en ligne droite (orthodromie, Paris-New York par le Groenland)",
   "05 Les traînées blanches (condensation, pas de produits chimiques)",
   "06 Comment un avion freine (inverseurs, spoilers, freins carbone)",
   "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
   "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
  ],
- "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)"
+ "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)",
+ "notes_tech": [
+  "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser."
+ ]
 }

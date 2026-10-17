@@ -1,7 +1,7 @@
 """VRAI OU FAUX en style néon @minuteaero. Usage : VF=vf16 python3 nv_render.py [stills t1 ...]
 Lit <VF>_script.py (INTRO, OUTRO, Q[img, stmt, answer(0=vrai,1=faux), q_say, a_say, a_show, q_show?], THEME?) et <VF>/durs.json ; images r3d/<img>.png.
 Même timeline que vfN_render.py (compatible el_sync / vfN_audio.py) : pour el_sync, <VF>_render.py = wrapper qui importe ce module."""
-import cairo, json, math, os, sys, importlib
+import cairo, json, math, os, re, sys, importlib
 from neon_lib import *
 
 VF = os.environ.get('VF', 'vf15')
@@ -28,7 +28,7 @@ IMG = [neon_image(f"r3d/{q['img']}.png", BLU, maxdim=1000) for q in Q]
 
 
 def wrap(c, s, size, maxw, fam=BIG):
-    F(c, size, fam); words = s.split(); lines = []; cur = ''
+    F(c, size, fam); s = re.sub(r'(\d) (\d{3})', '\\1\u00a0\\2', s); words = [w for w in s.split(' ') if w]; lines = []; cur = ''
     for w in words:
         tst = (cur + ' ' + w).strip()
         if c.text_extents(tst).x_advance > maxw and cur: lines.append(cur); cur = w

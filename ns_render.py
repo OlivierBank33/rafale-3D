@@ -771,6 +771,164 @@ def sc_dos(c, t, sg, lt, u):
 SC.update(angle=sc_angle, forme=sc_forme, piege=sc_piege, vitesse=sc_vitesse, limite=sc_limite, astuce=sc_astuce, dos=sc_dos)
 
 
+# ---------- épisode 04 : pourquoi les avions ne volent pas tout droit ----------
+import functools
+CDG = (49.01, 2.55); LAX = (33.94, -118.41); JFK = (40.64, -73.78)
+
+
+def gc_points(a, b, n=120):
+    p1, l1 = map(math.radians, a); p2, l2 = map(math.radians, b)
+    d = 2 * math.asin(math.sqrt(math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin((l2 - l1) / 2) ** 2))
+    out = []
+    for k in range(n + 1):
+        f = k / n; A = math.sin((1 - f) * d) / math.sin(d); B = math.sin(f * d) / math.sin(d)
+        x = A * math.cos(p1) * math.cos(l1) + B * math.cos(p2) * math.cos(l2); y = A * math.cos(p1) * math.sin(l1) + B * math.cos(p2) * math.sin(l2); z = A * math.sin(p1) + B * math.sin(p2)
+        out.append((math.degrees(math.atan2(z, math.hypot(x, y))), math.degrees(math.atan2(y, x))))
+    return out
+
+
+class Merc:
+    def __init__(s, lon0, lon1, lat0, lat1, x0, x1, ycen):
+        s.lon0, s.lon1, s.x0, s.x1 = lon0, lon1, x0, x1
+        s.k = (x1 - x0) / math.radians(lon1 - lon0)
+        s.ym = lambda la: math.log(math.tan(math.pi / 4 + math.radians(la) / 2))
+        s.yc = ycen; s.mid = (s.ym(lat0) + s.ym(lat1)) / 2; s.lat0, s.lat1 = lat0, lat1
+    def __call__(s, lat, lon):
+        return s.x0 + (lon - s.lon0) * math.pi / 180 * s.k, s.yc - (s.ym(lat) - s.mid) * s.k
+
+
+@functools.lru_cache(maxsize=8)
+def land_dots(lon0, lon1, lat0, lat1, step):
+    from global_land_mask import globe
+    pts = []
+    la = lat0
+    while la <= lat1:
+        lo = lon0
+        while lo <= lon1:
+            if globe.is_land(la, lo): pts.append((la, lo))
+            lo += step
+        la += step
+    return pts
+
+
+def dot_map(c, P, a, step=1.15, col=None, r=3.4):
+    col = col or (0.30, 0.62, 0.58)
+    for la, lo in land_dots(P.lon0, P.lon1, P.lat0, P.lat1, step):
+        x, y = P(la, lo); c.new_path(); c.arc(x, y, r, 0, 6.283); c.set_source_rgba(*col, a * 0.9); c.fill()
+
+
+def city(c, P, ll, name, a, right=True):
+    x, y = P(*ll); c.new_path(); c.arc(x, y, 11, 0, 6.283); c.set_source_rgba(*WHT, a); c.fill()
+    glow(c, lambda: (c.new_path(), c.arc(x, y, 20, 0, 6.283)), YLW, a, 2)
+    txt(c, name, x + (28 if right else -28), y + 14, 44, (*WHT, a), BIG, 'l' if right else 'r')
+
+
+def path_part(c, pts, f):
+    n = max(2, int(len(pts) * f)); poly(c, pts[:n])
+
+
+def sc_carte(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    P = Merc(-130, 15, 20, 72, 40, 1040, 820)
+    dot_map(c, P, a)
+    gc = [P(*p) for p in gc_points(CDG, LAX)]
+    xa, ya = P(*CDG); xb, yb = P(*LAX)
+    b = ap(u, 0.15, 0.4)
+    if b > 0:
+        c.save(); c.set_dash([18, 12]); glow(c, lambda: (c.new_path(), c.move_to(xa, ya), c.line_to(xa + (xb - xa) * b, ya + (yb - ya) * b)), WHT, 0.9, 3); c.restore()
+        txt(c, "« LIGNE DROITE » : 10 140 KM", (xa + xb) / 2, max(ya, yb) + 110, 48, (*WHT, ap(u, 0.3, 0.4)), BIG, 'c')
+    d = ap(u, 0.5, 0.8)
+    if d > 0:
+        glow(c, lambda: path_part(c, gc, d), YLW, 1, 5)
+        txt(c, "VRAI PLUS COURT : 9 100 KM", W / 2, 470, 60, (*YLW, ap(u, 0.7, 0.8)), BIG, 'c', glow=1)
+    city(c, P, CDG, "PARIS", a, False); city(c, P, LAX, "LOS ANGELES", a)
+
+
+def sc_globe(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); cx, cy, R = W / 2, 820, 400
+    lat0, lon0 = math.radians(48), math.radians(-58 + 20 * (u - 0.5))
+    def proj(la, lo):
+        la, lo = math.radians(la), math.radians(lo)
+        cosc = math.sin(lat0) * math.sin(la) + math.cos(lat0) * math.cos(la) * math.cos(lo - lon0)
+        x = math.cos(la) * math.sin(lo - lon0); y = math.cos(lat0) * math.sin(la) - math.sin(lat0) * math.cos(la) * math.cos(lo - lon0)
+        return cx + R * x, cy - R * y, cosc > 0
+    c.new_path(); c.arc(cx, cy, R, 0, 6.283); c.set_source_rgba(*BLU, 0.06 * a); c.fill()
+    glow(c, lambda: (c.new_path(), c.arc(cx, cy, R, 0, 6.283)), BLU, a, 3)
+    for la in range(-60, 90, 30):
+        pts = [proj(la, lo) for lo in range(-180, 181, 4)]
+        c.new_path(); started = False
+        for x, y, v in pts:
+            if v: (c.line_to if started else c.move_to)(x, y); started = True
+            else: started = False
+        c.set_source_rgba(*BLU, 0.25 * a); c.set_line_width(1.5); c.stroke()
+    for la, lo in land_dots(-180, 180, -60, 85, 2.2):
+        x, y, v = proj(la, lo)
+        if v: c.new_path(); c.arc(x, y, 3, 0, 6.283); c.set_source_rgba(*DIM, 0.8 * a); c.fill()
+    gc = [proj(*p) for p in gc_points(CDG, LAX)]
+    b = ap(u, 0.25, 0.65); n = max(2, int(len(gc) * b))
+    glow(c, lambda: poly(c, [(x, y) for x, y, v in gc[:n]]), YLW, a, 5)
+    for ll, name in ((CDG, "PARIS"), (LAX, "LOS ANGELES")):
+        x, y, v = proj(*ll)
+        if v: c.new_path(); c.arc(x, y, 10, 0, 6.283); c.set_source_rgba(*WHT, a); c.fill(); txt(c, name, x + 20, y - 16, 40, (*WHT, a), BIG)
+    x, y, v = proj(62, -45)
+    txt(c, "GROENLAND", x - 40, y + 90, 46, (*CYA, ap(u, 0.55, 0.65)), BIG, glow=1)
+    txt(c, "SUR UN GLOBE, C'EST TOUT DROIT", W / 2, 1330, 62, (*YLW, ap(u, 0.7, 0.8)), BIG, 'c', glow=1)
+
+
+def sc_jet(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    P = Merc(-90, 15, 22, 68, 40, 1040, 800)
+    dot_map(c, P, a)
+    for k in range(7):
+        y0 = 650 + k * 22
+        for j in range(9):
+            ph = ((t * 0.35 + j / 9 + k * 0.05) % 1)
+            x = 40 + ph * 1000; y = y0 + 40 * math.sin(x * 0.008 + k * 0.3)
+            arrow(c, x, y, x + 60, y + 40 * 0.008 * 60 * math.cos(x * 0.008), CYA, a * 0.55 * math.sin(ph * math.pi), 3, 14)
+    txt(c, "JET-STREAM", W / 2, 470, 90, (*CYA, a), BIG, 'c', glow=1)
+    txt(c, "VENT D'OUEST · PARFOIS + DE 300 KM/H", W / 2, 540, 40, (*WHT, ap(u, 0.15, 0.25)), BIG, 'c')
+    city(c, P, JFK, "NEW YORK", a); city(c, P, CDG, "PARIS", a, False)
+    b = ap(u, 0.4, 0.55)
+    if b > 0:
+        xa, ya = P(*JFK); xb, yb = P(*CDG); f = (t * 0.25) % 1
+        plane_side(c, xa + (xb - xa) * f, ya + (yb - ya) * f - 60, 45, YLW, b, 2)
+        txt(c, "VERS L'EST : AVEC LE VENT", W / 2, 1130, 54, (*YLW, b), BIG, 'c', glow=1)
+        txt(c, "JUSQU'À ~1 H DE MOINS", W / 2, 1200, 54, (*YLW, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+def sc_nat(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    P = Merc(-75, 10, 30, 68, 40, 1040, 800)
+    dot_map(c, P, a)
+    for k, L in enumerate("ABCDE"):
+        b = ap(u, 0.1 + k * 0.08, 0.3 + k * 0.08)
+        pts = [P(*p) for p in gc_points((51 + 0.0 * k, -8), (47.5 - 1.6 * k + 6, -52 - 1 * k), 60)]
+        pts = [(x, y + (k - 2) * 46) for x, y in pts]
+        glow(c, lambda pts=pts, b=b: path_part(c, pts, b), YLW if k == 2 else CYA, 1 if b > 0 else 0, 3)
+        if b > 0.9: txt(c, L, pts[-1][0] - 30, pts[-1][1] + 14, 46, (*(YLW if k == 2 else CYA), 1), BIG, 'r')
+    txt(c, "LES AUTOROUTES DE L'ATLANTIQUE", W / 2, 470, 66, (*WHT, a), BIG, 'c', glow=1)
+    txt(c, "REDESSINÉES CHAQUE JOUR SELON LE VENT", W / 2, 1180, 50, (*YLW, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+def sc_etops(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    P = Merc(-75, 10, 30, 68, 40, 1040, 800)
+    dot_map(c, P, a)
+    for k, (ll, name) in enumerate((((53.42, -9.0), "IRLANDE"), ((63.98, -22.6), "ISLANDE"), ((48.94, -54.57), "TERRE-NEUVE"), ((37.74, -25.7), "AÇORES"))):
+        b = ap(u, 0.15 + k * 0.1, 0.3 + k * 0.1); x, y = P(*ll)
+        r = 170 * b
+        c.new_path(); c.arc(x, y, r, 0, 6.283); c.set_source_rgba(*BLU, 0.10 * b); c.fill()
+        glow(c, lambda x=x, y=y, r=r: (c.new_path(), c.arc(x, y, r, 0, 6.283)), BLU, b, 2.5)
+        c.new_path(); c.arc(x, y, 8, 0, 6.283); c.set_source_rgba(*WHT, b); c.fill()
+        txt(c, name, x, y + 50, 36, (*WHT, b), BIG, 'c')
+    gc = [P(*p) for p in gc_points(CDG, JFK)]
+    glow(c, lambda: path_part(c, gc, ap(u, 0.55, 0.85)), YLW, a, 4)
+    txt(c, "TOUJOURS À PORTÉE D'UN AÉROPORT", W / 2, 470, 64, (*YLW, ap(u, 0.6, 0.7)), BIG, 'c', glow=1)
+
+
+SC.update(carte=sc_carte, globe=sc_globe, jet=sc_jet, nat=sc_nat, etops=sc_etops)
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))
