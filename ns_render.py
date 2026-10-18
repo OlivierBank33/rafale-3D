@@ -929,6 +929,180 @@ def sc_etops(c, t, sg, lt, u):
 SC.update(carte=sc_carte, globe=sc_globe, jet=sc_jet, nat=sc_nat, etops=sc_etops)
 
 
+# ---------- épisode 05 : comment un avion freine ----------
+def airfoil(c, x, y, s):
+    c.new_path(); c.move_to(x - s, y)
+    c.curve_to(x - 0.3 * s, y - 0.16 * s, x + 0.6 * s, y - 0.26 * s, x + s, y - 0.02 * s)
+    c.curve_to(x + 1.02 * s, y + 0.06 * s, x + 0.6 * s, y + 0.08 * s, x - s, y)
+    c.close_path()
+
+
+def sc_spoil(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); sp = ap(u, 0.2, 0.32)
+    x, y, s = W / 2 + 40, 860, 360
+    # filets d'air (de droite à gauche), perturbés derrière le spoiler
+    for k in range(6):
+        yy = y - 250 + k * 34 if k < 4 else y + 70 + (k - 4) * 40
+        pts = []
+        for j in range(60):
+            xx = W - 40 - j * 17
+            dy = 0
+            if k < 4:
+                bump = math.exp(-((xx - x - 0.2 * s) / (0.7 * s)) ** 2) * (60 - k * 12)
+                dy -= bump
+                if xx < x - 0.1 * s: dy += sp * (40 - k * 6) * math.sin(xx / 25 + lt * 9 + k)
+            pts.append((xx, yy + dy))
+        glow(c, lambda pts=pts: poly(c, pts), CYA, a * 0.55, 1.6)
+        ph = (lt * 420 + k * 130) % 1020
+        px = W - 40 - ph; j = int(ph / 17) % 60
+        c.set_source_rgba(*YLW, a); c.arc(px, pts[j][1], 6, 0, 6.283); c.fill()
+    airfoil(c, x, y, s); c.set_source_rgba(*BLU, a * 0.12); c.fill()
+    glow(c, lambda: airfoil(c, x, y, s), BLU, a, 3.5)
+    # spoiler articulé à l'avant, bord arrière qui se lève
+    hx, hy = x + 0.05 * s, y - 0.155 * s; L = 0.42 * s; an = math.radians(8 + 42 * sp)
+    ex, ey = hx - L * math.cos(an), hy - L * math.sin(an)
+    glow(c, lambda: (c.new_path(), c.move_to(hx, hy), c.line_to(ex, ey)), YLW, a, 7)
+    # portance qui s'effondre, poids sur les roues
+    lf = 1 - 0.8 * sp
+    arrow(c, x + 0.1 * s, y - 0.2 * s, x + 0.1 * s, y - 0.2 * s - 300 * lf, CYA, a, 7, 34)
+    txt(c, "PORTANCE", x + 0.1 * s + 30, y - 0.2 * s - 300 * lf + 30, 50, (*CYA, a), BIG)
+    wb = ap(u, 0.35, 0.5)
+    if wb > 0:
+        arrow(c, x - 0.2 * s, y + 40, x - 0.2 * s, y + 40 + 260 * wb, YLW, wb, 7, 34)
+        txt(c, "TOUT LE POIDS SUR LES ROUES", W / 2, y + 380, 58, (*YLW, wb), BIG, 'c', glow=1)
+    txt(c, "16 SPOILERS SE DRESSENT", W / 2, 440, 64, (*WHT, ap(u, 0.2, 0.3)), BIG, 'c', glow=1)
+
+
+def sc_reverse(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); rv = ap(u, 0.18, 0.3)
+    y0, y1 = 560, 760; xi, xe = 900, 160; ym = (y0 + y1) / 2
+    gap0, gap1 = 520 - 120 * rv, 520          # le capot arrière recule et ouvre une fenêtre
+    def cowl_front(): c.new_path(); c.rectangle(gap1, y0, xi - gap1, y1 - y0)
+    def cowl_back(): c.new_path(); c.rectangle(xe + 60 - 120 * rv, y0 + 10, gap0 - (xe + 60 - 120 * rv) - 0, y1 - y0 - 20)
+    c.set_source_rgba(*BLU, a * 0.08); cowl_front(); c.fill()
+    glow(c, cowl_front, BLU, a, 3); glow(c, cowl_back, BLU, a, 3)
+    for k in range(7):     # soufflante
+        yy = y0 + 20 + k * (y1 - y0 - 40) / 6
+        glow(c, lambda yy=yy: (c.new_path(), c.move_to(xi - 20, yy), c.line_to(xi - 50, yy + 12)), CYA, a * 0.8, 2)
+    rr = random.Random(5)
+    for k in range(26):
+        ph = (lt * 0.9 + rr.random()) % 1; side = -1 if k % 2 else 1; off = rr.uniform(-60, 60)
+        if rv < 0.5:
+            px, py = xi + 80 - ph * (xi - xe + 160), ym + off
+        else:
+            if ph < 0.55:
+                px, py = xi + 80 - ph / 0.55 * (xi + 80 - (gap0 + gap1) / 2), ym + off * (1 - ph)
+            else:
+                q = (ph - 0.55) / 0.45
+                px = (gap0 + gap1) / 2 + q * 200; py = ym + side * (110 + q * 120)
+        c.set_source_rgba(*YLW, a * 0.9); c.arc(px, py, 7, 0, 6.283); c.fill()
+    if rv > 0.5:
+        for side in (-1, 1):
+            arrow(c, (gap0 + gap1) / 2, ym + side * 120, (gap0 + gap1) / 2 + 200, ym + side * 230, YLW, ap(u, 0.3, 0.38), 6, 30)
+    txt(c, "SOUFFLE RENVOYÉ VERS L'AVANT", W / 2, 370, 58, (*YLW, ap(u, 0.3, 0.4)), BIG, 'c', glow=1)
+    # vue de dessus : 4 moteurs, seuls les 2 intérieurs inversent
+    b = ap(u, 0.55, 0.65); cx, cy = W / 2, 1150
+    glow(c, lambda: poly(c, [(cx - 470, cy + 40), (cx, cy - 60), (cx + 470, cy + 40)]), BLU, b, 3)
+    glow(c, lambda: (c.new_path(), c.move_to(cx, cy - 160), c.line_to(cx, cy + 120)), BLU, b, 4)
+    for k, dx in enumerate((-330, -170, 170, 330)):
+        inner = k in (1, 2); ex = cx + dx; ey = cy - 60 + abs(dx) / 470 * 100 + 30
+        col = YLW if inner else DIM
+        def eng(ex=ex, ey=ey): c.new_path(); c.rectangle(ex - 24, ey - 40, 48, 80)
+        glow(c, eng, col, b, 3 if inner else 2)
+        if inner and b > 0.5:
+            for sd in (-1, 1): arrow(c, ex + sd * 30, ey - 10, ex + sd * 60, ey - 70, YLW, b, 3, 14)
+    txt(c, "A380 : SEULS LES 2 MOTEURS INTÉRIEURS", W / 2, cy + 190, 50, (*WHT, ap(u, 0.6, 0.7)), BIG, 'c')
+
+
+def sc_brakes(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); heat = ap(u, 0.15, 0.6)
+    x, y, R = W / 2, 720, 230
+    glow(c, lambda: (c.new_path(), c.arc(x, y, R, 0, 6.283)), BLU, a, 5)
+    glow(c, lambda: (c.new_path(), c.arc(x, y, R * 0.72, 0, 6.283)), BLU, a, 3)
+    col = tuple(CYA[i] + (RED[i] - CYA[i]) * heat for i in range(3))
+    rot = 6 * lt * (1 - 0.8 * heat)
+    for k in range(5):          # disques carbone empilés (anneaux)
+        rr = R * (0.62 - k * 0.07)
+        glow(c, lambda rr=rr: (c.new_path(), c.arc(x, y, rr, 0, 6.283)), col, a, 2.5 + 2 * heat)
+    g = cairo.RadialGradient(x, y, 20, x, y, R * 0.65); g.add_color_stop_rgba(0, *col, 0.0); g.add_color_stop_rgba(1, *col, 0.25 * heat * a)
+    c.set_source(g); c.arc(x, y, R * 0.65, 0, 6.283); c.fill()
+    for k in range(8):
+        an = rot + k * math.pi / 4
+        glow(c, lambda an=an: (c.new_path(), c.move_to(x + math.cos(an) * 40, y + math.sin(an) * 40), c.line_to(x + math.cos(an) * R * 0.7, y + math.sin(an) * R * 0.7)), WHT, a * 0.5, 2)
+    txt(c, "DISQUES EN CARBONE", W / 2, 440, 66, (*WHT, ap(u, 0.1, 0.2)), BIG, 'c', glow=1)
+    # antiblocage : impulsions
+    p = ap(u, 0.35, 0.45)
+    if p > 0:
+        on = (math.sin(lt * 2 * math.pi * 2.5) > 0)
+        panel(c, W / 2 - 230, 950, 460, 80, YLW, p, 0.25 if on else 0.04)
+        txt(c, "ANTIBLOCAGE", W / 2, 1010, 60, (*(YLW if on else DIM), p), BIG, 'c')
+    # 16 roues freinées sur 20
+    q = ap(u, 0.6, 0.72)
+    if q > 0:
+        gear = [(-4, 0), (-4, 1), (-3, 0), (-3, 1), (-3, 2), (-2, 0), (-2, 1), (-2, 2), (2, 0), (2, 1), (2, 2), (3, 0), (3, 1), (3, 2), (4, 0), (4, 1)]
+        idx = 0
+        for gx in (-4, -3, -2, -1, 1, 2, 3, 4):
+            n = 2 if abs(gx) == 4 else 3 if abs(gx) in (2, 3) else 0
+            for j in range(n): pass
+        k = 0
+        for i in range(20):
+            col2 = YLW if i % 5 != 4 else DIM
+            xx = W / 2 - 4.5 * 70 + (i % 10) * 70; yy = 1090 + (i // 10) * 64
+            c.new_path(); c.arc(xx, yy, 24, 0, 6.283); c.set_source_rgba(*col2, q * (0.9 if col2 == YLW else 0.5)); c.fill()
+        txt(c, "16 ROUES FREINÉES SUR 20", W / 2, 1225, 50, (*WHT, q), BIG, 'c')
+
+
+def sc_rto(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    for k, (lab, col) in enumerate((("CHARGÉ AU MAXIMUM", WHT), ("FREINS USÉS À 90 %", RED), ("SANS INVERSEURS", YLW))):
+        b = ap(u, 0.02 + 0.06 * k, 0.08 + 0.06 * k)
+        txt(c, lab, W / 2, 400 + k * 62, 56, (*col, b), BIG, 'c', glow=1)
+    p = ap(u, 0.28, 0.62); p = min(1, max(0, (u - 0.28) / 0.34))
+    v = 315 * (1 - p); d = 1850 * (1 - (1 - p) ** 2)
+    ry = 940
+    c.new_path(); c.rectangle(60, ry, W - 120, 90); c.set_source_rgba(*BLU, a * 0.08); c.fill()
+    glow(c, lambda: (c.new_path(), c.rectangle(60, ry, W - 120, 90)), BLU, a, 2.5)
+    for k in range(14):
+        xx = 80 + k * 70
+        c.new_path(); c.rectangle(xx, ry + 42, 36, 6); c.set_source_rgba(*WHT, a * 0.5); c.fill()
+    px = 220 + 620 * (d / 1850)
+    plane_side(c, px, ry - 50, 160, BLU, a, 3)
+    hot = ap(u, 0.35, 0.6)
+    for gx in (px - 40, px + 10):
+        c.new_path(); c.arc(gx, ry - 6, 12, 0, 6.283); c.set_source_rgba(*RED, hot * a); c.fill()
+    txt(c, f"{int(round(v))} KM/H", 290, 780, 110, (*YLW, a), BIG, 'c', glow=1)
+    txt(c, f"{int(round(d / 10) * 10):,} M".replace(',', ' '), 790, 780, 110, (*WHT, a), BIG, 'c', glow=1)
+    txt(c, "VITESSE", 290, 830, 34, (*CYA, a), FONT, 'c'); txt(c, "DISTANCE", 790, 830, 34, (*CYA, a), FONT, 'c')
+    f = ap(u, 0.7, 0.8)
+    if f > 0:
+        panel(c, 90, 1110, 900, 170, RED, f, 0.08)
+        txt(c, "PNEUS DÉGONFLÉS : FUSIBLES FONDUS", W / 2, 1185, 54, (*RED, f), BIG, 'c', glow=1)
+        txt(c, "POUR ÉVITER QU'ILS EXPLOSENT", W / 2, 1250, 46, (*WHT, f), BIG, 'c')
+
+
+def sc_wet(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    rr = random.Random(9)
+    for _ in range(70):
+        x0 = rr.random() * W; y0 = rr.random() * 900 + 350; sp = 500 + rr.random() * 300
+        yy = 350 + (y0 - 350 + lt * sp) % 900
+        c.move_to(x0, yy); c.line_to(x0 - 8, yy + 30); c.set_source_rgba(*CYA, a * 0.35 * ap(u, 0.3, 0.4)); c.set_line_width(2); c.stroke()
+    L = 600
+    for k, (lab, fr, col) in enumerate((("PISTE SÈCHE", 1.0, CYA), ("PISTE MOUILLÉE", 1.15, YLW))):
+        b = ap(u, 0.1 + 0.25 * k, 0.25 + 0.25 * k); y = 640 + k * 300
+        txt(c, lab, 110, y - 30, 56, (*col, b), BIG)
+        ww = L * fr * b
+        c.new_path(); c.rectangle(110, y, ww, 80); c.set_source_rgba(*col, 0.15 * b); c.fill()
+        glow(c, lambda y=y, ww=ww: (c.new_path(), c.rectangle(110, y, max(1, ww), 80)), col, b, 3)
+        plane_side(c, 110 + ww - 40, y - 4, 50, col, b, 2)
+    g = ap(u, 0.55, 0.65)
+    txt(c, "+15 %", W / 2, 1110, 130, (*YLW, g), BIG, 'c', glow=1)
+    txt(c, "LES PNEUS ACCROCHENT MOINS", W / 2, 1250, 58, (*WHT, ap(u, 0.7, 0.8)), BIG, 'c', glow=1)
+
+
+SC.update(spoil=sc_spoil, reverse=sc_reverse, brakes=sc_brakes, rto=sc_rto, wet=sc_wet)
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))

@@ -895,6 +895,49 @@
     "tiktok": "6381572325315199572",
     "youtube+facebook": "-3326600945331846304"
    }
+  },
+  {
+   "date": "2026-10-19 10:00",
+   "format": "vrai_faux néon (nv_render)",
+   "name": "VF18 : 14-18 (avions sans mitrailleuse en 1914 V, Baron rouge surtout sur triplan F, 1re victoire aérienne française V, parachute pilotes français F, Américains sur SPAD V, meilleur as allié britannique F -> Fonck)",
+   "voice": "Corentin",
+   "duree": 90.4,
+   "flow": "xc02nD2ptH6YAWaFbl0C",
+   "credits": 1591,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-2548183212949420543",
+    "youtube+facebook": "voir Metricool 19/10 10:00"
+   }
+  },
+  {
+   "date": "2026-10-19 12:30",
+   "format": "science du vol néon (ns_render)",
+   "name": "LA SCIENCE DU VOL 05 — Comment un avion freine (A380 RTO 315 km/h -> 1 850 m, spoilers, inverseurs 2 moteurs intérieurs, 16/20 roues carbone, fusibles, piste mouillée +15 %)",
+   "voice": "Corentin",
+   "duree": 74.6,
+   "flow": "1qcES1w4NCAj9atMnIHj",
+   "credits": 1627,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-5726355307286933937",
+    "youtube+facebook": "-2311975615273352327"
+   }
+  },
+  {
+   "date": "2026-10-19 18:00",
+   "format": "duel néon (nd_render)",
+   "name": "Mirage 2000 vs Su-35",
+   "voice": "Corentin",
+   "duree": 72.1,
+   "flow": "LdY28b6k1xCWrqzFxakm",
+   "credits": 1353,
+   "score": "2-3 Su-35",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "5989094982683870187",
+    "youtube+facebook": "-7947207834425210795"
+   }
   }
  ],
  "notes": [
@@ -1032,11 +1075,6 @@
  },
  "duel_backlog": [
   {
-   "match": "Mirage 2000 vs Su-35",
-   "models": "vues dl/m2000_f15 (a_*) + dl/rafale_su37 (b_*)",
-   "angle": "France vs Russie, le petit delta contre le Flanker"
-  },
-  {
    "match": "Rafale Marine vs Harrier",
    "models": "vues dl/rafale_f35 (a_*) + fg/Harrier-GR1 (à rendre)",
    "angle": "porte-avions : catapulte contre décollage vertical"
@@ -1073,13 +1111,13 @@
   }
  ],
  "ns_backlog": [
-  "05 Les traînées blanches (condensation, pas de produits chimiques)",
-  "06 Comment un avion freine (inverseurs, spoilers, freins carbone)",
+  "06 Les traînées blanches (condensation, pas de produits chimiques)",
   "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
   "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
  ],
  "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)",
  "notes_tech": [
-  "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser."
+  "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser.",
+  "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s."
  ]
 }
