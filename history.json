@@ -938,6 +938,49 @@
     "tiktok": "5989094982683870187",
     "youtube+facebook": "-7947207834425210795"
    }
+  },
+  {
+   "date": "2026-10-20 10:00",
+   "format": "vrai_faux néon (nv_render)",
+   "name": "VF19 : dangers du ciel (foudre ~1-2/an V, toujours au-dessus des orages F, Hudson 2009 V, givre au décollage F, BA9 cendres 4 moteurs V, turbulences pareilles avant/arrière F)",
+   "voice": "Corentin",
+   "duree": 93.5,
+   "flow": "yeG0wufHwW1XYW56bImb",
+   "credits": 1696,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-7675452725419818146",
+    "youtube+facebook": "voir Metricool 20/10 10:00"
+   }
+  },
+  {
+   "date": "2026-10-20 12:30",
+   "format": "science du vol néon (ns_render)",
+   "name": "LA SCIENCE DU VOL 06 — Les traînées blanches (vapeur 1,2 kg/kg, −50 °C cristaux, humidité, bombardiers WWII, effet climat > CO2 selon Lee et al.)",
+   "voice": "Corentin",
+   "duree": 62.2,
+   "flow": "6r4ebMB5gEvPZYrTWKQy",
+   "credits": 1294,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-7029848579137581592",
+    "youtube+facebook": "-93758741049030483"
+   }
+  },
+  {
+   "date": "2026-10-20 18:00",
+   "format": "duel néon (nd_render)",
+   "name": "Rafale Marine vs Harrier (modèle Harrier GR1 rendu 4 vues)",
+   "voice": "Corentin",
+   "duree": 69.9,
+   "flow": "owG0KBudxL4Ygdyktx0l",
+   "credits": 1304,
+   "score": "3-2 Rafale",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "4082006810903593700",
+    "youtube+facebook": "1771993090137474478"
+   }
   }
  ],
  "notes": [
@@ -1075,11 +1118,6 @@
  },
  "duel_backlog": [
   {
-   "match": "Rafale Marine vs Harrier",
-   "models": "vues dl/rafale_f35 (a_*) + fg/Harrier-GR1 (à rendre)",
-   "angle": "porte-avions : catapulte contre décollage vertical"
-  },
-  {
    "match": "Mirage 2000 vs F-35",
    "models": "vues dl/m2000_f15 (a_*) + dl/rafale_f35 (b_*)",
    "angle": "France vs USA, ancienne gloire contre furtif"
@@ -1111,13 +1149,13 @@
   }
  ],
  "ns_backlog": [
-  "06 Les traînées blanches (condensation, pas de produits chimiques)",
   "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
   "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
  ],
  "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)",
  "notes_tech": [
   "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser.",
-  "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s."
+  "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s.",
+  "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement »."
  ]
 }

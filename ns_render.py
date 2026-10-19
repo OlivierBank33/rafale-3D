@@ -1103,6 +1103,135 @@ def sc_wet(c, t, sg, lt, u):
 SC.update(spoil=sc_spoil, reverse=sc_reverse, brakes=sc_brakes, rto=sc_rto, wet=sc_wet)
 
 
+
+# ---------- épisode 06 : les traînées blanches ----------
+def h2o(c, x, y, s, col, a):
+    c.new_path(); c.arc(x, y, s, 0, 6.283); c.set_source_rgba(*col, a); c.fill()
+    for an in (-0.6, 0.6):
+        c.new_path(); c.arc(x + math.sin(an) * s * 1.3, y + math.cos(an) * s * 1.3, s * 0.55, 0, 6.283); c.set_source_rgba(*WHT, a * 0.9); c.fill()
+
+
+def crystal(c, x, y, s, col, a, rot=0):
+    for k in range(3):
+        an = rot + k * math.pi / 3
+        c.move_to(x - math.cos(an) * s, y - math.sin(an) * s); c.line_to(x + math.cos(an) * s, y + math.sin(an) * s)
+    c.set_source_rgba(*col, a); c.set_line_width(3); c.stroke()
+
+
+def nacelle(c, x, y, L, Hh, col, a):
+    def p():
+        c.new_path(); c.move_to(x, y - Hh / 2); c.line_to(x + L, y - Hh * 0.38); c.line_to(x + L, y + Hh * 0.38); c.line_to(x, y + Hh / 2); c.close_path()
+    p(); c.set_source_rgba(*col, a * 0.08); c.fill(); glow(c, p, col, a, 3)
+    for k in range(6):
+        yy = y - Hh * 0.4 + k * Hh * 0.16
+        glow(c, lambda yy=yy: (c.new_path(), c.move_to(x + 14, yy), c.line_to(x + 34, yy + 8)), CYA, a * 0.7, 2)
+
+
+def sc_vapeur(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); y = 720
+    nacelle(c, 60, y, 330, 170, BLU, a)
+    rr = random.Random(3)
+    for k in range(34):
+        ph = (lt * 0.35 + rr.random()) % 1
+        x = 400 + ph * 640; yy = y + rr.uniform(-70, 70) * (0.6 + ph)
+        h2o(c, x, yy, 13, YLW, a * ap(u, 0.1, 0.25) * (1 - ph * 0.6))
+    txt(c, "H2O", 780, 560, 110, (*YLW, ap(u, 0.2, 0.3)), BIG, 'c', glow=1)
+    txt(c, "KÉROSÈNE + AIR = CO2 + EAU", W / 2, 440, 54, (*WHT, ap(u, 0.1, 0.2)), BIG, 'c', glow=1)
+    b = ap(u, 0.45, 0.55)
+    txt(c, "1,2 KG D'EAU", W / 2, 1080, 130, (*YLW, b), BIG, 'c', glow=1)
+    txt(c, "POUR 1 KG DE KÉROSÈNE BRÛLÉ", W / 2, 1150, 46, (*WHT, b), BIG, 'c')
+
+
+def thermo(c, x, y0, y1, frac, a):
+    glow(c, lambda: (c.new_path(), c.rectangle(x - 22, y0, 44, y1 - y0)), CYA, a, 2.5)
+    c.new_path(); c.arc(x, y1 + 34, 40, 0, 6.283); c.set_source_rgba(*CYA, a); c.fill()
+    hh = (y1 - y0) * frac
+    c.new_path(); c.rectangle(x - 12, y1 - hh, 24, hh + 10); c.set_source_rgba(*CYA, a); c.fill()
+
+
+def sc_froid(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    f = 0.9 - 0.75 * ap(u, 0.05, 0.3)
+    thermo(c, 140, 420, 900, f, a)
+    temp = int(round(15 - 65 * ap(u, 0.05, 0.3)))
+    txt(c, f"{temp} °C", 140, 1075, 80, (*CYA, a), BIG, 'c', glow=1)
+    txt(c, "À 11 000 M", 140, 1125, 40, (*WHT, a), BIG, 'c')
+    plane_side(c, 860, 540, 120, BLU, a, 2.5)
+    rr = random.Random(11)
+    for k in range(40):
+        ph = (lt * 0.3 + rr.random()) % 1
+        x = 720 - ph * 520; yy = 560 + rr.uniform(-30, 30) * (1 + 2 * ph)
+        q = min(1, ph * 3)
+        if q < 0.5: h2o(c, x, yy, 9, YLW, a * (1 - q))
+        else: crystal(c, x, yy, 14, WHT, a * q * 0.9, rot=lt * 0.8 + k)
+    b = ap(u, 0.35, 0.45)
+    txt(c, "LA VAPEUR GÈLE D'UN COUP", 640, 820, 58, (*YLW, b), BIG, 'c', glow=1)
+    txt(c, "= CRISTAUX DE GLACE", 640, 890, 50, (*WHT, b), BIG, 'c')
+    d = ap(u, 0.65, 0.75)
+    txt(c, "COMME LA BUÉE DE TON SOUFFLE", 640, 1080, 50, (*CYA, d), BIG, 'c', glow=1)
+
+
+def trail(c, x0, y, L, w0, w1, col, a, wob=0.0, t=0):
+    n = 40
+    for k in range(n):
+        f = k / n; x = x0 - f * L; w = w0 + (w1 - w0) * f
+        c.new_path(); c.arc(x, y + wob * math.sin(f * 9 + t), w, 0, 6.283); c.set_source_rgba(*col, a * 0.10 * (1 - 0.5 * f)); c.fill()
+
+
+def sc_humide(c, t, sg, lt, u):
+    for k, (lab, sub, col, L, w1, fade) in enumerate((("AIR SEC", "DISPARAÎT EN QUELQUES SECONDES", CYA, 260, 14, True), ("AIR HUMIDE", "RESTE DES HEURES, S'ÉTALE EN NUAGE", YLW, 820, 90, False))):
+        b = ap(u, 0.05 + 0.35 * k, 0.15 + 0.35 * k); y = 560 + k * 380
+        panel(c, 50, y - 170, 980, 320, col, b, 0.03)
+        txt(c, lab, 90, y - 110, 64, (*col, b), BIG, glow=1)
+        px = 900
+        trail(c, px - 110, y + 20, L * ap(u, 0.05 + 0.35 * k, 0.3 + 0.35 * k), 10, w1, WHT, b, wob=8 if not fade else 0, t=lt)
+        plane_side(c, px, y, 90, BLU, b, 2)
+        txt(c, sub, 90, y + 125, 42, (*WHT, b), BIG)
+
+
+def bomber_icon(c, x, y, s, col, a):
+    glow(c, lambda: (c.new_path(), c.move_to(x, y - s), c.line_to(x, y + s * 0.9)), col, a, 2.5)
+    glow(c, lambda: (c.new_path(), c.move_to(x - s * 1.3, y - s * 0.2), c.line_to(x + s * 1.3, y - s * 0.2)), col, a, 2.5)
+    glow(c, lambda: (c.new_path(), c.move_to(x - s * 0.5, y + s * 0.8), c.line_to(x + s * 0.5, y + s * 0.8)), col, a, 2)
+
+
+def sc_ww2(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    rise = 120 * u
+    for i in range(4):
+        for j in range(3):
+            x = 260 + j * 280 + (i % 2) * 140 - 70; y = 700 + i * 120 - rise
+            L = 480 * ap(u, 0.02, 0.5)
+            for k in range(24):
+                f = k / 24; c.new_path(); c.arc(x, y + 30 + f * L, 6 + f * 22, 0, 6.283); c.set_source_rgba(*WHT, a * 0.09 * (1 - f * 0.5)); c.fill()
+            bomber_icon(c, x, y, 26, CYA, a)
+    txt(c, "TRAHIS PAR LEURS TRAÎNÉES", W / 2, 440, 66, (*YLW, ap(u, 0.3, 0.4)), BIG, 'c', glow=1)
+    txt(c, "VISIBLES À DES DIZAINES DE KM", W / 2, 1260, 50, (*WHT, ap(u, 0.55, 0.65)), BIG, 'c', glow=1)
+
+
+def sc_climat(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    c.new_path(); c.arc(W / 2, 2350, 1250, math.pi * 1.25, math.pi * 1.75); glow(c, lambda: (c.new_path(), c.arc(W / 2, 2350, 1250, math.pi * 1.2, math.pi * 1.8)), BLU, a, 4)
+    b = ap(u, 0.1, 0.25)
+    for k in range(5):
+        cloud(c, 160 + k * 190, 560 + 20 * math.sin(k), 70, b)
+    txt(c, "NUAGES DE TRAÎNÉES", W / 2, 430, 60, (*CYA, b), BIG, 'c', glow=1)
+    h = ap(u, 0.3, 0.45)
+    for k in range(5):
+        x = 180 + k * 180; ph = (lt * 0.6 + k * 0.2) % 1
+        y0 = 1080 - ph * 380
+        if y0 > 660:
+            arrow(c, x, y0 + 60, x, y0, RED, h * (1 - ph * 0.3), 5, 22)
+        else:
+            arrow(c, x + 20, 640 + (660 - y0), x + 20, 720 + (660 - y0), RED, h * 0.8, 5, 22)
+    txt(c, "LA CHALEUR RESTE PIÉGÉE", W / 2, 1180, 62, (*RED, ap(u, 0.45, 0.55)), BIG, 'c', glow=1)
+    d = ap(u, 0.65, 0.75)
+    txt(c, "EFFET ESTIMÉ > CO2 DES AVIONS", W / 2, 1260, 50, (*YLW, d), BIG, 'c', glow=1)
+
+
+SC.update(vapeur=sc_vapeur, froid=sc_froid, humide=sc_humide, ww2=sc_ww2, climat=sc_climat)
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))
