@@ -1195,5 +1195,49 @@
   "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s.",
   "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement ».",
   "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique »."
+ ],
+ "format_2026_10_22": {
+  "10:00": "SURVIVRAIS-TU ? (stickman)",
+  "12:30": "HISTOIRE VRAIE (stickman)",
+  "18:00": "TU ES LE PILOTE (série interactive, 1 ép. / 2 jours) en alternance avec QU'AURAIS-TU FAIT ?"
+ },
+ "sm_series": {
+  "name": "TU ES LE PILOTE",
+  "episodes": [
+   {
+    "ep": 1,
+    "slug": "sm_ep01",
+    "date": "2026-10-22 18:00",
+    "pitch": "bimoteur, nuit, Atlantique, feu moteur gauche éteint, 1 moteur, Irlande à 200 km / 50 min carburant, cargo à 15 km",
+    "choice": {
+     "A": "demi-tour vers l'Irlande",
+     "B": "se poser en mer près du cargo"
+    },
+    "next_ep_date": "2026-10-24 18:00"
+   }
+  ]
+ },
+ "survie_backlog": [
+  "Éjection à Mach 1 (siège éjectable, 14 G, vent relatif)",
+  "Un hublot casse à 11 000 m (décompression, temps de conscience utile)",
+  "9 G dans un Rafale (voile noir, combinaison anti-G)",
+  "Hypoxie à 10 000 m sans masque",
+  "Chute libre depuis un avion de ligne (Vesna Vulović, 10 160 m)",
+  "Amerrissage d'un avion de ligne",
+  "Coincé dans la soute / train d'atterrissage (passagers clandestins, −50 °C)"
+ ],
+ "histoire_vraie_backlog": [
+  "BA 5390 (1990) : le commandant aspiré par le pare-brise, retenu par les jambes",
+  "SR-71 « ground speed check » à Los Angeles",
+  "Patrouille de France appelée « Air France » par erreur",
+  "F-15 israélien rentré avec une seule aile (1983)",
+  "Sioux City, United 232 (1989) : piloter sans commandes, avec les moteurs",
+  "Garros, premier à traverser la Méditerranée (1913)",
+  "Bob Hoover et le verre d'eau en tonneau"
+ ],
+ "quaurais_tu_fait_backlog": [
+  "Sully 2009 : Hudson ou retour à LaGuardia/Teterboro ?",
+  "Gimli 1983 : panne sèche, piste désaffectée pleine de monde",
+  "Air Transat 236 : fuite de carburant, plané vers les Açores"
  ]
 }
