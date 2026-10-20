@@ -4,7 +4,7 @@ D = os.environ.get('DL', 'dl/sm_ep01').rstrip('/') + '/'
 TM = json.load(open(D + 'timeline.json')); SEGS = TM['seg']; SR = 48000; TOTAL = TM['total']; N = int(TOTAL * SR) + SR
 t = np.arange(N) / SR
 def env(n, a=0.01, r=0.3):
-    e = np.ones(n); na = max(1, int(a * SR)); nr = max(1, int(r * SR)); e[:na] = np.linspace(0, 1, na); e[-nr:] *= np.linspace(1, 0, nr); return e
+    e = np.ones(n); na = max(1, min(n // 2, int(a * SR))); nr = max(1, min(n // 2, int(r * SR))); e[:na] = np.linspace(0, 1, na); e[-nr:] *= np.linspace(1, 0, nr); return e
 def add(buf, at, sig, g=1.0):
     i = int(at * SR); j = min(len(buf), i + len(sig))
     if i < len(buf) and j > i: buf[i:j] += sig[:j - i] * g

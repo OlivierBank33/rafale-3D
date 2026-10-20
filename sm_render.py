@@ -346,7 +346,7 @@ def frame(t):
     c.save(); c.translate(W / 2, H * 0.45); c.scale(k, k); c.translate(-W / 2, -H * 0.45)
     SC[sg['scene']](c, t, sg, lt, u); c.restore()
     vignette(c, 0.8); grain(c, int(t * 12) % 6, 6000)
-    title_card(c, sg, lt); subtitles(c, t); watermark(c)
+    title_card(c, sg, lt); subtitles(c, t)
     if lt < 0.25 and sg['i'] > 0: c.set_source_rgba(0, 0, 0, 1 - lt / 0.25); c.paint()          # fondu au noir
     if sg['end'] - lt < 0.15 and sg['i'] < len(SEG) - 1: c.set_source_rgba(0, 0, 0, 1 - (sg['end'] - t) / 0.15); c.paint()
     c.set_source_rgba(*ORG, 1); c.rectangle(0, H - 8, W * t / TOTAL, 8); c.fill()

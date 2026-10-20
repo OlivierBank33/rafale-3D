@@ -1024,6 +1024,19 @@
     "tiktok": "-4222767409252709318",
     "youtube+facebook": "1699117143921084587"
    }
+  },
+  {
+   "date": "2026-10-22 18:00",
+   "format": "TU ES LE PILOTE (stickman, sm_render)",
+   "name": "Épisode 1 : moteur en feu au-dessus de l'Atlantique (A demi-tour Irlande / B se poser près du cargo)",
+   "voice": "Corentin",
+   "duree": 63.6,
+   "flow": "HpbKhTYO8ZyVOIIX8HWr",
+   "credits": 1220,
+   "uuids": {
+    "tiktok": "-3372735784899490447",
+    "youtube+facebook": "voir Metricool 22/10 18:00"
+   }
   }
  ],
  "notes": [
@@ -1194,7 +1207,8 @@
   "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser.",
   "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s.",
   "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement ».",
-  "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique »."
+  "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique ».",
+  "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
