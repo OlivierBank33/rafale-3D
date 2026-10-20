@@ -981,6 +981,49 @@
     "tiktok": "4082006810903593700",
     "youtube+facebook": "1771993090137474478"
    }
+  },
+  {
+   "date": "2026-10-21 10:00",
+   "format": "vrai_faux néon (nv_render)",
+   "name": "VF20 : secrets de pilotes (Mayday vient du français V, anglais obligatoire partout F, plats différents V, pilote jusqu'à 70 ans F, couchettes cachées V, 7500 = panne radio F)",
+   "voice": "Corentin",
+   "duree": 90.7,
+   "flow": "cBkV2Di3DbVr0lEn1MoA",
+   "credits": 1642,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "7309210457711792008",
+    "youtube+facebook": "voir Metricool 21/10 10:00"
+   }
+  },
+  {
+   "date": "2026-10-21 12:30",
+   "format": "science du vol néon (ns_render)",
+   "name": "LA SCIENCE DU VOL 07 — Pourquoi le Rafale vole si lentement (Mirage III 333 km/h vs Rafale 222 km/h, delta, canards/tourbillons, instabilité, CDVE 3 numériques + 1 analogique, limite d'incidence)",
+   "voice": "Corentin",
+   "duree": 70.0,
+   "flow": "AWTcdarWPmruoGPBI4lf",
+   "credits": 1457,
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "8942222706758011412",
+    "youtube+facebook": "5044454927890205299"
+   }
+  },
+  {
+   "date": "2026-10-21 18:00",
+   "format": "duel néon (nd_render)",
+   "name": "Mirage 2000 vs F-35",
+   "voice": "Corentin",
+   "duree": 71.5,
+   "flow": "1SJgS6hyXmMSCVGOQKCW",
+   "credits": 1319,
+   "score": "2-3 F-35",
+   "mascotte": true,
+   "uuids": {
+    "tiktok": "-4222767409252709318",
+    "youtube+facebook": "1699117143921084587"
+   }
   }
  ],
  "notes": [
@@ -1118,11 +1161,6 @@
  },
  "duel_backlog": [
   {
-   "match": "Mirage 2000 vs F-35",
-   "models": "vues dl/m2000_f15 (a_*) + dl/rafale_f35 (b_*)",
-   "angle": "France vs USA, ancienne gloire contre furtif"
-  },
-  {
    "match": "P-51 Mustang vs A6M Zero",
    "models": "fg/p51d, fg/A6M2",
    "angle": "Pacifique 1942-45"
@@ -1149,13 +1187,13 @@
   }
  ],
  "ns_backlog": [
-  "07 Pourquoi le Rafale peut voler lentement (plan canard, instabilité contrôlée)",
   "08 Le pilote automatique (ce qu'il fait vraiment, atterrissage automatique CAT III)"
  ],
  "style": "néon partout depuis le 16/10 : palette turquoise #00E0C7 / orange #FF8C00 / rouge-rose #FF2E55 sur fond #03090B (RUNBOOK §1sexies)",
  "notes_tech": [
   "17/10 : disque plein pendant le rendu -> supprimer video_noaudio.mp4 des anciens dossiers et les beds déjà poussés de media_push (rm après push). Le modèle r3d/a380.png est cassé (aile en boîte) : ne pas l'utiliser.",
   "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s.",
-  "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement »."
+  "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement ».",
+  "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique »."
  ]
 }

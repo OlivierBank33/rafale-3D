@@ -1232,6 +1232,122 @@ def sc_climat(c, t, sg, lt, u):
 SC.update(vapeur=sc_vapeur, froid=sc_froid, humide=sc_humide, ww2=sc_ww2, climat=sc_climat)
 
 
+
+# ---------- épisode 07 : pourquoi le Rafale vole si lentement ----------
+def delta_top(c, x, y, s, col, a, canard=False, w=3):
+    glow(c, lambda: poly(c, [(x, y - 0.45 * s), (x + 0.85 * s, y + 0.55 * s), (x - 0.85 * s, y + 0.55 * s)], True), col, a, w)
+    glow(c, lambda: (c.new_path(), c.move_to(x - 0.08 * s, y + 0.7 * s), c.line_to(x - 0.08 * s, y - 0.9 * s), c.line_to(x, y - 1.15 * s), c.line_to(x + 0.08 * s, y - 0.9 * s), c.line_to(x + 0.08 * s, y + 0.7 * s)), col, a, w)
+    if canard:
+        for sd in (-1, 1):
+            glow(c, lambda sd=sd: poly(c, [(x + sd * 0.08 * s, y - 0.78 * s), (x + sd * 0.42 * s, y - 0.52 * s), (x + sd * 0.40 * s, y - 0.44 * s), (x + sd * 0.08 * s, y - 0.56 * s)], True), YLW, a, w)
+
+
+def sc_delta(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    delta_top(c, 270, 720, 210, BLU, a)
+    txt(c, "AILE EN DELTA", 270, 930, 50, (*CYA, a), BIG, 'c')
+    b = ap(u, 0.3, 0.5); ang = math.radians(4 + 18 * b)
+    c.save(); c.translate(760, 700); c.rotate(-ang); airfoil(c, 0, 0, 220); c.set_source_rgba(*BLU, 0.1 * a); c.fill_preserve(); c.restore()
+    c.save(); c.translate(760, 700); c.rotate(-ang); glow(c, lambda: airfoil(c, 0, 0, 220), BLU, a, 3); c.restore()
+    glow(c, lambda: (c.new_path(), c.move_to(500, 700), c.line_to(1010, 700)), DIM, a * 0.6, 1.5)
+    glow(c, lambda: (c.new_path(), c.arc_negative(760, 700, 200, 0, -ang)), YLW, b, 3)
+    txt(c, f"{int(round(math.degrees(ang)))}°", 990, 640, 60, (*YLW, b), BIG, 'c', glow=1)
+    txt(c, "NEZ TRÈS CABRÉ", 760, 930, 50, (*YLW, b), BIG, 'c')
+    d = ap(u, 0.6, 0.7)
+    txt(c, "MIRAGE III : 333 KM/H À L'APPROCHE", W / 2, 1150, 58, (*RED, d), BIG, 'c', glow=1)
+
+
+def sc_canard(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1); x, y, s = W / 2, 820, 320
+    delta_top(c, x, y, s, BLU, a, canard=True, w=3.5)
+    v = ap(u, 0.25, 0.4)
+    for sd in (-1, 1):
+        x0, y0 = x + sd * 0.41 * s, y - 0.48 * s
+        pts = []
+        for k in range(90):
+            f = k / 89; r = 6 + 34 * f
+            ph = lt * 9 - f * 26
+            pts.append((x0 + sd * f * 0.28 * s + math.cos(ph) * r, y0 + f * 1.0 * s + math.sin(ph) * r * 0.45))
+        n = max(2, int(len(pts) * v))
+        glow(c, lambda pts=pts[:n]: poly(c, pts), CYA, a * v, 2)
+    txt(c, "TOURBILLONS DES CANARDS", W / 2, 400, 62, (*CYA, ap(u, 0.25, 0.35)), BIG, 'c', glow=1)
+    d = ap(u, 0.55, 0.65)
+    txt(c, "= BEAUCOUP PLUS DE PORTANCE", W / 2, 1190, 60, (*YLW, d), BIG, 'c', glow=1)
+    txt(c, "À BASSE VITESSE", W / 2, 1260, 50, (*WHT, d), BIG, 'c')
+
+
+def sc_instab(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    # stable : bille dans un bol
+    bx, by = 290, 820
+    glow(c, lambda: (c.new_path(), c.arc_negative(bx, by - 170, 190, math.pi * 0.85, math.pi * 0.15)), BLU, a, 3)
+    off = 60 * math.sin(lt * 2.2) * math.exp(-((lt % 4) * 0.6))
+    c.new_path(); c.arc(bx + off, by + 5 - abs(off) * 0.25, 22, 0, 6.283); c.set_source_rgba(*CYA, a); c.fill()
+    txt(c, "STABLE", bx, 940, 60, (*CYA, a), BIG, 'c', glow=1)
+    txt(c, "REVIENT TOUT SEUL", bx, 1000, 38, (*WHT, a), BIG, 'c')
+    # instable : crayon sur le doigt, corrigé en permanence
+    b = ap(u, 0.25, 0.35); px, py = 790, 860
+    tilt = 0.18 * math.sin(lt * 5.3) + 0.08 * math.sin(lt * 11.7)
+    glow(c, lambda: (c.new_path(), c.move_to(px - 40, py + 90), c.line_to(px, py + 10), c.line_to(px + 40, py + 90)), WHT, b * 0.7, 3)
+    tx, ty = px + math.sin(tilt) * 330, py - math.cos(tilt) * 330
+    glow(c, lambda: (c.new_path(), c.move_to(px, py), c.line_to(tx, ty)), YLW, b, 7)
+    if abs(tilt) > 0.08:
+        sd = -1 if tilt > 0 else 1
+        arrow(c, tx - sd * 10, ty + 40, tx + sd * 70, ty + 40, RED, b, 4, 18)
+    txt(c, "INSTABLE", px, 1000, 60, (*YLW, b), BIG, 'c', glow=1)
+    txt(c, "CORRIGÉ SANS ARRÊT", px, 1060, 38, (*WHT, b), BIG, 'c')
+    d = ap(u, 0.6, 0.7)
+    txt(c, "= ULTRA AGILE", W / 2, 1230, 70, (*YLW, d), BIG, 'c', glow=1)
+
+
+def sc_fbw(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    glow(c, lambda: (c.new_path(), c.move_to(150, 900), c.line_to(170, 640)), WHT, a, 6)
+    c.new_path(); c.arc(170, 630, 22, 0, 6.283); c.set_source_rgba(*WHT, a); c.fill()
+    txt(c, "MANCHE", 160, 960, 40, (*WHT, a), BIG, 'c')
+    panel(c, 430, 560, 220, 300, YLW, a, 0.08)
+    txt(c, "CALCULATEUR", 540, 905, 40, (*YLW, a), BIG, 'c')
+    labs = [("NUMÉRIQUE", CYA), ("NUMÉRIQUE", CYA), ("NUMÉRIQUE", CYA), ("ANALOGIQUE", ORG)]
+    for k, (lab, col) in enumerate(labs):
+        y = 600 + k * 70; b = ap(u, 0.1 + 0.08 * k, 0.2 + 0.08 * k)
+        glow(c, lambda y=y: (c.new_path(), c.move_to(200, y), c.line_to(430, y)), col, b, 2.5)
+        glow(c, lambda y=y: (c.new_path(), c.move_to(650, y), c.line_to(860, y)), col, b, 2.5)
+        ph = (lt * 1.2 + k * 0.25) % 1
+        c.new_path(); c.arc(200 + ph * 660, y, 8, 0, 6.283); c.set_source_rgba(*col, b); c.fill()
+        txt(c, lab, 960, y + 12, 32, (*col, b), BIG, 'c')
+    txt(c, "4 CHAÎNES EN PARALLÈLE", W / 2, 440, 62, (*WHT, ap(u, 0.1, 0.2)), BIG, 'c', glow=1)
+    d = ap(u, 0.6, 0.7)
+    txt(c, "AUCUN CÂBLE ENTRE MANCHE ET GOUVERNES", W / 2, 1150, 50, (*YLW, d), BIG, 'c', glow=1)
+
+
+def sc_aoa(c, t, sg, lt, u):
+    a = ap(u, 0, 0.1)
+    b = ap(u, 0.15, 0.6); ang = math.radians(5 + 30 * b)
+    lim = math.radians(27)
+    x, y = W / 2 + 60, 760
+    stall = ang > lim
+    for k in range(6):
+        yy = y - 220 + k * 70
+        pts = []
+        for j in range(50):
+            xx = W - 40 - j * 21
+            dy = 0
+            if xx < x and k < 3:
+                dy = (math.sin(xx / 18 + lt * 10 + k) * 30) if stall else 0
+            pts.append((xx, yy + dy))
+        glow(c, lambda pts=pts: poly(c, pts), RED if (stall and k < 3) else CYA, a * 0.5, 1.6)
+    c.save(); c.translate(x, y); c.rotate(-min(ang, lim)); glow(c, lambda: airfoil(c, 0, 0, 260), BLU, a, 3.5); c.restore()
+    glow(c, lambda: (c.new_path(), c.arc_negative(x, y, 330, 0, -lim)), YLW, a * 0.8, 3)
+    glow(c, lambda: (c.new_path(), c.arc_negative(x, y, 330, -lim, -math.radians(40))), RED, a * 0.8, 6)
+    txt(c, "ZONE DE DÉCROCHAGE", W / 2, 400, 58, (*RED, a), BIG, 'c', glow=1)
+    d = ap(u, 0.6, 0.7)
+    panel(c, 140, 1110, 800, 120, YLW, d, 0.12)
+    txt(c, "STOP : LIMITE AUTOMATIQUE", W / 2, 1192, 62, (*YLW, d), BIG, 'c', glow=1)
+
+
+SC.update(delta=sc_delta, canard=sc_canard, instab=sc_instab, fbw=sc_fbw, aoa=sc_aoa)
+
+
 def frame(t):
     sg = next((x for x in SEG if x['t0'] <= t < x['end']), SEG[-1]); lt = t - sg['t0']
     u = min(1, max(0, (t - sg['vt']) / max(0.1, sg['dur'] + 0.3)))
