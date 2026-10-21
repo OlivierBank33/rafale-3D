@@ -1037,6 +1037,28 @@
     "tiktok": "-3372735784899490447",
     "youtube+facebook": "voir Metricool 22/10 18:00"
    }
+  },
+  {
+   "date": "2026-10-22 10:00",
+   "format": "SURVIVRAIS-TU ? (stickman)",
+   "name": "Un hublot casse à 11 000 m (décompression, TUC 15-30 s, hypoxie euphorique, masque d'abord, descente vers 3 000 m) -> tu survis",
+   "voice": "Corentin",
+   "duree": 61.9,
+   "flow": "fFFRXNjhU42KBbxsoYHd",
+   "credits": 1268,
+   "uuids": {
+    "tiktok": "-4709223074908190308",
+    "youtube+facebook": "4979887981357911462"
+   }
+  },
+  {
+   "date": "2026-10-22 12:30",
+   "format": "HISTOIRE VRAIE (stickman)",
+   "name": "British Airways 5390 (1990) : pare-brise, 84 vis trop fines, commandant retenu 20 min, Southampton, 87 survivants",
+   "voice": "Corentin",
+   "flow": "RhUkHx35i70CYzAHDOYg",
+   "credits": 1211,
+   "uuids": {}
   }
  ],
  "notes": [
@@ -1233,7 +1255,6 @@
  },
  "survie_backlog": [
   "Éjection à Mach 1 (siège éjectable, 14 G, vent relatif)",
-  "Un hublot casse à 11 000 m (décompression, temps de conscience utile)",
   "9 G dans un Rafale (voile noir, combinaison anti-G)",
   "Hypoxie à 10 000 m sans masque",
   "Chute libre depuis un avion de ligne (Vesna Vulović, 10 160 m)",
@@ -1241,7 +1262,6 @@
   "Coincé dans la soute / train d'atterrissage (passagers clandestins, −50 °C)"
  ],
  "histoire_vraie_backlog": [
-  "BA 5390 (1990) : le commandant aspiré par le pare-brise, retenu par les jambes",
   "SR-71 « ground speed check » à Los Angeles",
   "Patrouille de France appelée « Air France » par erreur",
   "F-15 israélien rentré avec une seule aile (1983)",

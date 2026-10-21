@@ -290,6 +290,8 @@ def sc_think(c, t, sg, lt, u):
 
 
 SC = dict(cockpit=sc_cockpit, handle=sc_handle, ocean=sc_ocean, map=sc_map, radio=sc_radio, think=sc_think, choice=sc_choice)
+from sm_scenes2 import SC2
+SC.update(SC2)
 
 
 # ---------------- sous-titres ----------------
@@ -333,7 +335,8 @@ def subtitles(c, t):
 def title_card(c, sg, lt):
     a = ease(lt / 0.4) * (1 - ease((lt - 2.6) / 0.5))
     if a <= 0 or sg['scene'] == 'choice': return
-    if sg['i'] == 0:
+    if getattr(CFG, 'MODE', 'serie') != 'serie' and sg['i'] > 0: return
+    if sg['i'] == 0 and getattr(CFG, 'MODE', 'serie') == 'serie':
         text(c, f"ÉPISODE {int(CFG.EP)}", W / 2, 250, 46, (0.85, 0.88, 0.95), 'Montserrat', track=6)
     c.push_group(); text(c, sg['p']['title'], W / 2, 370, 128, RED if sg['i'] == 0 else (0.92, 0.95, 1), glow=1.0); c.pop_group_to_source(); c.paint_with_alpha(a)
 
