@@ -1064,6 +1064,45 @@
    },
    "duree": 64.7,
    "note": "avancé à la demande d'Olivier (« publie-en une maintenant »)"
+  },
+  {
+   "date": "2026-10-23 10:00",
+   "format": "SURVIVRAIS-TU ? (stickman)",
+   "name": "9 G dans un Rafale (×9 le poids, sang, vision tunnel/voile gris/noir/G-LOC, combinaison anti-G +1 G, contraction +4 G) -> tu t'évanouis",
+   "voice": "Corentin",
+   "duree": 64.3,
+   "flow": "Gibzk0fjBKMAN2DEVJtH",
+   "credits": 1204,
+   "uuids": {
+    "tiktok": "310803817172650969",
+    "youtube+facebook": "8924689793378043930"
+   }
+  },
+  {
+   "date": "2026-10-23 12:30",
+   "format": "HISTOIRE VRAIE (stickman)",
+   "name": "SR-71 « ground speed check » (Cessna 90 kt, Twin Beech 125, F-18 Dusty 52 620, Aspen 20 1 842 kt)",
+   "voice": "Corentin",
+   "duree": 61.2,
+   "flow": "KC5JYgSCZy5c9s0bf4eb",
+   "credits": 1185,
+   "uuids": {
+    "tiktok": "-2469870323111541749",
+    "youtube+facebook": "3651952712029257850"
+   }
+  },
+  {
+   "date": "2026-10-23 18:00",
+   "format": "QU'AURAIS-TU FAIT ? (stickman)",
+   "name": "Hudson / US Airways 1549 (A LaGuardia, B Teterboro, C Hudson ; simulateurs NTSB 7/13, +35 s = crash)",
+   "voice": "Corentin",
+   "duree": 62.2,
+   "flow": "mlcz1IhpnH334F6yyKZf",
+   "credits": 1166,
+   "uuids": {
+    "tiktok": "-5565430178444980692",
+    "youtube+facebook": "-4674052420498079310"
+   }
   }
  ],
  "notes": [
@@ -1235,7 +1274,8 @@
   "18/10 : l'ép. 04 annonçait « comment un avion freine » -> fait en ép. 05 ; traînées blanches = ép. 06 (annoncé à la fin de l'ép. 05). Toujours enchaîner sur le NEXT annoncé. Coût voix EL ≈ 1 350-1 630 crédits par vidéo de 60-90 s.",
   "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement ».",
   "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique ».",
-  "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge."
+  "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge.",
+  "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson)."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
@@ -1260,14 +1300,12 @@
  },
  "survie_backlog": [
   "Éjection à Mach 1 (siège éjectable, 14 G, vent relatif)",
-  "9 G dans un Rafale (voile noir, combinaison anti-G)",
   "Hypoxie à 10 000 m sans masque",
   "Chute libre depuis un avion de ligne (Vesna Vulović, 10 160 m)",
   "Amerrissage d'un avion de ligne",
   "Coincé dans la soute / train d'atterrissage (passagers clandestins, −50 °C)"
  ],
  "histoire_vraie_backlog": [
-  "SR-71 « ground speed check » à Los Angeles",
   "Patrouille de France appelée « Air France » par erreur",
   "F-15 israélien rentré avec une seule aile (1983)",
   "Sioux City, United 232 (1989) : piloter sans commandes, avec les moteurs",
@@ -1275,7 +1313,6 @@
   "Bob Hoover et le verre d'eau en tonneau"
  ],
  "quaurais_tu_fait_backlog": [
-  "Sully 2009 : Hudson ou retour à LaGuardia/Teterboro ?",
   "Gimli 1983 : panne sèche, piste désaffectée pleine de monde",
   "Air Transat 236 : fuite de carburant, plané vers les Açores"
  ]

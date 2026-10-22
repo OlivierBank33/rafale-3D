@@ -292,6 +292,8 @@ def sc_think(c, t, sg, lt, u):
 SC = dict(cockpit=sc_cockpit, handle=sc_handle, ocean=sc_ocean, map=sc_map, radio=sc_radio, think=sc_think, choice=sc_choice)
 from sm_scenes2 import SC2
 SC.update(SC2)
+from sm_scenes3 import SC3
+SC.update(SC3)
 
 
 # ---------------- sous-titres ----------------
