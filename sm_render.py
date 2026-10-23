@@ -294,6 +294,9 @@ from sm_scenes2 import SC2
 SC.update(SC2)
 from sm_scenes3 import SC3
 SC.update(SC3)
+import sm_scenes4
+sm_scenes4.R = sys.modules[__name__]
+SC.update(sm_scenes4.SC4)
 
 
 # ---------------- sous-titres ----------------
@@ -336,7 +339,7 @@ def subtitles(c, t):
 
 def title_card(c, sg, lt):
     a = ease(lt / 0.4) * (1 - ease((lt - 2.6) / 0.5))
-    if a <= 0 or sg['scene'] == 'choice': return
+    if a <= 0 or sg['scene'] in ('choice', 'e2_choice', 'e2_recap'): return
     if getattr(CFG, 'MODE', 'serie') != 'serie' and sg['i'] > 0: return
     if sg['i'] == 0 and getattr(CFG, 'MODE', 'serie') == 'serie':
         text(c, f"ÉPISODE {int(CFG.EP)}", W / 2, 250, 46, (0.85, 0.88, 0.95), 'Montserrat', track=6)
