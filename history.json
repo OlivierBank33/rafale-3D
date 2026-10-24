@@ -1139,6 +1139,44 @@
    "uuids": {
     "tiktok": "-5886377345071627922"
    }
+  },
+  {
+   "date": "2026-10-25 10:00",
+   "format": "SURVIVRAIS-TU ? (stickman)",
+   "name": "Caché dans le train d'atterrissage (repli du train, −50 °C, hypoxie, chute à l'approche ; FAA 128 cas, > 3/4 morts) -> tu ne survis pas",
+   "voice": "Corentin",
+   "duree": 61.4,
+   "flow": "ar4ip4RHk5eonnM9gnqa",
+   "credits": 1100,
+   "uuids": {
+    "tiktok": "3999869231369045077"
+   }
+  },
+  {
+   "date": "2026-10-25 12:30",
+   "format": "HISTOIRE VRAIE (stickman)",
+   "name": "F-15 israélien rentré avec une seule aile (1983, Ziv Nedivi, ~480 km/h, arrêt à 6 m)",
+   "voice": "Corentin",
+   "duree": 64.8,
+   "flow": "TjEhq0iBGp0g42OUUjKn",
+   "credits": 1153,
+   "uuids": {
+    "tiktok": "1963261834005727236",
+    "youtube+facebook": "-3933505718644881305"
+   }
+  },
+  {
+   "date": "2026-10-25 18:00",
+   "format": "QU'AURAIS-TU FAIT ? (stickman)",
+   "name": "Planeur de Gimli 1983 (livres/kg, 767 sans moteurs, A Winnipeg / B Gimli / C champ, glissade, 69 survivants)",
+   "voice": "Corentin",
+   "duree": 64.4,
+   "flow": "OoasJPn0Edmw9nddMTwJ",
+   "credits": 1115,
+   "uuids": {
+    "tiktok": "748227657540587352",
+    "youtube+facebook": "-5844486534008192911"
+   }
   }
  ],
  "notes": [
@@ -1311,7 +1349,8 @@
   "19/10 : vues Harrier GR1 rendues dans dl/rafalem_harrier/b_*.png (az 215/270/180/180, el 16/4/4/88) ; réutilisables. Bebas Neue n'a pas la flèche → (tofu) : utiliser = ou >. Ép. 06 annonce ép. 07 « Pourquoi le Rafale vole si lentement ».",
   "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique ».",
   "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge.",
-  "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson)."
+  "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson).",
+  "24/10 : 26/10 18:00 = ép. 3 « TU ES LE PILOTE » (vote ép. 2 publié le 24/10 18:00). Lire les commentaires YouTube de l'ép. 2 avant d'écrire."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
@@ -1349,17 +1388,16 @@
  "survie_backlog": [
   "Hypoxie à 10 000 m sans masque",
   "Chute libre depuis un avion de ligne (Vesna Vulović, 10 160 m)",
-  "Amerrissage d'un avion de ligne",
-  "Coincé dans la soute / train d'atterrissage (passagers clandestins, −50 °C)"
+  "Amerrissage d'un avion de ligne"
  ],
  "histoire_vraie_backlog": [
   "Patrouille de France appelée « Air France » par erreur",
-  "F-15 israélien rentré avec une seule aile (1983)",
   "Garros, premier à traverser la Méditerranée (1913)",
   "Bob Hoover et le verre d'eau en tonneau"
  ],
  "quaurais_tu_fait_backlog": [
-  "Gimli 1983 : panne sèche, piste désaffectée pleine de monde",
-  "Air Transat 236 : fuite de carburant, plané vers les Açores"
+  "Air Transat 236 : fuite de carburant, plané vers les Açores",
+  "Qantas 32 (2010) : moteur A380 qui explose, 58 alarmes",
+  "Swissair 111 / fumée en cabine : vider le carburant ou se poser tout de suite ?"
  ]
 }

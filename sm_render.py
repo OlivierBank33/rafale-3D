@@ -297,6 +297,9 @@ SC.update(SC3)
 import sm_scenes4
 sm_scenes4.R = sys.modules[__name__]
 SC.update(sm_scenes4.SC4)
+import sm_scenes5
+sm_scenes5.R = sys.modules[__name__]
+SC.update(sm_scenes5.SC5)
 
 
 # ---------------- sous-titres ----------------
