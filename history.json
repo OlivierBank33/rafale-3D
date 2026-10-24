@@ -1149,8 +1149,14 @@
    "flow": "ar4ip4RHk5eonnM9gnqa",
    "credits": 1100,
    "uuids": {
-    "tiktok": "3999869231369045077"
-   }
+    "tiktok": "3999869231369045077",
+    "youtube+facebook": "1578352932299821017"
+   },
+   "post_ids": {
+    "tiktok": "405132095",
+    "youtube+facebook": "405132395"
+   },
+   "moteur": "stickman v2 (re-rendu 24/10 19h, même voix, 0 crédit voix)"
   },
   {
    "date": "2026-10-25 12:30",
@@ -1163,7 +1169,12 @@
    "uuids": {
     "tiktok": "1963261834005727236",
     "youtube+facebook": "-3933505718644881305"
-   }
+   },
+   "post_ids": {
+    "tiktok": "405132171",
+    "youtube+facebook": "405132434"
+   },
+   "moteur": "stickman v2 (re-rendu 24/10 19h, même voix, 0 crédit voix)"
   },
   {
    "date": "2026-10-25 18:00",
@@ -1176,7 +1187,12 @@
    "uuids": {
     "tiktok": "748227657540587352",
     "youtube+facebook": "-5844486534008192911"
-   }
+   },
+   "post_ids": {
+    "tiktok": "405132309",
+    "youtube+facebook": "405132487"
+   },
+   "moteur": "stickman v2 (re-rendu 24/10 19h, même voix, 0 crédit voix)"
   }
  ],
  "notes": [
@@ -1350,7 +1366,8 @@
   "20/10 : plus aucun duel avec camp français dans duel_backlog. Idées à vérifier (modèles dispo ?) : Alpha Jet vs Hawk (fg/Alphajet ok, Hawk à trouver), Mirage III vs F-104, Concorde vs Tu-144 (Tu-144 absent), Rafale vs J-20, Mirage 2000 vs F-16 déjà fait. Ép. 07 annonce ép. 08 « Le pilote automatique ».",
   "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge.",
   "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson).",
-  "24/10 : 26/10 18:00 = ép. 3 « TU ES LE PILOTE » (vote ép. 2 publié le 24/10 18:00). Lire les commentaires YouTube de l'ép. 2 avant d'écrire."
+  "24/10 : 26/10 18:00 = ép. 3 « TU ES LE PILOTE » (vote ép. 2 publié le 24/10 18:00). Lire les commentaires YouTube de l'ép. 2 avant d'écrire.",
+  "24/10: les 3 vidéos du 25/10 re-rendues en v2 (sm_render2/sm_audio2) et posts Metricool remplacés (TikTok + YT/FB). Les ids de post changent à chaque update, l'uuid reste."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
