@@ -213,9 +213,20 @@ def sc_g_options(c, t, sg, lt, u):
 
 def sc_g_pause(c, t, sg, lt, u):
     c.set_source_rgb(0.03, 0.04, 0.07); c.paint()
-    n = 3 - int(min(2.999, lt * 3 / max(1, sg['end'] - sg['t0'])))
-    s = 1 + 0.2 * (1 - (lt % 1))
-    c.save(); c.translate(540, 900); c.scale(s, s); text(c, str(n), 0, 120, 360, ORG, glow=1.2); c.restore()
+    if len(sg.get('sent', [])) >= 5:                      # v2 : calé sur « Trois. Deux. Un. » de la vraie voix
+        marks = [x[0] for x in sg['sent'][2:5]]
+        k = sum(1 for m in marks if t >= m - 0.05)
+        if k == 0:
+            text(c, "?", 540, 1020, 360, WH, glow=0.6); since = lt
+        else:
+            n = 4 - k; since = t - marks[k - 1]
+            s = 1 + 0.35 * (1 - ease(since / 0.25))
+            c.save(); c.translate(540, 900); c.scale(s, s); text(c, str(n), 0, 120, 360, (RED, ORG, ORG)[n - 1] if n <= 3 else ORG, glow=1.2); c.restore()
+            c.new_path(); c.arc(540, 860, 260 + 120 * ease(since / 0.4), 0, 7); c.set_source_rgba(*ORG, 0.5 * (1 - ease(since / 0.4))); c.set_line_width(10); c.stroke()
+    else:
+        n = 3 - int(min(2.999, lt * 3 / max(1, sg['end'] - sg['t0'])))
+        s = 1 + 0.2 * (1 - (lt % 1))
+        c.save(); c.translate(540, 900); c.scale(s, s); text(c, str(n), 0, 120, 360, ORG, glow=1.2); c.restore()
     text(c, "A, B OU C ?", 540, 520, 130, WH, glow=0.6)
 
 def sc_g_reveal(c, t, sg, lt, u):

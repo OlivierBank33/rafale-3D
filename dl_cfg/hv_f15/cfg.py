@@ -26,3 +26,5 @@ SCENES = [
          show="L'avion a reçu une nouvelle aile, et a repris du service. Tu aurais tenté l'atterrissage, ou tu te serais éjecté ? Dis-le en commentaire."),
 ]
 END_HOLD = 12.5
+
+RECAP = [("1 AILE", "arrachée en vol", (1.0, 0.25, 0.25)), ("480 KM/H", "à l'atterrissage", (1.0, 0.55, 0.12)), ("6 M", "avant la barrière", (0.4, 1, 0.6))]

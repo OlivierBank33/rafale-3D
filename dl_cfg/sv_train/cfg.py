@@ -22,3 +22,5 @@ SCENES = [
          show="Verdict : tu ne survis probablement pas. Sur 128 cas recensés par l'aviation américaine depuis 1947, plus de 3 sur 4 sont morts. Ne le tente jamais. Tu savais que c'était aussi dangereux ?"),
 ]
 END_HOLD = 14.0
+
+RECAP = [("128 CAS", "recensés depuis 1947 (FAA)", (1, 0.85, 0.25)), ("−50 °C", "dehors, à 11 000 m", (0.35, 0.82, 1.0)), ("3 SUR 4", "n'ont pas survécu", (1.0, 0.25, 0.25))]

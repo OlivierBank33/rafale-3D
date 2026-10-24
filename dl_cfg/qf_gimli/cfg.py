@@ -27,3 +27,5 @@ SCENES = [
          show="Les 69 personnes à bord survivent, sans aucun blessé grave. Et toi, tu avais choisi quoi ? A, B ou C, en commentaire."),
 ]
 END_HOLD = 12.5
+
+RECAP = [("LB ≠ KG", "l'erreur du plein", (1.0, 0.55, 0.12)), ("0 MOTEUR", "un 767 en planeur", (1.0, 0.25, 0.25)), ("69", "survivants", (0.4, 1, 0.6))]

@@ -133,15 +133,34 @@ def sc_verdict(c, t, sg, lt, u):
     if u > 0.3: text(c, "CEINTURE + MASQUE EN 15 S", 540, 690, 64, WH)
 
 # ---------- HISTOIRE VRAIE : BA 5390 ----------
-def jet(c, x, y, rot, s=1.0, wind=None):
+def jet(c, x, y, rot, s=1.0, wind=None, gear=0.0, night=False):
+    """Avion de ligne v2 : dégradé, liseré, hublots, réacteur, gouverne de profondeur, train optionnel (0..1)."""
     c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s)
-    c.new_path(); c.move_to(-250, -12); c.curve_to(-120, -38, 160, -38, 240, -12); c.curve_to(268, 0, 268, 24, 240, 30); c.curve_to(100, 42, -130, 38, -250, 22); c.close_path(); fill_stroke(c, (0.92, 0.93, 0.96), 9)
-    c.new_path(); c.move_to(-210, -14); c.line_to(-250, -130); c.line_to(-200, -130); c.line_to(-150, -24); c.close_path(); fill_stroke(c, (0.1, 0.2, 0.5), 8)
+    # aile lointaine + empennage horizontal lointain
+    c.new_path(); c.move_to(-10, 0); c.line_to(60, 0); c.line_to(-30, -46); c.line_to(-70, -46); c.close_path(); fill_stroke(c, (0.62, 0.64, 0.7), 6)
+    if gear > 0:
+        for gx, gl in ((150, 44), (-5, 56)):
+            L = gl * gear; c.move_to(gx, 26); c.line_to(gx, 26 + L); c.set_source_rgb(*INK); c.set_line_width(7); c.stroke()
+            c.new_path(); c.arc(gx, 30 + L, 11 * gear + 1, 0, 7); fill_stroke(c, (0.12, 0.12, 0.14), 4)
+    c.new_path(); c.move_to(-250, -12); c.curve_to(-120, -38, 160, -38, 240, -12); c.curve_to(268, 0, 268, 24, 240, 30); c.curve_to(100, 42, -130, 38, -250, 22); c.close_path()
+    g = cairo.LinearGradient(0, -38, 0, 40); g.add_color_stop_rgb(0, 0.99, 0.99, 1.0); g.add_color_stop_rgb(0.55, 0.9, 0.91, 0.95); g.add_color_stop_rgb(1, 0.68, 0.7, 0.78)
+    c.set_source(g); c.fill_preserve(); c.save(); c.clip_preserve()
+    c.new_path(); c.rectangle(-260, 6, 520, 7); c.set_source_rgb(0.1, 0.2, 0.5); c.fill()
+    c.new_path(); c.rectangle(-260, 14, 520, 3); c.set_source_rgb(0.85, 0.2, 0.2); c.fill()
+    c.restore(); c.set_source_rgb(*INK); c.set_line_width(9); c.set_line_join(1); c.stroke()
+    c.new_path(); c.move_to(-200, -25); c.curve_to(-80, -36, 120, -36, 200, -22); c.set_source_rgba(1, 1, 1, 0.8); c.set_line_width(3); c.stroke()
+    c.new_path(); c.move_to(-210, -14); c.line_to(-250, -130); c.line_to(-200, -130); c.line_to(-150, -24); c.close_path()
+    g = cairo.LinearGradient(-250, -130, -150, -14); g.add_color_stop_rgb(0, 0.16, 0.3, 0.66); g.add_color_stop_rgb(1, 0.06, 0.14, 0.38); c.set_source(g); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(8); c.stroke()
+    c.new_path(); c.arc(-205, -78, 14, 0, 7); c.set_source_rgba(1, 1, 1, 0.85); c.fill()
     c.new_path(); c.move_to(-235, -128); c.line_to(-170, -128); c.line_to(-175, -116); c.line_to(-232, -116); c.close_path(); fill_stroke(c, (0.1, 0.2, 0.5), 6)
-    rr(c, -200, -30, 70, 26, 12); fill_stroke(c, (0.75, 0.76, 0.8), 6)
-    for i in range(8): rr(c, -100 + i * 36, -18, 20, 15, 6); fill_stroke(c, (1, 0.85, 0.45), 4)
+    c.new_path(); c.move_to(-235, 4); c.line_to(-290, 18); c.line_to(-280, 26); c.line_to(-215, 16); c.close_path(); fill_stroke(c, (0.8, 0.81, 0.86), 5)
+    for i in range(13):
+        rr(c, -150 + i * 23, -16, 13, 13, 5); c.set_source_rgb(*((1, 0.86, 0.5) if night else (0.2, 0.3, 0.45))); c.fill()
     c.new_path(); c.move_to(185, -26); c.curve_to(205, -32, 225, -24, 240, -12); c.line_to(195, -12); c.close_path(); fill_stroke(c, (0.02, 0.02, 0.05) if wind else (0.35, 0.75, 1.0), 5)
     c.new_path(); c.move_to(-30, 14); c.line_to(80, 14); c.line_to(0, 66); c.line_to(-80, 66); c.close_path(); fill_stroke(c, (0.8, 0.81, 0.86), 8)
+    rr(c, -20, 40, 104, 36, 17); g = cairo.LinearGradient(0, 40, 0, 76); g.add_color_stop_rgb(0, 0.86, 0.87, 0.9); g.add_color_stop_rgb(1, 0.55, 0.57, 0.63)
+    c.set_source(g); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(6); c.stroke()
+    c.new_path(); c.save(); c.translate(84, 58); c.scale(0.35, 1); c.arc(0, 0, 16, 0, 7); c.restore(); c.set_source_rgb(0.08, 0.08, 0.1); c.fill()
     c.restore()
 
 def sc_climb(c, t, sg, lt, u):
