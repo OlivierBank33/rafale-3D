@@ -1193,6 +1193,74 @@
     "youtube+facebook": "405132487"
    },
    "moteur": "stickman v2 (re-rendu 24/10 19h, même voix, 0 crédit voix)"
+  },
+  {
+   "date": "2026-10-26 10:00",
+   "format": "SURVIVRAIS-TU ? (stickman v2)",
+   "name": "Chute libre depuis 10 000 m sans parachute (hypoxie, réveil vers 6 700 m, ~200 km/h à plat, neige/marais, Magee 1943 Saint-Nazaire, Vulović 1972 record contesté) -> presque jamais",
+   "voice": "Corentin",
+   "duree": 72.8,
+   "flow": "UT0fLliRMVIWXGNpss4q",
+   "credits": 1422,
+   "composition": "X65lfzdzjP4H8gA8slit",
+   "uuids": {
+    "tiktok": "-1987355341289140490",
+    "youtube+facebook": "-9028553281240873174"
+   },
+   "post_ids": {
+    "tiktok": "405673224",
+    "youtube+facebook": "405673289"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-8734676887431339939.mp4",
+   "sources": [
+    "Popular Mechanics (D. Koeppel) via Gigazine 2016",
+    "Wikipedia Vesna Vulović",
+    "Wikipedia Alan Magee"
+   ]
+  },
+  {
+   "date": "2026-10-26 12:30",
+   "format": "HISTOIRE VRAIE (stickman v2)",
+   "name": "Roland Garros traverse la Méditerranée (23/09/1913, Fréjus 5h47 -> Bizerte 13h40, 7h53, ~800 km, 2 pannes Corse/Sardaigne, ~5 L restants ; abattu 5/10/1918 ; stade 1928)",
+   "voice": "Corentin",
+   "duree": 62.0,
+   "flow": "8JbaROsuT04Up7xQOgJk",
+   "credits": 1075,
+   "composition": "wiWwsRFXshmfwQi5hVxK",
+   "uuids": {
+    "tiktok": "-720324350394873061",
+    "youtube+facebook": "-2936731372479561462"
+   },
+   "post_ids": {
+    "tiktok": "405677273",
+    "youtube+facebook": "405677379"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-1700869455118285428.mp4",
+   "sources": [
+    "FAI centenaire traversée",
+    "Vikidia Roland Garros",
+    "This Day in Aviation",
+    "Wikipedia EN Roland Garros (aviator)"
+   ]
+  },
+  {
+   "date": "2026-10-26 18:00",
+   "format": "TU ES LE PILOTE ép. 3 (stickman v2)",
+   "name": "Plage choisie (votes YouTube A 3 / B 1), volets, sable mouillé, moteur arrêté à 300 m, phare : gens + feu de camp ; choix A l'eau / B au-dessus",
+   "voice": "Corentin",
+   "duree": 61.8,
+   "flow": "5KX5rxFhHnfiU0LsfX5A",
+   "credits": 1080,
+   "composition": "SQonpbk5F7G9V7pwKsxM",
+   "uuids": {
+    "tiktok": "2529860787670699575",
+    "youtube+facebook": "-3912404274079055002"
+   },
+   "post_ids": {
+    "tiktok": "405677849",
+    "youtube+facebook": "405677906"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-8115024015595058221.mp4"
   }
  ],
  "notes": [
@@ -1367,7 +1435,8 @@
   "20/10 soir : bascule stickman. Le filigrane est ajouté par eleven_prep.sh (haut gauche) : ne pas en dessiner un 2e dans sm_render. ElevenLabs a mis ~5 min à générer la voix et la composition ce soir : prévoir la marge.",
   "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson).",
   "24/10 : 26/10 18:00 = ép. 3 « TU ES LE PILOTE » (vote ép. 2 publié le 24/10 18:00). Lire les commentaires YouTube de l'ép. 2 avant d'écrire.",
-  "24/10: les 3 vidéos du 25/10 re-rendues en v2 (sm_render2/sm_audio2) et posts Metricool remplacés (TikTok + YT/FB). Les ids de post changent à chaque update, l'uuid reste."
+  "24/10: les 3 vidéos du 25/10 re-rendues en v2 (sm_render2/sm_audio2) et posts Metricool remplacés (TikTok + YT/FB). Les ids de post changent à chaque update, l'uuid reste.",
+  "25/10: 26/10 produit en v2 (sm_scenes7 + cues7). Ports de composition EL désormais 'video' + 'audio' (paramètres identiques : piste vidéo du bed + piste voix). media_push : après push d'un bed, supprimer le fichier local puis `git update-index --skip-worktree` sur les fichiers supprimés (le hook git exige un dépôt propre)."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
