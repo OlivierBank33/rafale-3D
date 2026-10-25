@@ -144,6 +144,49 @@ def cues7(sc, s, S, at):
         add(sfx, at(1), pluck(660, 0.3, 0.15)); add(sfx, at(2, 0.2), impact(0.5)); add(sfx, at(3), pluck(880, 0.3, 0.15)); add(sfx, at(4, 0.2), tone(140, 0.3, 0.3))
     if sc == 'e3_choice':
         for k in (1, 2): add(sfx, at(k), tone(660 + 220 * k, 0.3, 0.14, 0.002, 0.25))
+    # ---- AF447 (sm_scenes8) ----
+    def cricket(t0, d, g=0.12):
+        tt = t0
+        while tt < t0 + d: add(sfx, tt, tone(2900, 0.035, g, 0.002, 0.01)); add(sfx, tt + 0.012, tone(3300, 0.03, g * 0.7, 0.002, 0.01)); tt += 0.066
+    if sc == 'af_hook':
+        add(sfx, at(0), rumble(S[1][1] - S[0][0] + 0.5, 70, 0.25)); add(sfx, at(1, 0.2), pluck(1320, 0.4, 0.12))
+        add(sfx, at(2, 0.05), gliss(1100, 140, (S[2][1] - S[2][0]) * 0.9, 0.12)); add(sfx, at(2, 0.95), impact(0.6)); add(sfx, at(3), stinger(ROOT / 2, 0.45))
+    if sc == 'af_night':
+        for j in range(5): add(sfx, at(0, 0.1 + 0.15 * j), pluck(440 * 2 ** (j * 3 / 12), 0.5, 0.08))
+        for j in range(20): add(sfx, at(1, 0.1 + 0.035 * j), tone(1800, 0.02, 0.05, 0.001, 0.01))
+        add(sfx, at(2, 0.6), tone(300, 0.06, 0.25)); add(sfx, at(2, 0.62), tone(150, 0.1, 0.3))
+    if sc == 'af_storm':
+        tt = at(0)
+        while tt < at(1): add(sfx, tt, tone(1200, 0.06, 0.08)); tt += 0.83
+        add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.8, 40, 0.35))
+        for f in (0.15, 0.55, 0.9): add(sfx, at(1, f), impact(0.55, 1.4))
+    if sc == 'af_pitot':
+        for j in range(50): add(sfx, at(0, 0.35 + 0.6 * j / 50), tone(rng.uniform(3000, 5200), 0.03, 0.03))
+        for j in range(12): add(sfx, at(1, 0.2 + 0.06 * j), tone(rng.uniform(200, 900), 0.05, 0.08))
+        for rep in range(2):                                   # « cavalry charge » (sinus)
+            for j, f in enumerate((523, 659, 784, 1046, 784, 1046)): add(sfx, at(2, 0.05) + rep * 0.75 + j * 0.11, tone(f, 0.1, 0.18, 0.003, 0.03))
+    if sc == 'af_climb':
+        add(sfx, at(0, 0.15), gliss(180, 320, 0.5, 0.15)); add(sfx, at(1), gliss(200, 520, S[1][1] - S[1][0], 0.07))
+    if sc == 'af_stall':
+        tt = at(0)
+        while tt < end - 0.3: cricket(tt, 0.45, 0.11 if tt < at(1) else 0.06); tt += 1.0
+        add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.5, 60, 0.3)); add(sfx, at(3), stinger(ROOT / 2, 0.35))
+    if sc == 'af_captain':
+        add(sfx, at(0, 0.1), tone(300, 0.06, 0.25))
+        tt = at(1)
+        while tt < end - 0.2: add(sfx, tt, tone(1050, 0.18, 0.1, 0.005, 0.05)); add(sfx, tt + 0.22, tone(840, 0.18, 0.1, 0.005, 0.05)); tt += 0.5
+        cricket(at(0), 0.45, 0.06)
+    if sc == 'af_fall':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.5, 330, 0.12)); add(sfx, at(0), rumble(S[1][1] - S[0][0], 45, 0.35))
+        for j in range(int(S[1][1] - S[1][0])): add(sfx, at(1) + j, tone(1600, 0.03, 0.08, 0.001, 0.02))
+        MUTE.append((at(2) - 0.15, end + 0.4)); add(sfx, at(2), tone(73.4, 3.0, 0.2, 0.3, 2.0))
+    if sc == 'af_search':
+        tt = at(0, 0.35)
+        while tt < end - 0.3: add(sfx, tt, tone(1480, 0.5, 0.12, 0.002, 0.45)); add(sfx, tt + 0.5, tone(1480, 0.4, 0.04, 0.002, 0.35)); tt += 1.6
+        add(sfx, at(0, 0.62), stinger(ROOT, 0.25))
+    if sc == 'af_after':
+        for f in (0.0, 0.05): add(sfx, at(1, f), impact(0.35, 0.6))
+        for j in range(6): add(sfx, at(2, 0.05 + 0.12 * j), pluck(880 * 2 ** ([0, 4, 7, 12, 7, 4][j] / 12), 0.8, 0.07))
 
 
 # ---------------- montage sonore ----------------
@@ -214,7 +257,7 @@ for a_, b_ in MUTE:                                          # silence musical (
     music *= gm
 # récap final + appel à s'abonner
 if getattr(CFG, 'RECAP', None):
-    t0 = ve + 0.9
+    t0 = ve + getattr(CFG, 'RECAP_DELAY', 0.9)
     add(sfx, t0, whoosh(0.2))
     for j in range(3): add(sfx, t0 + 0.5 + j * 1.6, impact(0.35, 0.8)); add(sfx, t0 + 0.5 + j * 1.6, tone(1320, 0.2, 0.1, 0.002, 0.15))
     tc = t0 + 0.5 + 3 * 1.6 + 0.4; add(sfx, tc, tone(1568, 0.5, 0.12, 0.002, 0.4)); add(sfx, tc + 0.12, tone(2093, 0.7, 0.12, 0.002, 0.5))

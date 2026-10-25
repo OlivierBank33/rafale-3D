@@ -16,6 +16,9 @@ SC.update(sm_scenes6.SC6)
 import sm_scenes7
 sm_scenes7.R = R1
 SC.update(sm_scenes7.SC7)
+import sm_scenes8
+sm_scenes8.R = R1
+SC.update(sm_scenes8.SC8)
 ORG, BLUE, RED, WH = R1.ORG, R1.BLUE, R1.RED, R1.WH
 YEL = (1.0, 0.85, 0.25)
 AL = json.load(open(D + 'align.json'))
@@ -155,7 +158,7 @@ def dust(c, t, z, cx, cy):
 RECAP = getattr(CFG, 'RECAP', None)
 def recap(c, t):
     """Maintien final : récap de 3 chiffres-clés + appel à s'abonner (pas d'écran figé)."""
-    t0 = AL['voice_end'] + 0.9
+    t0 = AL['voice_end'] + getattr(CFG, 'RECAP_DELAY', 0.9)
     if not RECAP or t < t0: return
     a = ease((t - t0) / 0.4); c.set_source_rgba(0.02, 0.02, 0.05, a); c.paint()
     radial(c, W / 2, 900, 700, (0.25, 0.3, 0.6), 0.25 * a); dust(c, t, 1.0, W / 2, H / 2)
@@ -172,6 +175,8 @@ def recap(c, t):
         c.save(); c.translate(W / 2, 1440); c.scale(q, q)
         rr(c, -300, -70, 600, 140, 70); c.set_source_rgb(*ORG); c.fill()
         text(c, "ABONNE-TOI", 0, 30, 90, (0.05, 0.05, 0.08)); c.restore()
+    note = getattr(CFG, 'RECAP_NOTE', None)
+    if note: text(c, note, W / 2, 1640, 34, (0.75, 0.78, 0.85), 'Montserrat')
 
 
 def draw_scene(c, sg, t, extra_z=1.0, dx=0.0):
