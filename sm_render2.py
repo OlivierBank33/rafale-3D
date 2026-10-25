@@ -13,6 +13,9 @@ CFG = R1.CFG; SC = R1.SC; D = R1.D; FPS = 30
 import sm_scenes6
 sm_scenes6.R = R1
 SC.update(sm_scenes6.SC6)
+import sm_scenes7
+sm_scenes7.R = R1
+SC.update(sm_scenes7.SC7)
 ORG, BLUE, RED, WH = R1.ORG, R1.BLUE, R1.RED, R1.WH
 YEL = (1.0, 0.85, 0.25)
 AL = json.load(open(D + 'align.json'))
@@ -123,7 +126,7 @@ def subtitles(c, t):
 
 # ---------------- titre « slam » ----------------
 def title_card(c, sg, lt):
-    if sg['scene'] in ('choice', 'e2_choice', 'e2_recap'): return
+    if sg['scene'].endswith(('choice', 'recap')): return
     mode = getattr(CFG, 'MODE', 'serie')
     if mode != 'serie' and sg['i'] > 0: return
     a = 1 - ease((lt - 2.7) / 0.45)

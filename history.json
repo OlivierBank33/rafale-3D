@@ -1398,19 +1398,34 @@
      "A": "se poser sur la plage maintenant",
      "B": "tenter la piste de Shannon"
     },
-    "next_ep_date": "2026-10-26 18:00"
+    "next_ep_date": "2026-10-26 18:00",
+    "vote": "YouTube zFWjdWuBaQ8 lu le 25/10 14h : A ×3, B ×1 (+1 commentaire hors vote) ; TikTok/Facebook non lisibles -> A la plage (majorité réelle YouTube, comptes affichés)"
+   },
+   {
+    "ep": 3,
+    "slug": "sm_ep03",
+    "date": "2026-10-26 18:00",
+    "pitch": "plage choisie, volets, sable mouillé, moteur arrêté à 300 m (planeur), phare : feu de camp et gens sur la plage",
+    "choice": {
+     "A": "se poser avant eux dans l'eau peu profonde",
+     "B": "passer au-dessus et se poser sur la fin de plage"
+    },
+    "next_ep_date": "2026-10-28 18:00"
    }
   ]
  },
  "survie_backlog": [
   "Hypoxie à 10 000 m sans masque",
-  "Chute libre depuis un avion de ligne (Vesna Vulović, 10 160 m)",
-  "Amerrissage d'un avion de ligne"
+  "Amerrissage d'un avion de ligne",
+  "Foudre qui frappe ton avion en vol",
+  "Turbulences sévères sans ceinture",
+  "Givre sur les ailes au décollage"
  ],
  "histoire_vraie_backlog": [
   "Patrouille de France appelée « Air France » par erreur",
-  "Garros, premier à traverser la Méditerranée (1913)",
-  "Bob Hoover et le verre d'eau en tonneau"
+  "Bob Hoover et le verre d'eau en tonneau",
+  "Mermoz et la Croix-du-Sud (1936)",
+  "Concorde 001 et l'éclipse de 1973 (74 min de totalité)"
  ],
  "quaurais_tu_fait_backlog": [
   "Air Transat 236 : fuite de carburant, plané vers les Açores",

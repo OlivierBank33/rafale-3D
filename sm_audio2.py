@@ -72,6 +72,80 @@ for b in range(nbars):
 fade = np.ones(N); i0 = int((mend - 2.0) * SR); fade[i0:] = np.linspace(1, 0, N - i0) if i0 < N else 1
 music *= fade
 
+MUTE = []
+def crackle(t0, d, g=0.04, n=40):
+    for j in range(n): add(sfx, t0 + d * rng.random(), tone(rng.uniform(900, 2600), 0.025, g))
+def sputter(t0, d, g=0.55, step=0.26):
+    tt = t0
+    while tt < t0 + d: add(sfx, tt, tone(68, 0.12, g, 0.003, 0.08)); add(sfx, tt + 0.05, tone(140, 0.06, g * 0.4)); tt += step * rng.uniform(0.8, 1.3)
+def cues7(sc, s, S, at):
+    end = s['end']
+    if sc == 'fl_hook':
+        add(sfx, at(0), rumble(2.4, 260, 0.1)); add(sfx, at(1), impact(0.5)); add(sfx, at(2, 0.45), tone(1320, 0.12, 0.1)); add(sfx, at(2, 0.55), stinger(ROOT * 2, 0.25)); add(sfx, at(3), stinger(ROOT, 0.4))
+    if sc == 'fl_air':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.5, 320, 0.1)); heartbeat(at(1), at(1, 0.5), 100, 0.45); heartbeat(at(1, 0.5), end, 50, 0.3)
+    if sc == 'fl_wake':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.4, 200, 0.12)); add(sfx, at(1), impact(0.6)); add(sfx, at(1), gliss(300, 1200, 0.4, 0.12))
+        tt = at(2)
+        while tt < end - 0.1: add(sfx, tt, tone(2000, 0.03, 0.12, 0.001, 0.02)); tt += 1.0
+    if sc == 'fl_speed':
+        add(sfx, at(0), spool(80, 300, 1.6, 0.2)); add(sfx, at(0), rumble(3.0, 380, 0.08)); add(sfx, at(1, 0.1), gliss(900, 500, 1.2, 0.08))
+    if sc == 'fl_target':
+        add(sfx, at(1), tone(660, 0.2, 0.15)); add(sfx, at(2, 0.4), impact(0.9)); add(sfx, at(3), pluck(1320, 0.4, 0.18)); add(sfx, at(3, 0.5), pluck(1568, 0.4, 0.18))
+        for f in (0.25, 0.52, 0.79): add(sfx, at(4, f), pluck(1046, 0.3, 0.16))
+    if sc == 'fl_magee':
+        add(sfx, at(0), stinger(ROOT * 1.5, 0.25)); add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.5, 50, 0.4))
+        for f in (0.15, 0.4, 0.7): add(sfx, at(1, f), impact(0.3, 0.8))
+        add(sfx, at(2, 0.42), impact(0.7)); crackle(at(2, 0.42), 0.6, 0.06, 70); add(sfx, at(2, 0.74), stinger(ROOT * 2, 0.3))
+    if sc == 'fl_vesna':
+        add(sfx, at(0), gliss(700, 200, (S[0][1] - S[0][0]) * 0.66, 0.08)); add(sfx, at(0, 0.66), impact(0.8))
+        for j in range(3): add(sfx, at(1) + j * 0.55, tone(1000, 0.08, 0.15))
+        add(sfx, at(2), tone(1568, 0.5, 0.1, 0.002, 0.4)); add(sfx, at(2, 0.42), impact(0.7))
+    if sc == 'fl_verdict':
+        add(sfx, at(0), stinger(ROOT / 2, 0.5)); add(sfx, at(0, 0.3), impact(0.8)); add(sfx, at(1, 0.1), pluck(880, 0.4, 0.15)); add(sfx, at(1, 0.35), pluck(1100, 0.4, 0.15)); add(sfx, at(2), stinger(ROOT, 0.3))
+    if sc == 'gr_hook':
+        tt = at(0)
+        while tt < at(1): add(sfx, tt, pluck(330, 0.15, 0.2)); tt += 0.83
+        add(sfx, at(1), spool(60, 180, 1.4, 0.25)); add(sfx, at(2), stinger(ROOT, 0.3))
+    if sc == 'gr_takeoff':
+        tt = at(0)
+        while tt < at(1) - 0.1: add(sfx, tt, tone(1800, 0.03, 0.12, 0.001, 0.02)); tt += 0.5
+        add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.6, 45, 0.35)); add(sfx, at(1), spool(40, 140, 2.5, 0.2))
+        for j in range(6): add(sfx, at(2, j / 6), pluck(660 * 2 ** (j / 12 * 2), 0.3, 0.1))
+    if sc == 'gr_sea':
+        for j in range(16): add(sfx, at(0, 0.05 + 0.05 * j), tone(1500, 0.02, 0.06, 0.001, 0.01))
+        add(sfx, at(1), impact(0.5)); add(sfx, at(2), gliss(500, 700, 1.0, 0.05)); add(sfx, at(2, 0.4), pluck(880, 0.3, 0.12))
+    if sc == 'gr_fail':
+        sputter(at(0), S[0][1] - S[0][0]); add(sfx, at(1), spool(50, 190, 1.4, 0.3)); add(sfx, at(1, 0.3), stinger(ROOT * 2, 0.2))
+        sputter(at(2), S[2][1] - S[2][0]); add(sfx, at(3), rumble(S[3][1] - S[3][0] + 0.5, 45, 0.3)); add(sfx, at(3), stinger(ROOT, 0.25))
+    if sc == 'gr_land':
+        add(sfx, at(0), tone(880, 0.6, 0.12, 0.002, 0.5)); add(sfx, at(0, 0.3), tone(660, 0.8, 0.12, 0.002, 0.6)); add(sfx, at(1), stinger(ROOT * 2, 0.3))
+        add(sfx, at(2), rumble(2.0, 45, 0.25)); add(sfx, at(2, 0.6), impact(0.45))
+        for j in range(4): add(sfx, at(3, 0.1) + j * 0.4, tone(1500 - 100 * j, 0.06, 0.12))
+        add(sfx, at(3, 0.2), stinger(ROOT / 2, 0.3))
+    if sc == 'gr_end':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 52, 0.2)); add(sfx, at(0, 0.55), gliss(800, 200, 2.0, 0.08)); add(sfx, at(1), stinger(ROOT * 1.5, 0.25)); add(sfx, at(2), stinger(ROOT, 0.3))
+    if sc == 'e3_recap':
+        for f in (0.2, 0.5): add(sfx, at(1, f), tone(70, 0.14, 0.6, 0.003, 0.1))
+        add(sfx, at(2, 0.1), pluck(660, 0.3, 0.15)); add(sfx, at(2, 0.25), pluck(880, 0.3, 0.15)); add(sfx, at(2, 0.57), stinger(ROOT * 2, 0.3))
+    if sc == 'e3_appr':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.5, 55, 0.3)); add(sfx, at(0, 0.45), gliss(300, 500, 1.0, 0.06)); add(sfx, at(1, 0.2), pluck(1320, 0.4, 0.15))
+    if sc == 'e3_quit':
+        add(sfx, at(0), rumble(S[1][1] - S[0][0], 55, 0.3)); add(sfx, at(1, 0.45), spool(130, 18, 1.6, 0.4)); add(sfx, at(1, 0.6), impact(0.6))
+        MUTE.append((at(2) - 0.1, at(4) - 0.1)); add(sfx, at(3), rumble(S[3][1] - S[3][0] + 1.0, 330, 0.12)); add(sfx, at(4), stinger(ROOT, 0.3))
+    if sc == 'e3_glide':
+        add(sfx, at(0, 0.1), impact(0.3, 0.6)); add(sfx, at(0, 0.2), impact(0.3, 0.6)); add(sfx, at(0, 0.35), tone(110, 0.45, 0.3, 0.005, 0.2)); heartbeat(at(1), end, 110, 0.45)
+    if sc == 'e3_light':
+        add(sfx, at(0, 0.35), tone(3000, 0.03, 0.2)); add(sfx, at(0, 0.35), tone(220, 1.5, 0.08, 0.3, 0.6)); add(sfx, at(1), pluck(990, 0.3, 0.12))
+        crackle(at(2), end - at(2), 0.03, 60); add(sfx, at(3), stinger(ROOT, 0.45)); add(sfx, at(3), impact(0.6))
+    if sc == 'e3_think':
+        heartbeat(at(0), end, 120, 0.45)
+        for j in range(5): add(sfx, at(0) + j / 2.2, tone(1000, 0.05, 0.12))
+        add(sfx, at(1), pluck(660, 0.3, 0.15)); add(sfx, at(2, 0.2), impact(0.5)); add(sfx, at(3), pluck(880, 0.3, 0.15)); add(sfx, at(4, 0.2), tone(140, 0.3, 0.3))
+    if sc == 'e3_choice':
+        for k in (1, 2): add(sfx, at(k), tone(660 + 220 * k, 0.3, 0.14, 0.002, 0.25))
+
+
 # ---------------- montage sonore ----------------
 add(sfx, 0.04, impact(1.0)); add(sfx, 0.04, gliss(3000, 1200, 0.5, 0.08, 0.002, 0.4))            # titre « slam »
 for i, s in enumerate(SEGS):
@@ -133,6 +207,11 @@ for i, s in enumerate(SEGS):
         add(sfx, at(2, 0.15), impact(0.8)); add(sfx, at(2, 0.78), stinger(ROOT * 2, 0.3))
     if sc == 'g_end':
         add(sfx, at(0), stinger(ROOT * 2 * 1.26, 0.25))
+    cues7(sc, s, S, at)
+for a_, b_ in MUTE:                                          # silence musical (« plus aucun bruit »)
+    gm = np.ones(N); i0, i1 = int(a_ * SR), int(b_ * SR); r_ = int(0.25 * SR)
+    gm[i0:i1] = 0.06; gm[max(0, i0 - r_):i0] = np.linspace(1, 0.06, i0 - max(0, i0 - r_)); gm[i1:i1 + r_] = np.linspace(0.06, 1, len(gm[i1:i1 + r_]))
+    music *= gm
 # récap final + appel à s'abonner
 if getattr(CFG, 'RECAP', None):
     t0 = ve + 0.9
