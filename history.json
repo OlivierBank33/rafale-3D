@@ -1331,6 +1331,29 @@
    "sources": [
     "Rapport BEA 16/01/2002 (via Wikipedia EN Air France Flight 4590)"
    ]
+  },
+  {
+   "date": "2026-10-27 18:00",
+   "format": "MYSTÈRES (v3 cinéma, sm_scenes9)",
+   "name": "MH370 (8/03/2014) : 239 à bord, « bonne nuit » 01:19, transpondeur coupé 01:21, demi-tour au radar militaire (dernier écho 02:22), 7 arcs Inmarsat, flaperon à La Réunion (07/2015), 120 000 km² fouillés, mission début 2026 sans résultat",
+   "voice": "Corentin",
+   "duree": 70.85,
+   "flow": "dJ3FHBL5cq1RKRRTmZ1D",
+   "credits": 1338,
+   "composition": "t3WjBEAWcIgBsTdOYNSZ",
+   "uuids": {
+    "tiktok": "948117787156498571",
+    "youtube+facebook": "-386664789958832328"
+   },
+   "post_ids": {
+    "tiktok": "406710434",
+    "youtube+facebook": "406710645"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-7740332505667845896.mp4",
+   "sources": [
+    "Wikipedia EN Timeline of Malaysia Airlines Flight 370",
+    "PBS / AP mars 2026 (Ocean Infinity 2025-2026)"
+   ]
   }
  ],
  "notes": [
@@ -1506,7 +1529,8 @@
   "22/10 : 22/10 12:30 resté vide (BA 5390 avancé au 21/10 15:12 sur demande). Ép. 2 de TU ES LE PILOTE à produire le 23/10 pour le 24/10 18:00 (vote ép. 1 publié le 22/10 18:00). Scènes ajoutées : sm_scenes3.py (9 G, SR-71, Hudson).",
   "24/10 : 26/10 18:00 = ép. 3 « TU ES LE PILOTE » (vote ép. 2 publié le 24/10 18:00). Lire les commentaires YouTube de l'ép. 2 avant d'écrire.",
   "24/10: les 3 vidéos du 25/10 re-rendues en v2 (sm_render2/sm_audio2) et posts Metricool remplacés (TikTok + YT/FB). Les ids de post changent à chaque update, l'uuid reste.",
-  "25/10: 26/10 produit en v2 (sm_scenes7 + cues7). Ports de composition EL désormais 'video' + 'audio' (paramètres identiques : piste vidéo du bed + piste voix). media_push : après push d'un bed, supprimer le fichier local puis `git update-index --skip-worktree` sur les fichiers supprimés (le hook git exige un dépôt propre)."
+  "25/10: 26/10 produit en v2 (sm_scenes7 + cues7). Ports de composition EL désormais 'video' + 'audio' (paramètres identiques : piste vidéo du bed + piste voix). media_push : après push d'un bed, supprimer le fichier local puis `git update-index --skip-worktree` sur les fichiers supprimés (le hook git exige un dépôt propre).",
+  "26/10 : ne JAMAIS lancer le post YouTube+Facebook en parallèle du post TikTok — l'URL static.metricool.com n'existe qu'après la réponse TikTok (erreur corrigée sur MH370 par updateScheduledPost)."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
