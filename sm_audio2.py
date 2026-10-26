@@ -188,6 +188,111 @@ def cues7(sc, s, S, at):
         for f in (0.0, 0.05): add(sfx, at(1, f), impact(0.35, 0.6))
         for j in range(6): add(sfx, at(2, 0.05 + 0.12 * j), pluck(880 * 2 ** ([0, 4, 7, 12, 7, 4][j] / 12), 0.8, 0.07))
 
+    # ---- SR-71 (sm_scenes9) ----
+    def alarm2(t0, t1, f0=1050, f1=840, g=0.1, step=0.5):
+        tt = t0
+        while tt < t1 - 0.2: add(sfx, tt, tone(f0, 0.18, g, 0.005, 0.05)); add(sfx, tt + 0.22, tone(f1, 0.18, g, 0.005, 0.05)); tt += step
+    if sc == 'sb_hook':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 330, 0.1)); add(sfx, at(0, 0.66), impact(0.9)); add(sfx, at(0, 0.66), gliss(900, 120, 1.0, 0.1)); crackle(at(0, 0.66), 0.8, 0.05, 50)
+        for j in range(6): add(sfx, at(1) + j * 0.12, tone(1400, 0.02, 0.05, 0.001, 0.01))
+        add(sfx, at(1, 0.3), stinger(ROOT * 1.5, 0.25)); add(sfx, at(2), stinger(ROOT, 0.35))
+    if sc == 'sb_jet':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.4, 70, 0.25)); add(sfx, at(0), spool(60, 200, 1.5, 0.15))
+        add(sfx, at(1, 0.05), pluck(880, 0.4, 0.15)); add(sfx, at(2, 0.05), pluck(1100, 0.4, 0.15))
+    if sc == 'sb_unstart':
+        add(sfx, at(0), gliss(200, 700, (S[0][1] - S[0][0]) * 0.7, 0.07))
+        add(sfx, at(1, 0.48), impact(1.0)); add(sfx, at(1, 0.48), tone(60, 0.5, 0.35, 0.002, 0.4)); sputter(at(1, 0.6), (S[1][1] - S[1][0]) * 0.4)
+        add(sfx, at(2), rumble(S[2][1] - S[2][0] + 0.4, 50, 0.3)); add(sfx, at(2, 0.2), gliss(500, 250, 1.4, 0.08))
+    if sc == 'sb_break':
+        add(sfx, at(0, 0.15), gliss(120, 90, 0.8, 0.15)); alarm2(at(1), at(2), 1200, 900, 0.1, 0.45)
+        add(sfx, at(2, 0.05), impact(1.0)); add(sfx, at(2, 0.05), rumble(S[2][1] - S[2][0] + 0.6, 45, 0.4)); crackle(at(2, 0.05), S[2][1] - S[2][0], 0.06, 90)
+    if sc == 'sb_out':
+        MUTE.append((at(0) - 0.1, at(2) - 0.1)); heartbeat(at(0), at(2) - 0.1, 48, 0.4)
+        add(sfx, at(1), tone(220, 1.6, 0.06, 0.4, 1.0)); add(sfx, at(2), rumble(S[2][1] - S[2][0] + 0.5, 330, 0.12)); add(sfx, at(2), whoosh(0.3))
+    if sc == 'sb_suit':
+        add(sfx, at(0, 0.1), gliss(300, 520, 1.6, 0.05)); add(sfx, at(0, 0.3), pluck(880, 0.3, 0.12))
+        tt = at(1)
+        while tt < at(2) - 0.3: add(sfx, tt, tone(140, 0.7, 0.06, 0.3, 0.3)); tt += 1.4
+        add(sfx, at(2), stinger(ROOT * 2, 0.3)); add(sfx, at(2, 0.1), tone(70, 0.4, 0.4, 0.003, 0.3))
+        for j in range(8): add(sfx, at(2, 0.2) + j * 0.2, tone(rng.uniform(600, 1200), 0.05, 0.05))
+    if sc == 'sb_chute':
+        add(sfx, at(0), rumble((S[0][1] - S[0][0]) * 0.7, 330, 0.12)); add(sfx, at(0, 0.72), impact(0.7)); add(sfx, at(0, 0.72), gliss(500, 200, 0.4, 0.12))
+        add(sfx, at(0, 0.8), pluck(660, 0.4, 0.12)); add(sfx, at(0, 0.9), pluck(990, 0.5, 0.12))
+        tt = at(1)
+        while tt < end - 0.3: add(sfx, tt, tone(85, 0.05, 0.12, 0.002, 0.03)); tt += 0.085
+    if sc == 'sb_verdict':
+        for j, f in enumerate((660, 880, 1100)): add(sfx, at(0, 0.1) + j * 0.14, pluck(f, 0.5, 0.15))
+        MUTE.append((at(1) - 0.1, at(2) - 0.1)); add(sfx, at(1), tone(73.4, 2.5, 0.18, 0.3, 1.8))
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    # ---- Concorde (sm_scenes9) ----
+    if sc == 'co_hook':
+        for j in range(4): add(sfx, at(0, 0.1) + j * 1.25, tone(2600, 0.12, 0.05, 0.003, 0.1))
+        add(sfx, at(0, 0.5), rumble(2.6, 60, 0.25)); add(sfx, at(0, 0.5), whoosh(0.3))
+    if sc == 'co_dc10':
+        tt = at(0)
+        while tt < at(1) - 0.1: add(sfx, tt, tone(1800, 0.03, 0.12, 0.001, 0.02)); tt += 0.5
+        add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.4, 55, 0.3)); add(sfx, at(1), spool(50, 160, 2.0, 0.15))
+        for j in range(5): add(sfx, at(2, 0.1 + 0.08 * j), tone(2400 - 200 * j, 0.04, 0.1))
+        add(sfx, at(2, 0.6), impact(0.35, 0.6)); add(sfx, at(2, 0.6), tone(3100, 0.25, 0.06, 0.002, 0.2))
+    if sc == 'co_roll':
+        add(sfx, at(0), rumble(S[1][1] - S[0][0] + 0.3, 50, 0.35)); add(sfx, at(0), spool(50, 220, S[0][1] - S[0][0], 0.15))
+        add(sfx, at(1, 0.3), pluck(1320, 0.3, 0.1))
+        add(sfx, at(2), impact(1.0)); add(sfx, at(2), tone(55, 0.6, 0.4, 0.002, 0.5)); crackle(at(2), 0.7, 0.07, 60)
+    if sc == 'co_tank':
+        add(sfx, at(0, 0.2), gliss(1400, 400, 1.2, 0.08)); add(sfx, at(0, 0.88), impact(0.7))
+        for j in range(5): add(sfx, at(1) + j * 0.5, tone(48, 0.4, 0.3, 0.003, 0.35)); add(sfx, at(1) + j * 0.5, tone(96, 0.2, 0.08))
+        add(sfx, at(2, 0.3), impact(0.8)); add(sfx, at(2, 0.3), rumble(S[2][1] - S[2][0], 35, 0.3)); crackle(at(2, 0.3), (S[2][1] - S[2][0]) * 0.8, 0.05, 80)
+    if sc == 'co_fire':
+        add(sfx, at(0), rumble(end - at(0), 55, 0.25)); crackle(at(0), S[0][1] - S[0][0], 0.04, 60)
+        tt = at(1)
+        while tt < at(2) - 0.15: add(sfx, tt, tone(1000, 0.09, 0.08, 0.002, 0.03)); tt += 0.18
+        add(sfx, at(1, 0.3), spool(140, 60, 1.2, 0.2))
+        for f in (0.25, 0.55): add(sfx, at(2, f), impact(0.3, 0.5)); add(sfx, at(2, f), tone(1600, 0.06, 0.06))
+    if sc == 'co_crash':
+        add(sfx, at(0), gliss(160, 110, S[0][1] - S[0][0], 0.1))
+        add(sfx, at(1), tone(220, 0.5, 0.06, 0.1, 0.4)); add(sfx, at(1, 0.4), gliss(400, 150, 1.5, 0.05))
+        MUTE.append((at(2) - 0.15, end + 0.3)); add(sfx, at(2), tone(73.4, 3.0, 0.18, 0.3, 2.0))
+    if sc == 'co_after':
+        add(sfx, at(0, 0.2), pluck(660, 0.4, 0.1))
+        for j in range(4): add(sfx, at(1, 0.05 + 0.1 * j), pluck(523 * 2 ** ([0, 4, 7, 12][j] / 12), 0.6, 0.1))
+        add(sfx, at(2), stinger(ROOT / 2, 0.3))
+        for j in range(6): add(sfx, at(3, 0.05 + 0.12 * j), pluck(880 * 2 ** ([0, 4, 7, 12, 7, 4][j] / 12), 0.8, 0.07))
+    # ---- MH370 (sm_scenes9) ----
+    def ping(t0, f=1480, g=0.11): add(sfx, t0, tone(f, 0.5, g, 0.002, 0.45)); add(sfx, t0 + 0.5, tone(f, 0.4, g * 0.33, 0.002, 0.35))
+    if sc == 'mh_hook':
+        add(sfx, at(0), rumble(S[1][1] - S[0][0], 70, 0.22))
+        for j in range(8): add(sfx, at(0, 0.2 + 0.06 * j), tone(1800, 0.02, 0.06, 0.001, 0.01))
+        add(sfx, at(1), gliss(600, 150, (S[1][1] - S[1][0]) * 0.7, 0.08)); ping(at(2), 1180); add(sfx, at(2), stinger(ROOT, 0.35))
+    if sc == 'mh_night':
+        for j in range(4): add(sfx, at(0, 0.1 + 0.15 * j), pluck(440 * 2 ** ([0, 3, 7, 10][j] / 12), 0.5, 0.08))
+        add(sfx, at(1), rumble(S[1][1] - S[1][0] + 0.3, 70, 0.15))
+        tt = at(2)
+        while tt < end - 0.4: ping(tt, 1700, 0.05); tt += 1.6
+        add(sfx, at(2, 0.25), tone(300, 0.06, 0.25)); add(sfx, at(2, 0.27), tone(150, 0.1, 0.3))
+    if sc == 'mh_dark':
+        add(sfx, at(0, 0.48), tone(880, 0.12, 0.15)); add(sfx, at(0, 0.5), gliss(880, 110, 0.6, 0.1))
+        MUTE.append((at(0, 0.5), end - 0.1)); add(sfx, at(1), tone(55, 2.5, 0.18, 0.5, 1.5))
+    if sc == 'mh_turn':
+        tt = at(0)
+        while tt < end - 0.3: add(sfx, tt, tone(520, 0.12, 0.1, 0.002, 0.1)); tt += 1.2
+        add(sfx, at(1, 0.1), stinger(ROOT / 2, 0.3))
+    if sc == 'mh_arcs':
+        add(sfx, at(0), pluck(1320, 0.4, 0.12))
+        tt = at(1)
+        while tt < at(2) - 0.2: add(sfx, tt, tone(1760, 0.06, 0.08)); add(sfx, tt + 0.08, tone(2350, 0.05, 0.06)); tt += 0.9
+        for j in range(7): add(sfx, at(2) + (S[2][1] - S[2][0]) * j / 7, pluck(440 * 2 ** (j * 2 / 12), 0.4, 0.12))
+        add(sfx, at(3), stinger(ROOT * 2, 0.3)); add(sfx, at(3, 0.3), tone(1320, 0.8, 0.08, 0.002, 0.7))
+    if sc == 'mh_flaperon':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 40, 0.12)); add(sfx, at(0, 0.85), pluck(990, 0.5, 0.12))
+        add(sfx, at(1), rumble(end - at(1), 90, 0.08)); add(sfx, at(1, 0.15), stinger(ROOT * 1.5, 0.25))
+    if sc == 'mh_search':
+        tt = at(0, 0.1)
+        while tt < at(1) - 0.3: ping(tt); tt += 1.6
+        add(sfx, at(1), stinger(ROOT / 2, 0.35))
+    if sc == 'mh_end':
+        for j in range(6): add(sfx, at(0, 0.05 + 0.12 * j), pluck(660 * 2 ** ([0, 3, 7, 10, 7, 3][j] / 12), 0.8, 0.06))
+        add(sfx, at(1), stinger(ROOT, 0.3))
+
 
 # ---------------- montage sonore ----------------
 add(sfx, 0.04, impact(1.0)); add(sfx, 0.04, gliss(3000, 1200, 0.5, 0.08, 0.002, 0.4))            # titre « slam »

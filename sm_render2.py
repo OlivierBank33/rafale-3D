@@ -19,6 +19,9 @@ SC.update(sm_scenes7.SC7)
 import sm_scenes8
 sm_scenes8.R = R1
 SC.update(sm_scenes8.SC8)
+import sm_scenes9
+sm_scenes9.R = R1
+SC.update(sm_scenes9.SC9)
 ORG, BLUE, RED, WH = R1.ORG, R1.BLUE, R1.RED, R1.WH
 YEL = (1.0, 0.85, 0.25)
 AL = json.load(open(D + 'align.json'))

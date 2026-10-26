@@ -1286,6 +1286,51 @@
     "Vikidia Vol Air France 447",
     "TourMaG / Reuters 21/05/2026"
    ]
+  },
+  {
+   "date": "2026-10-27 10:00",
+   "format": "SURVIVRAIS-TU ? (v3 cinéma, sm_scenes9)",
+   "name": "SR-71 désintégré à Mach 3,2 (25/01/1966) : Bill Weaver survit sans s'éjecter (combinaison pressurisée, parachute auto ~4 500 m), Jim Zwayer tué",
+   "voice": "Corentin",
+   "duree": 66.19,
+   "flow": "ykvrZry8cOBHO9PYzFRI",
+   "credits": 1212,
+   "composition": "zqBoXQsJhmlxynWHOFtU",
+   "uuids": {
+    "tiktok": "-3539917845964241251",
+    "youtube+facebook": "2541219185940842882"
+   },
+   "post_ids": {
+    "tiktok": "406642782",
+    "youtube+facebook": "406642903"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-2130783038938470349.mp4",
+   "sources": [
+    "The Aviationist (2015), récit de Bill Weaver",
+    "Limite d'Armstrong (~19 km)"
+   ]
+  },
+  {
+   "date": "2026-10-27 12:30",
+   "format": "GRANDS CRASHS (v3 cinéma, sm_scenes9)",
+   "name": "Concorde AF4590 (25/07/2000) : lamelle de 43 cm du DC-10, pneu éclaté, fragment 4,5 kg, onde de choc dans le réservoir 5, feu, Gonesse ~2 min, 113 victimes, Kevlar, retour 11/2001, retrait 2003",
+   "voice": "Corentin",
+   "duree": 61.85,
+   "flow": "V2M2oUvNoZayvKUekOvQ",
+   "credits": 1066,
+   "composition": "MrDdjY1RIjQb15VkMkAv",
+   "uuids": {
+    "tiktok": "-9082372020861317545",
+    "youtube+facebook": "3459537404813918497"
+   },
+   "post_ids": {
+    "tiktok": "406655118",
+    "youtube+facebook": "406655266"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-12008408040968961794.mp4",
+   "sources": [
+    "Rapport BEA 16/01/2002 (via Wikipedia EN Air France Flight 4590)"
+   ]
   }
  ],
  "notes": [
@@ -1523,8 +1568,6 @@
   "Swissair 111 / fumée en cabine : vider le carburant ou se poser tout de suite ?"
  ],
  "grands_crashs_backlog": [
-  "Concorde à Gonesse (25/07/2000)",
-  "MH370 et le « 7e arc » Inmarsat",
   "Germanwings 9525 (2015)",
   "Ténérife 1977 (deux 747)",
   "Crash des Andes 1972 (survivants)",

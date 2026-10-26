@@ -52,7 +52,7 @@ def ocean_night(c, t, horizon=1050, calm=0.0):
 
 
 # ------------------------------------------------------------------ A330
-def a330(c, x, y, rot, s, t, lights=True, lit=0.0, wing_glow=0.0, eng_glow=0.0):
+def a330(c, x, y, rot, s, t, lights=True, lit=0.0, wing_glow=0.0, eng_glow=0.0, tail=((0.05, 0.15, 0.45), (0.98, 0.98, 1), (0.85, 0.12, 0.15))):
     """A330-200 de profil (nez à droite), livrée blanche, empennage aux trois bandes, feux de navigation et anticollision."""
     c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s)
     body = (0.93, 0.94, 0.97)
@@ -77,7 +77,7 @@ def a330(c, x, y, rot, s, t, lights=True, lit=0.0, wing_glow=0.0, eng_glow=0.0):
     # dérive aux trois bandes
     c.new_path(); c.move_to(-230, -24); c.line_to(-300, -165); c.line_to(-255, -165); c.line_to(-165, -30); c.close_path()
     c.set_source_rgb(0.98, 0.98, 1); c.fill_preserve(); c.save(); c.clip()
-    for k, col in enumerate(((0.05, 0.15, 0.45), (0.98, 0.98, 1), (0.85, 0.12, 0.15))):
+    for k, col in enumerate(tail):
         c.new_path(); c.move_to(-320 + k * 30, -175); c.line_to(-290 + k * 30, -175); c.line_to(-200 + k * 30, -10); c.line_to(-230 + k * 30, -10); c.close_path(); c.set_source_rgb(*col); c.fill()
     c.restore(); c.new_path(); c.move_to(-230, -24); c.line_to(-300, -165); c.line_to(-255, -165); c.line_to(-165, -30); c.close_path(); c.set_source_rgb(*INK); c.set_line_width(7); c.stroke()
     # empennage horizontal proche
