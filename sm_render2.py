@@ -22,6 +22,10 @@ SC.update(sm_scenes8.SC8)
 import sm_scenes9
 sm_scenes9.R = R1
 SC.update(sm_scenes9.SC9)
+import sm_scenes10
+sm_scenes10.R = R1
+SC.update(sm_scenes10.SC10)
+CINEMA = getattr(CFG, 'STYLE', '') == 'cinema'
 ORG, BLUE, RED, WH = R1.ORG, R1.BLUE, R1.RED, R1.WH
 YEL = (1.0, 0.85, 0.25)
 AL = json.load(open(D + 'align.json'))
@@ -197,16 +201,19 @@ def frame(t):
     out_k = 0.0
     if i + 1 < len(SEG) and sg['end'] - t < 0.12: out_k = ease(1 - (sg['end'] - t) / 0.12)       # sortie : accélération
     in_k = 1 - eout(lt / WHIP) if i > 0 else 0.0                                                 # entrée : glisse
-    z, cx, cy = draw_scene(c, sg, t, 1 + 0.18 * out_k, -260 * out_k + 300 * in_k)
+    if CINEMA: z, cx, cy = draw_scene(c, sg, t, 1 + 0.04 * out_k + 0.03 * in_k, 0.0)
+    else: z, cx, cy = draw_scene(c, sg, t, 1 + 0.18 * out_k, -260 * out_k + 300 * in_k)
     k = max(out_k, in_k)
+    if CINEMA and k > 0.02:                                                                      # film : coupe « respirée » (fondu au noir bref)
+        c.set_source_rgba(0, 0, 0, 0.75 * k); c.paint(); k = 0
     if k > 0.02:                                                                                 # traînées du whip
         r = random.Random(int(t * 60))
         for _ in range(26):
             y = r.random() * H; L = 200 + 500 * r.random(); x = r.random() * W
             c.move_to(x, y); c.line_to(x + L, y); c.set_source_rgba(1, 1, 1, 0.22 * k); c.set_line_width(2 + 6 * r.random()); c.stroke()
         c.set_source_rgba(1, 1, 1, 0.22 * in_k); c.paint()
-    dust(c, t, z, cx, cy)
-    vignette(c, 0.82); grain(c, int(t * 12) % 6, 6000)
+    if not CINEMA: dust(c, t, z, cx, cy)
+    vignette(c, 0.9 if CINEMA else 0.82); grain(c, int(t * 12) % 6, 4000 if CINEMA else 6000)
     title_card(c, sg, lt); subtitles(c, t); recap(c, t)
     c.set_source_rgba(*ORG, 1); c.rectangle(0, H - 8, W * t / TOTAL, 8); c.fill()
     return s

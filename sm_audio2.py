@@ -54,7 +54,31 @@ BPM = 92; BEAT = 60 / BPM; BAR = 4 * BEAT
 PROG = [(0, (0, 3, 7)), (8, (0, 4, 7)), (3, (0, 4, 7)), (10, (0, 4, 7))]   # i - VI - III - VII (demi-tons depuis la tonique)
 music = np.zeros(N); sfx = np.zeros(N)
 ve = AL['voice_end']; mend = TOTAL
-nbars = int(mend / BAR) + 2
+CINEMA = getattr(CFG, 'STYLE', '') == 'cinema'
+INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'cc_roll': 0.8, 'cc_burst': 0.95, 'cc_tank': 0.9, 'cc_fire': 1.0,
+         'cc_engines': 1.0, 'cc_struggle': 1.0, 'cc_crash': 0.0, 'cc_after': 0.35, 'cc_justice': 0.3, 'cc_end': 0.5}
+def inten_at(tt):
+    for sgx in SEGS:
+        if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
+    return 0.4
+if CINEMA:                                               # partition de film : nappes lentes, piano rare, ostinato grave selon la tension
+    ROOT = 110.0; BPM = 72; BEAT = 60 / BPM; BAR = 4 * BEAT
+    PROGC = [(0, (0, 3, 7)), (8, (0, 4, 7)), (5, (0, 3, 7)), (7, (0, 4, 7))]   # i - VI - iv - V
+    nb = int(mend / BAR) + 2
+    for b in range(nb):
+        t0 = b * BAR
+        if t0 > mend: break
+        deg, tri = PROGC[b % 4]; rootf = ROOT * 2 ** (deg / 12); it = inten_at(t0 + 0.1)
+        for iv in tri:
+            f = rootf * 2 ** (iv / 12)
+            for det, g in ((1.0, 0.07), (1.004, 0.05), (2.0, 0.025), (0.5, 0.05)):
+                add(music, t0, tone(f * det, BAR + 0.6, g * (0.7 + 0.5 * it), 1.4, 1.2))
+        add(music, t0, pluck(rootf * 4 * 2 ** (tri[1] / 12), 1.6, 0.05)); add(music, t0 + 2 * BEAT, pluck(rootf * 4 * 2 ** (tri[2] / 12), 1.4, 0.04))
+        if it >= 0.75:                                    # ostinato grave en croches
+            for e in range(8):
+                add(music, t0 + e * BEAT / 2, tone(rootf / 2, BEAT * 0.45, 0.16 * it, 0.004, 0.2))
+                if e % 2 == 0: add(music, t0 + e * BEAT / 2, tone(rootf, BEAT * 0.3, 0.06 * it, 0.004, 0.15))
+nbars = 0 if CINEMA else int(mend / BAR) + 2
 for b in range(nbars):
     t0 = b * BAR
     if t0 > mend: break
@@ -293,14 +317,83 @@ def cues7(sc, s, S, at):
         for j in range(6): add(sfx, at(0, 0.05 + 0.12 * j), pluck(660 * 2 ** ([0, 3, 7, 10, 7, 3][j] / 12), 0.8, 0.06))
         add(sfx, at(1), stinger(ROOT, 0.3))
 
+    # ---- Concorde premium (sm_scenes10) ----
+    def roar(t0, d, g=0.3, f=42):
+        add(sfx, t0, rumble(d, f, g)); add(sfx, t0, rumble(d, f * 1.51, g * 0.5)); add(sfx, t0, rumble(d, 330, g * 0.12))
+    def bell(t0, t1, g=0.09):
+        tt = t0
+        while tt < t1 - 0.1: add(sfx, tt, tone(980, 0.09, g, 0.002, 0.06)); add(sfx, tt + 0.1, tone(980, 0.09, g * 0.8, 0.002, 0.06)); tt += 0.5
+    if sc == 'cc_hook':
+        roar(at(0), S[0][1] - S[0][0] + 0.3, 0.22, 38); crackle(at(0), S[0][1] - S[0][0], 0.03, 50)
+        add(sfx, at(1, 0.05), tone(2600, 1.2, 0.07, 0.002, 1.1)); add(sfx, at(1, 0.05), tone(3480, 0.9, 0.04, 0.002, 0.8))
+        add(sfx, at(2), spool(35, 110, S[2][1] - S[2][0] + 0.6, 0.18)); add(sfx, at(2, 0.9), stinger(ROOT / 2, 0.35))
+    if sc == 'cc_legend':
+        add(sfx, at(0), tone(880, S[0][1] - S[0][0], 0.03, 0.8, 0.8)); add(sfx, at(0), whoosh(0.18))
+        for j, f in enumerate((660, 880, 990, 1320)): add(sfx, at(1, 0.1) + j * 0.22, pluck(f, 0.9, 0.06))
+    if sc == 'cc_flight':
+        for j in range(60): add(sfx, at(0, 0.03) + j * 0.028, tone(rng.uniform(1500, 2400), 0.012, 0.05, 0.001, 0.008))
+        for j in range(25): add(sfx, at(1, 0.05) + j * (S[1][1] - S[1][0]) * 0.8 / 25, tone(1760, 0.03, 0.03, 0.002, 0.02))
+        add(sfx, at(2), gliss(300, 520, 1.6, 0.04))
+    if sc == 'cc_dc10':
+        roar(at(0), S[0][1] - S[0][0] + 0.5, 0.16, 55); add(sfx, at(0, 0.3), spool(60, 160, 2.2, 0.12))
+        add(sfx, at(1), gliss(1800, 600, (S[1][1] - S[1][0]) * 0.55, 0.05))
+        for f, g in ((2400, 0.12), (3150, 0.08), (4100, 0.05)): add(sfx, at(1, 0.55), tone(f, 0.5, g, 0.001, 0.45))
+        add(sfx, at(1, 0.72), tone(2700, 0.3, 0.06, 0.001, 0.28))
+    if sc == 'cc_roll':
+        add(sfx, at(0, 0.1), tone(70, 0.5, 0.35, 0.003, 0.4)); add(sfx, at(0, 0.1), tone(1200, 0.05, 0.06))
+        roar(at(1), s['end'] - at(1) + 0.4, 0.42, 36); add(sfx, at(1), spool(28, 95, S[1][1] - S[1][0], 0.25))
+        add(sfx, at(2), gliss(180, 420, S[2][1] - S[2][0] + 0.4, 0.06))
+    if sc == 'cc_burst':
+        roar(at(0), S[0][1] - S[0][0] + 0.1, 0.4, 36); add(sfx, at(0), gliss(300, 520, S[0][1] - S[0][0], 0.05))
+        add(sfx, at(1), impact(1.3)); add(sfx, at(1), tone(48, 1.2, 0.5, 0.002, 1.0)); add(sfx, at(1), gliss(2400, 200, 0.7, 0.1))
+        MUTE.append((at(1) - 0.02, at(2) + 0.2)); heartbeat(at(1, 0.3), at(2, 0.2), 54, 0.35)
+        add(sfx, at(2), whoosh(0.25)); add(sfx, at(2, 0.45), impact(0.8, 1.2)); add(sfx, at(2, 0.45), tone(95, 0.4, 0.35, 0.003, 0.35))
+    if sc == 'cc_tank':
+        add(sfx, at(0), tone(120, S[0][1] - S[0][0] + 0.3, 0.05, 0.2, 0.3)); add(sfx, at(0, 0.5), pluck(1320, 0.5, 0.06))
+        for j in range(5): add(sfx, at(1, 0.15) + j * 0.55, tone(44, 0.45, 0.4, 0.003, 0.4)); add(sfx, at(1, 0.15) + j * 0.55, tone(88, 0.2, 0.1))
+        add(sfx, at(2), impact(0.9)); add(sfx, at(2), gliss(2600, 900, 0.5, 0.08)); crackle(at(2), 0.6, 0.05, 30)
+        for j in range(70): add(sfx, at(3) + rng.random() * (S[3][1] - S[3][0]), tone(rng.uniform(250, 700), 0.05, 0.03, 0.005, 0.04))
+        add(sfx, at(3, 0.8), gliss(70, 220, 0.6, 0.35)); roar(at(3, 0.8), s['end'] - at(3, 0.8) + 0.4, 0.35, 34)
+    if sc == 'cc_fire':
+        roar(at(0), S[0][1] - S[0][0] + 0.3, 0.45, 32); crackle(at(0), S[0][1] - S[0][0], 0.05, 80)
+        for j in range(2): add(sfx, at(1, 0.05) + j * 0.35, tone(1050, 0.12, 0.08, 0.003, 0.05))
+        bell(at(2), at(3), 0.08)
+        roar(at(3), s['end'] - at(3) + 0.5, 0.4, 36); add(sfx, at(3), gliss(160, 260, 1.0, 0.1))
+    if sc == 'cc_engines':
+        bell(at(0), at(2), 0.06); add(sfx, at(0, 0.2), spool(130, 45, 1.6, 0.3)); roar(at(0), s['end'] - at(0), 0.25, 40)
+        add(sfx, at(1, 0.15), impact(0.5, 0.8)); add(sfx, at(1, 0.2), spool(60, 18, 1.0, 0.3))
+        add(sfx, at(2, 0.1), impact(0.45, 0.7)); add(sfx, at(2, 0.14), tone(180, 0.12, 0.3)); add(sfx, at(2, 0.4), tone(180, 0.12, 0.25))
+    if sc == 'cc_struggle':
+        roar(at(0), S[0][1] - S[0][0] + 0.4, 0.4, 38); heartbeat(at(0), s['end'], 104, 0.4)
+        for j in range(3): add(sfx, at(1, 0.2 + 0.25 * j), tone(880, 0.25, 0.05, 0.003, 0.2))
+    if sc == 'cc_crash':
+        roar(at(0), (S[0][1] - S[0][0]) * 0.85, 0.32, 38)
+        MUTE.append((at(0, 0.85), s['end'] + 0.6)); add(sfx, at(0, 0.88), tone(55, 4.0, 0.22, 0.6, 3.0))
+        add(sfx, at(2, 0.1), tone(73.4, 3.0, 0.12, 0.6, 2.0))
+        for j, f in enumerate((440, 554, 659)): add(sfx, at(2, 0.3) + j * 0.7, pluck(f, 1.6, 0.035))
+    if sc == 'cc_after':
+        for j in range(5): add(sfx, at(0, 0.05) + j * 0.3, pluck(660 * 2 ** (j * 2 / 12), 0.4, 0.06)); add(sfx, at(0, 0.05) + j * 0.3, tone(2800, 0.03, 0.03))
+        add(sfx, at(1, 0.1), pluck(990, 0.6, 0.06))
+        for j, f in enumerate((523, 659, 784, 1046)): add(sfx, at(2, 0.05) + j * 0.15, pluck(f, 0.8, 0.07))
+    if sc == 'cc_justice':
+        for j in range(2): add(sfx, at(0, 0.25) + j * 0.32, impact(0.55, 0.6)); add(sfx, at(0, 0.25) + j * 0.32, tone(140, 0.12, 0.3))
+        add(sfx, at(1, 0.2), pluck(660, 0.6, 0.06)); add(sfx, at(1, 0.5), pluck(440, 0.8, 0.06))
+    if sc == 'cc_end':
+        add(sfx, at(0), tone(220, S[0][1] - S[0][0] + 1.0, 0.04, 1.0, 1.0))
+        add(sfx, at(1, 0.2), pluck(880, 0.5, 0.06)); add(sfx, at(1, 0.45), pluck(587, 0.6, 0.06))
+        add(sfx, at(2), stinger(ROOT, 0.3)); add(sfx, at(2, 0.2), pluck(880, 1.2, 0.06))
+
 
 # ---------------- montage sonore ----------------
 add(sfx, 0.04, impact(1.0)); add(sfx, 0.04, gliss(3000, 1200, 0.5, 0.08, 0.002, 0.4))            # titre « slam »
 for i, s in enumerate(SEGS):
-    if i > 0:
+    if i > 0 and not CINEMA:
         add(sfx, s['t0'] - 1.0, riser(1.0, 0.07 if i < len(SEGS) - 2 else 0.12))
         add(sfx, s['t0'] - 0.05, whoosh(0.22)); add(sfx, s['t0'], impact(0.45, 1.0))
+    elif i > 0:
+        add(sfx, s['t0'] - 0.6, riser(0.6, 0.035)); add(sfx, s['t0'], impact(0.25, 1.4))
     for c0 in s['shots'][1:]:
+        if CINEMA: continue
         add(sfx, c0, tone(2900, 0.03, 0.05, 0.001, 0.02)); add(sfx, c0, tone(880, 0.07, 0.05, 0.002, 0.05))
     S = s['sent']; sc = s['scene']
     def at(k, frac=0.0, plus=0.0):

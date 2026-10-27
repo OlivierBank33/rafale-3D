@@ -1,0 +1,251 @@
+{
+ "hero": {
+  "W": 3000,
+  "H": 1800,
+  "az": 226,
+  "el": -7,
+  "dist": 1.25,
+  "lens": 50,
+  "samples": 48,
+  "gear": false,
+  "pitch": 3,
+  "sun_el": 38,
+  "sun_az": 210,
+  "sun_energy": 3.0,
+  "sun_col": [
+   1.0,
+   0.9,
+   0.78
+  ],
+  "rim_energy": 2.2
+ },
+ "side_up": {
+  "W": 3200,
+  "H": 1400,
+  "az": 270,
+  "el": 1,
+  "dist": 1.55,
+  "lens": 50,
+  "samples": 48,
+  "gear": false,
+  "sun_el": 30,
+  "sun_az": 230,
+  "sun_energy": 2.8,
+  "sun_col": [
+   1.0,
+   0.88,
+   0.72
+  ]
+ },
+ "roll": {
+  "W": 3000,
+  "H": 1800,
+  "az": 236,
+  "el": 2.5,
+  "dist": 1.15,
+  "lens": 40,
+  "samples": 48,
+  "gear": true,
+  "sun_el": 42,
+  "sun_az": 215,
+  "sun_energy": 3.0,
+  "sun_col": [
+   1.0,
+   0.92,
+   0.8
+  ]
+ },
+ "front": {
+  "W": 2400,
+  "H": 2000,
+  "az": 182,
+  "el": 2,
+  "dist": 1.05,
+  "lens": 45,
+  "samples": 48,
+  "gear": true,
+  "sun_el": 42,
+  "sun_az": 215,
+  "sun_energy": 3.0,
+  "sun_col": [
+   1.0,
+   0.92,
+   0.8
+  ]
+ },
+ "side_gear": {
+  "W": 3200,
+  "H": 1600,
+  "az": 270,
+  "el": -2,
+  "dist": 1.55,
+  "lens": 50,
+  "samples": 48,
+  "gear": true,
+  "pitch": 10,
+  "sun_el": 35,
+  "sun_az": 235,
+  "sun_energy": 2.8,
+  "sun_col": [
+   1.0,
+   0.88,
+   0.72
+  ]
+ },
+ "under": {
+  "W": 2800,
+  "H": 2200,
+  "az": 268,
+  "el": -48,
+  "dist": 1.2,
+  "lens": 45,
+  "samples": 48,
+  "gear": true,
+  "sun_el": 40,
+  "sun_az": 215,
+  "sun_energy": 2.6,
+  "sky_strength": 0.6
+ },
+ "top": {
+  "W": 2000,
+  "H": 3000,
+  "az": 270,
+  "el": 89.5,
+  "dist": 1.25,
+  "lens": 50,
+  "samples": 40,
+  "gear": false,
+  "roll": 0,
+  "sun_el": 60,
+  "sun_az": 200,
+  "sun_energy": 2.6
+ },
+ "rear": {
+  "W": 3000,
+  "H": 1800,
+  "az": 318,
+  "el": 6,
+  "dist": 1.3,
+  "lens": 45,
+  "samples": 48,
+  "gear": true,
+  "pitch": 9,
+  "sun_el": 35,
+  "sun_az": 235,
+  "sun_energy": 2.8,
+  "sun_col": [
+   1.0,
+   0.88,
+   0.72
+  ]
+ },
+ "bank": {
+  "W": 2600,
+  "H": 2000,
+  "az": 285,
+  "el": -4,
+  "dist": 1.4,
+  "lens": 50,
+  "samples": 40,
+  "gear": true,
+  "pitch": 18,
+  "roll": 32,
+  "sun_el": 30,
+  "sun_az": 235,
+  "sun_energy": 2.4,
+  "sun_col": [
+   1.0,
+   0.85,
+   0.7
+  ]
+ },
+ "sunset": {
+  "W": 3200,
+  "H": 1400,
+  "az": 270,
+  "el": 1,
+  "dist": 1.55,
+  "lens": 50,
+  "samples": 48,
+  "gear": false,
+  "sun_el": 6,
+  "sun_az": 95,
+  "sun_energy": 3.2,
+  "sun_col": [
+   1.0,
+   0.62,
+   0.35
+  ],
+  "sky_strength": 0.2,
+  "rim_energy": 3.0,
+  "exposure": -0.15
+ },
+ "side_roll": {
+  "W": 3200,
+  "H": 1400,
+  "az": 270,
+  "el": 1.5,
+  "dist": 1.55,
+  "lens": 50,
+  "samples": 48,
+  "gear": true,
+  "sun_el": 40,
+  "sun_az": 230,
+  "sun_energy": 2.8,
+  "sun_col": [
+   1.0,
+   0.9,
+   0.76
+  ]
+ },
+ "rear_roll": {
+  "W": 3000,
+  "H": 1900,
+  "az": 343,
+  "el": 3.5,
+  "dist": 1.2,
+  "lens": 50,
+  "samples": 48,
+  "gear": true,
+  "sun_el": 40,
+  "sun_az": 215,
+  "sun_energy": 2.9,
+  "sun_col": [
+   1.0,
+   0.9,
+   0.76
+  ]
+ },
+ "rear_fire": {
+  "W": 3000,
+  "H": 1900,
+  "az": 338,
+  "el": 4,
+  "dist": 1.25,
+  "lens": 50,
+  "samples": 48,
+  "gear": true,
+  "pitch": 7,
+  "sun_el": 38,
+  "sun_az": 220,
+  "sun_energy": 2.9,
+  "sun_col": [
+   1.0,
+   0.88,
+   0.72
+  ]
+ },
+ "top2": {
+  "W": 3400,
+  "H": 1700,
+  "az": 270,
+  "el": 89.5,
+  "dist": 1.45,
+  "lens": 50,
+  "samples": 40,
+  "gear": false,
+  "sun_el": 60,
+  "sun_az": 200,
+  "sun_energy": 2.6
+ }
+}
