@@ -56,7 +56,8 @@ music = np.zeros(N); sfx = np.zeros(N)
 ve = AL['voice_end']; mend = TOTAL
 CINEMA = getattr(CFG, 'STYLE', '') == 'cinema'
 INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'cc_roll': 0.8, 'cc_burst': 0.95, 'cc_tank': 0.9, 'cc_fire': 1.0,
-         'cc_engines': 1.0, 'cc_struggle': 1.0, 'cc_crash': 0.0, 'cc_after': 0.35, 'cc_justice': 0.3, 'cc_end': 0.5}
+         'cc_engines': 1.0, 'cc_struggle': 1.0, 'cc_crash': 0.0, 'cc_after': 0.35, 'cc_justice': 0.3, 'cc_end': 0.5,
+         'sw_hook': 0.8, 'sw_real': 0.35, 'sw_crack': 0.7, 'sw_decomp': 0.95, 'sw_cold': 0.9, 'sw_shake': 0.95, 'sw_manual': 0.8, 'sw_land': 0.5, 'sw_verdict': 0.4}
 def inten_at(tt):
     for sgx in SEGS:
         if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
@@ -382,6 +383,74 @@ def cues7(sc, s, S, at):
         add(sfx, at(0), tone(220, S[0][1] - S[0][0] + 1.0, 0.04, 1.0, 1.0))
         add(sfx, at(1, 0.2), pluck(880, 0.5, 0.06)); add(sfx, at(1, 0.45), pluck(587, 0.6, 0.06))
         add(sfx, at(2), stinger(ROOT, 0.3)); add(sfx, at(2, 0.2), pluck(880, 1.2, 0.06))
+
+    # ---- Sichuan 3U8633 (sm_scenes11) ----
+    def wind(t0, d, g=0.2): add(sfx, t0, rumble(d, 330, g * 0.5)); add(sfx, t0, rumble(d, 62, g)); add(sfx, t0, rumble(d, 520, g * 0.18))
+    def creak(t0, n=4, g=0.06):
+        for j in range(n): add(sfx, t0 + j * 0.16 + 0.05 * rng.random(), tone(rng.uniform(2200, 3400), 0.05, g, 0.001, 0.04))
+    if sc == 'sw_hook':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 90, 0.06)); creak(at(0, 0.15), 3); creak(at(0, 0.5), 4, 0.08)
+        tb = S[0][0] + 0.7 * (S[1][0] - S[0][0])
+        add(sfx, tb, impact(1.4)); add(sfx, tb, gliss(2600, 180, 0.6, 0.1)); crackle(tb, 0.5, 0.06, 60); wind(tb, at(2) - tb + 0.3, 0.3)
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    if sc == 'sw_real':
+        add(sfx, at(0), rumble(end - at(0), 95, 0.05)); add(sfx, at(0, 0.1), pluck(880, 0.6, 0.06))
+        for j in range(4): add(sfx, at(1, 0.1) + j * 0.5, pluck(660 * 2 ** ([0, 3, 7, 12][j] / 12), 0.5, 0.05))
+    if sc == 'sw_crack':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 95, 0.05)); creak(at(0, 0.45), 3, 0.07); creak(at(0, 0.75), 5, 0.09)
+        add(sfx, at(1), impact(1.4)); add(sfx, at(1), gliss(2400, 200, 0.6, 0.1)); crackle(at(1), 0.5, 0.06, 60); wind(at(1), end - at(1) + 0.3, 0.32)
+    if sc == 'sw_decomp':
+        add(sfx, at(0), whoosh(0.3)); wind(at(0), end - at(0), 0.28)
+        tt = at(0, 0.4)
+        while tt < at(1) - 0.1: add(sfx, tt, tone(1000, 0.18, 0.07, 0.003, 0.1)); add(sfx, tt + 0.25, tone(1000, 0.18, 0.07, 0.003, 0.1)); tt += 1.0
+        heartbeat(at(2), end, 112, 0.4); add(sfx, at(2, 0.2), tone(140, 0.25, 0.3, 0.003, 0.2))
+    if sc == 'sw_cold':
+        wind(at(0), end - at(0), 0.3)
+        for j in range(30): add(sfx, at(0) + rng.random() * (S[0][1] - S[0][0]), tone(rng.uniform(3000, 4200), 0.04, 0.025, 0.001, 0.03))
+        add(sfx, at(0, 0.6), tone(2093, 1.2, 0.04, 0.01, 1.1)); add(sfx, at(1), rumble(end - at(1), 48, 0.3))
+    if sc == 'sw_shake':
+        for j in range(3):
+            for f in (1480, 1760, 1480): add(sfx, at(0, 0.05) + j * 0.55 + (f == 1760) * 0.12, tone(f, 0.1, 0.06, 0.002, 0.06))
+        wind(at(0), end - at(0), 0.22); add(sfx, at(1), rumble(end - at(1), 28, 0.35)); heartbeat(at(1), end, 120, 0.35)
+    if sc == 'sw_manual':
+        wind(at(0), end - at(0), 0.2); heartbeat(at(0), end, 96, 0.35); add(sfx, at(0, 0.6), stinger(ROOT * 1.5, 0.2))
+    if sc == 'sw_land':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 80, 0.18)); add(sfx, at(0, 0.8), impact(0.5)); add(sfx, at(0, 0.8), tone(1700, 0.3, 0.04, 0.005, 0.25))
+        add(sfx, at(0, 0.8), rumble(1.8, 55, 0.25)); add(sfx, at(1), stinger(ROOT * 2, 0.25))
+        for j in range(3): add(sfx, at(1, 0.3) + j * 0.4, pluck(880 * 2 ** ([0, 4, 7][j] / 12), 0.6, 0.06))
+    if sc == 'sw_verdict':
+        add(sfx, at(0), stinger(ROOT * 2, 0.3)); add(sfx, at(0, 0.1), gliss(400, 900, 1.2, 0.04))
+        add(sfx, at(1, 0.15), tone(120, 0.6, 0.06)); add(sfx, at(1, 0.4), gliss(3000, 1200, 0.3, 0.06)); crackle(at(1, 0.4), 0.5, 0.05, 50)
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    # ---- TU ES LE PILOTE ép. 4 (sm_scenes11) ----
+    def splash(t0, d=0.8, g=0.05, n=80):
+        for j in range(n): add(sfx, t0 + d * rng.random() ** 1.6, tone(rng.uniform(600, 3200), 0.06, g, 0.002, 0.05))
+    if sc == 'e4_recap':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 300, 0.08)); add(sfx, at(0, 0.3), stinger(ROOT, 0.3))
+        for f in (0.2, 0.5): add(sfx, at(1, f), tone(70, 0.14, 0.5, 0.003, 0.1))
+        add(sfx, at(2, 0.1), pluck(660, 0.3, 0.15)); add(sfx, at(2, 0.25), pluck(880, 0.3, 0.15)); add(sfx, at(2, 0.62), stinger(ROOT * 2, 0.3))
+    if sc == 'e4_gear':
+        add(sfx, at(0, 0.05), spool(220, 120, 1.1, 0.12)); add(sfx, at(0, 0.38), tone(90, 0.2, 0.4, 0.002, 0.18))
+        add(sfx, at(0, 0.7), tone(60, 0.4, 0.3, 0.003, 0.3)); splash(at(0, 0.72), 0.6, 0.04, 40)
+        add(sfx, at(1, 0.15), tone(150, 0.1, 0.35, 0.002, 0.08)); add(sfx, at(1, 0.22), tone(110, 0.14, 0.3, 0.002, 0.1)); add(sfx, at(1, 0.45), pluck(990, 0.4, 0.12))
+    if sc == 'e4_flare':
+        add(sfx, at(0), rumble(end - at(0), 300, 0.1)); add(sfx, at(0), rumble(end - at(0), 70, 0.08))
+        heartbeat(at(1), end, 118, 0.4); add(sfx, at(1, 0.3), gliss(700, 400, 1.5, 0.05))
+    if sc == 'e4_touch':
+        add(sfx, at(0, 0.05), impact(1.1)); splash(at(0, 0.05), 1.2, 0.06, 120)
+        add(sfx, at(1), impact(1.2, 1.2)); splash(at(1), 1.0, 0.07, 120); add(sfx, at(1), rumble(S[1][1] - S[1][0], 60, 0.3))
+        add(sfx, at(2), tone(90, 0.3, 0.4, 0.003, 0.25)); heartbeat(at(2, 0.2), end, 104, 0.35)
+    if sc == 'e4_stop':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 80, 0.22)); splash(at(0), S[0][1] - S[0][0], 0.03, 60)
+        add(sfx, at(1, 0.1), stinger(ROOT * 2, 0.3)); add(sfx, at(1, 0.3), pluck(1320, 0.5, 0.12))
+    if sc == 'e4_out':
+        for j in range(4): splash(at(0, 0.2) + j * 0.6, 0.25, 0.04, 20)
+        for j in range(6): add(sfx, at(1, 0.05) + j * 0.22, tone(rng.uniform(300, 500), 0.12, 0.04, 0.01, 0.08))
+        add(sfx, at(1, 0.4), pluck(880, 0.6, 0.1))
+    if sc == 'e4_end':
+        add(sfx, at(0), stinger(ROOT * 2, 0.35)); add(sfx, at(0, 0.2), gliss(400, 900, 1.0, 0.05))
+        for j in range(4): add(sfx, at(1) + 0.15 * j, pluck(660 * 2 ** ([0, 4, 7, 12][j] / 12), 0.5, 0.12))
+        add(sfx, at(2), stinger(ROOT * 1.5, 0.3)); add(sfx, at(3), stinger(ROOT, 0.35))
 
 
 # ---------------- montage sonore ----------------

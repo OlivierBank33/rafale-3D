@@ -1380,6 +1380,53 @@
     "Wikipédia FR Vol 4590 Air France (miroir fr-academic)",
     "Votre Carnet de Voyage (lamelle 43 cm, MS Deutschland, procès 2010/2012)"
    ]
+  },
+  {
+   "date": "2026-10-28 10:00",
+   "format": "SURVIVRAIS-TU ? (style cinéma 3D, sm_scenes11)",
+   "name": "Pare-brise arraché à 9 800 m — Sichuan Airlines 3U8633 (14/05/2018) : A319 FlightGear livrée neutre rendu Cycles, gros plan fissure/éclatement, copilote à moitié dehors (silhouette), masques à oxygène, -40 °C, AP coupé, atterrissage manuel Chengdu, 128 survivants, cause joint/humidité/arc",
+   "voice": "Corentin",
+   "duree": 63.02,
+   "flow": "sCn8YHSEQZvhTXt4q7Qo",
+   "credits": 1312,
+   "composition": "7N44kghLG9Y6SWwIpUJz",
+   "uuids": {
+    "tiktok": "-8222063782211861293",
+    "youtube+facebook": "-3800161651035060834"
+   },
+   "post_ids": {
+    "tiktok": "407891469",
+    "youtube+facebook": "407891572"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-5707496988991156076.mp4",
+   "sources": [
+    "Aviation Safety Network wikibase 211013",
+    "CBS News 15/05/2018",
+    "Gulf News (CAAC : égratignures + poignet foulé)"
+   ]
+  },
+  {
+   "date": "2026-10-28 18:00",
+   "format": "TU ES LE PILOTE ép. 4 = FINALE (stickman v2, sm_scenes11)",
+   "name": "Finale : choix A l'eau (votes YouTube 5 contre 3) : train rentré (pas de capotage), porte déverrouillée, arrondi au ras des vagues le plus lent possible, impact « comme un mur », ceinture, arrêt sans retournement, sortie dans l'eau jusqu'à la taille, 0 blessé, récap des 4 épisodes",
+   "voice": "Corentin",
+   "duree": 61.95,
+   "flow": "nnHYYqX8KdqJs9R1lcrz",
+   "credits": 1042,
+   "composition": "ZJ2u8r8jhm9VWfhnvEFg",
+   "uuids": {
+    "tiktok": "-2945574697507077549",
+    "youtube+facebook": "1073157452895635636"
+   },
+   "post_ids": {
+    "tiktok": "407896402",
+    "youtube+facebook": "407896523"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-11401652266201894635.mp4",
+   "sources": [
+    "Votes YouTube ép. 3 (V-AXin5fEm0)",
+    "Bonnes pratiques d'amerrissage : train rentré, porte entrouverte, vitesse minimale, ceinture serrée"
+   ]
   }
  ],
  "notes": [
@@ -1410,7 +1457,8 @@
   "08/10 : série « DÉCODÉ » (dc_render.py, inspirée de @systemesdecodes mais habillage à nous : orange cockpit, Oswald + Space Mono, traits isométriques lumineux, HUD 01 MENACE/02 AUTOPSIE/03 RÉPONSE, sous-titres géants colorés, tampon HISTOIRE VRAIE, vue éclatée, chrono, teaser fiche suivante). Fiche 02 annoncée : les hublots ronds (Comet).",
   "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire.",
   "10/10 : prod du 11/10 = VF10 aviation française (10:00), Décodé 03 boîte noire (12:30), duel Blériot vs Wright (18:00). ~3 700 crédits EL. Prochain Décodé 04 : le train d'atterrissage.",
-  "2026-10-12 : backlog duels complété avec des duels côté France (modèles disponibles) ; SPAD vs Fokker ajouté hors backlog pour respecter la règle 'camp français'."
+  "2026-10-12 : backlog duels complété avec des duels côté France (modèles disponibles) ; SPAD vs Fokker ajouté hors backlog pour respecter la règle 'camp français'.",
+  "2026-10-27 : 28/10 produit — 10:00 SURVIVRAIS-TU ? Sichuan 3U8633 en style cinéma 3D (A319 FlightGear, sm_scenes11) ; 18:00 finale TU ES LE PILOTE (A l'eau 5-3). Série terminée après l'ép. 4."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -1599,7 +1647,15 @@
      "A": "se poser avant eux dans l'eau peu profonde",
      "B": "passer au-dessus et se poser sur la fin de plage"
     },
-    "next_ep_date": "2026-10-28 18:00"
+    "next_ep_date": "2026-10-28 18:00",
+    "vote": "YouTube V-AXin5fEm0 lu 27/10 ~14h : A ×5, B ×3 (+2 « C sur eux » hors vote) -> A l'eau"
+   },
+   {
+    "ep": 4,
+    "slug": "sm_ep04",
+    "date": "2026-10-28 18:00",
+    "pitch": "finale : amerrissage avant la plage (choix A), 0 blessé, série terminée",
+    "choice": null
    }
   ],
   "finale": "ép. 4 = finale le 28/10 18:00 (série arrêtée ensuite : 600-1 300 vues vs 2 300-4 500 pour Rafale/éjection) — décision du 25/10 suite à « que des sujets qui font des vues »"
