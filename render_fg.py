@@ -81,6 +81,12 @@ def build(parts, cfg):
         for (name, tex, texrep, texoff, wv, surfs) in objs:
             if any(s in (name or '').lower() for s in skip) or not surfs:
                 continue
+            if wv and 'skip_below' in cfg and max(v[1] for v in wv) < cfg['skip_below']:      # repère AC : y vers le haut (train, roues)
+                continue
+            if wv and 'keep_box' in cfg:                                                        # ne garder que les objets dont le centre est dans la boîte AC
+                bx = cfg['keep_box']; cxyz = [sum(v[i] for v in wv) / len(wv) for i in range(3)]
+                if not all(bx[2 * i] <= cxyz[i] <= bx[2 * i + 1] for i in range(3)):
+                    continue
             bverts = [bm.verts.new(M @ AC2FG @ v) for v in wv]
             if cfg.get('mark') and cfg['mark'] in acp and wv:
                 MARK.extend([M @ AC2FG @ v for v in wv])
@@ -90,6 +96,10 @@ def build(parts, cfg):
             else:
                 texpath = R.find_tex(acdir, tex, extra) if tex else None
             for (mi, refs, smooth) in surfs:
+                if 'clip_box' in cfg:                                                   # découpe : faces hors de la boîte AC supprimées (épave)
+                    bx = cfg['clip_box']
+                    if any(not all(bx[2 * i] <= wv[r[0]][i] <= bx[2 * i + 1] for i in range(3)) for r in refs):
+                        continue
                 mi = max(0, min(mi, len(mats) - 1))
                 key = f"{acp}|{mi}|{texpath}"
                 if key not in matindex:

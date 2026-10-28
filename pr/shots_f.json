@@ -1,0 +1,138 @@
+{
+ "f_hero": {
+  "xml": "Fokker50/Models/fokker50.xml",
+  "W": 2400,
+  "H": 2400,
+  "az": 140,
+  "el": 6,
+  "dist": 1.05,
+  "samples": 40,
+  "pitch": 1.0,
+  "sun_el": 22,
+  "sun_az": 230,
+  "texmap": {
+   "f50klm.rgb": "../pr/F50_white.png",
+   "f50klm.png": "../pr/F50_white.png"
+  },
+  "skip": [
+   "wheel",
+   "strut",
+   "casing",
+   "lock_bar",
+   "tire",
+   "gear_door",
+   "gear_bay",
+   "logo",
+   "city",
+   "regleft",
+   "regright",
+   "box.002"
+  ],
+  "skip_below": -2.2
+ },
+ "f_side": {
+  "xml": "Fokker50/Models/fokker50.xml",
+  "W": 2400,
+  "H": 1600,
+  "az": 92,
+  "el": 2,
+  "dist": 1.35,
+  "samples": 40,
+  "pitch": -3.0,
+  "sun_el": 30,
+  "sun_az": 200,
+  "texmap": {
+   "f50klm.rgb": "../pr/F50_white.png",
+   "f50klm.png": "../pr/F50_white.png"
+  },
+  "skip": [
+   "wheel",
+   "strut",
+   "casing",
+   "lock_bar",
+   "tire",
+   "gear_door",
+   "gear_bay",
+   "logo",
+   "city",
+   "regleft",
+   "regright",
+   "box.002"
+  ],
+  "skip_below": -2.2
+ },
+ "f_rear": {
+  "xml": "Fokker50/Models/fokker50.xml",
+  "W": 2400,
+  "H": 2000,
+  "az": 330,
+  "el": 12,
+  "dist": 1.15,
+  "samples": 40,
+  "pitch": -2.0,
+  "roll": -6,
+  "sun_el": 18,
+  "sun_az": 250,
+  "texmap": {
+   "f50klm.rgb": "../pr/F50_white.png",
+   "f50klm.png": "../pr/F50_white.png"
+  },
+  "skip": [
+   "wheel",
+   "strut",
+   "casing",
+   "lock_bar",
+   "tire",
+   "gear_door",
+   "gear_bay",
+   "logo",
+   "city",
+   "regleft",
+   "regright",
+   "box.002"
+  ],
+  "skip_below": -2.2
+ },
+ "f_wreck": {
+  "xml": "Fokker50/Models/fokker50.xml",
+  "W": 2400,
+  "H": 1600,
+  "az": 120,
+  "el": 14,
+  "dist": 1.0,
+  "samples": 40,
+  "pitch": -4.0,
+  "roll": 6,
+  "sun_el": 14,
+  "sun_az": 260,
+  "sky_strength": 0.6,
+  "texmap": {
+   "f50klm.rgb": "../pr/F50_white.png",
+   "f50klm.png": "../pr/F50_white.png"
+  },
+  "skip": [
+   "wheel",
+   "strut",
+   "casing",
+   "lock_bar",
+   "tire",
+   "gear_door",
+   "gear_bay",
+   "logo",
+   "city",
+   "regleft",
+   "regright",
+   "box.002",
+   "propdisk"
+  ],
+  "skip_below": -2.2,
+  "keep_box": [
+   -12,
+   9.5,
+   -2.2,
+   2.6,
+   -1.7,
+   1.7
+  ]
+ }
+}

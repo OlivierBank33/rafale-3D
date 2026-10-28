@@ -1427,6 +1427,57 @@
     "Votes YouTube ép. 3 (V-AXin5fEm0)",
     "Bonnes pratiques d'amerrissage : train rentré, porte entrouverte, vitesse minimale, ceinture serrée"
    ]
+  },
+  {
+   "date": "2026-10-29 10:00",
+   "format": "SURVIVRAIS-TU ? (style cinéma 3D, sm_scenes12)",
+   "name": "Crash des Andes, vol 571 (13/10/1972, « Le Cercle des neiges ») : Fokker 50 3D (sosie F27/FH-227) au-dessus de plaques Blender (glacier, crêtes), erreur de position Curicó vs réalité sur carte topo, glissade 725 m, -30 °C, radio jour 11, décision terrible (sobre), avalanche du 29/10 (54 ans jour pour jour), marche de Parrado et Canessa, hélicoptères 22-23/12, 29 lumières pour les 29 victimes, 16 survivants",
+   "voice": "Corentin",
+   "duree": 72.05,
+   "flow": "cTK4BFGa4ZYs8iJITjRQ",
+   "credits": 1387,
+   "composition": "fMj9k6JBz6Rjl9PGmkfO",
+   "uuids": {
+    "tiktok": "5357229283935341100",
+    "youtube+facebook": "6739412045612730433"
+   },
+   "post_ids": {
+    "tiktok": "408993143",
+    "youtube+facebook": "408993262"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-14782747243842099275.mp4",
+   "sources": [
+    "Wikipedia EN Uruguayan Air Force Flight 571",
+    "Britannica Uruguayan Air Force flight 571",
+    "The Guardian (via Wikipedia) : ~60 km en 10 jours"
+   ]
+  },
+  {
+   "date": "2026-10-29 18:00",
+   "format": "DUEL tête d'affiche, style cinéma 3D (sm_scenes12)",
+   "name": "Rafale vs F-22 : la revanche (1er duel 02/10 = 161 k vues YT) : Rafale glb repeint cocardes françaises, F-22 FlightGear ; vitesse (F-22), furtivité + écho radar (F-22), polyvalence (Rafale), export carte 8 pays vs F-22 interdit (Rafale), production arrêtée 2011 à 195 vs Rafale toujours fabriqué (Rafale) ; 3-2 Rafale, F-22 « roi du ciel » en combat pur",
+   "voice": "Corentin",
+   "duree": 68.33,
+   "flow": "ykMftCyza7EmBU9jHubN",
+   "credits": 1238,
+   "composition": "sX9i5KOUqCs3W26fc8TM",
+   "score": "3-2 Rafale",
+   "uuids": {
+    "tiktok": "6080372696770167458",
+    "youtube+facebook": "5583251865981305745"
+   },
+   "post_ids": {
+    "tiktok": "408997393",
+    "youtube+facebook": "408997514"
+   },
+   "media": "https://static.metricool.com/planner/202610/7174127-file-15716235326791316258.mp4",
+   "sources": [
+    "USAF fact sheet F-22 (af.mil 104506)",
+    "Dassault Aviation (Rafale Mach 1,8, omnirôle)",
+    "Shephard 2026 (Rafale opéré par huit pays)",
+    "amendement Obey 1998 (export F-22 interdit)",
+    "production F-22 arrêtée fin 2011 (195 exemplaires)"
+   ]
   }
  ],
  "notes": [
@@ -1458,7 +1509,8 @@
   "09/10 : stats TikTok J+1 : G 744, oiseaux 602, Rafale-F35 578, masque O2 258 (posté 22:30). Décodé 03 annoncé : la boîte noire.",
   "10/10 : prod du 11/10 = VF10 aviation française (10:00), Décodé 03 boîte noire (12:30), duel Blériot vs Wright (18:00). ~3 700 crédits EL. Prochain Décodé 04 : le train d'atterrissage.",
   "2026-10-12 : backlog duels complété avec des duels côté France (modèles disponibles) ; SPAD vs Fokker ajouté hors backlog pour respecter la règle 'camp français'.",
-  "2026-10-27 : 28/10 produit — 10:00 SURVIVRAIS-TU ? Sichuan 3U8633 en style cinéma 3D (A319 FlightGear, sm_scenes11) ; 18:00 finale TU ES LE PILOTE (A l'eau 5-3). Série terminée après l'ép. 4."
+  "2026-10-27 : 28/10 produit — 10:00 SURVIVRAIS-TU ? Sichuan 3U8633 en style cinéma 3D (A319 FlightGear, sm_scenes11) ; 18:00 finale TU ES LE PILOTE (A l'eau 5-3). Série terminée après l'ép. 4.",
+  "2026-10-28 : 29/10 produit — 10:00 crash des Andes (Le Cercle des neiges) en cinéma 3D (plaques Blender), 18:00 duel Rafale vs F-22 la revanche en cinéma 3D ; 12:30 = film premium Concorde déjà programmé."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -1676,7 +1728,6 @@
  "grands_crashs_backlog": [
   "Germanwings 9525 (2015)",
   "Ténérife 1977 (deux 747)",
-  "Crash des Andes 1972 (survivants)",
   "Yemenia 626 et Bahia Bakari (2009)",
   "Helios 522, l'avion fantôme (2005)",
   "Air France 358 Toronto (2005, tous sauvés)",
@@ -1691,7 +1742,6 @@
   "Rafale vs F-35",
   "Rafale vs Su-57",
   "Rafale vs J-20",
-  "Rafale vs F-22 (la revanche)",
   "Mirage 2000 vs F-16 en combat réel ?"
  ]
 }

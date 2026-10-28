@@ -1,0 +1,44 @@
+{
+ "f_wreck": {
+  "xml": "Fokker50/Models/fokker50.xml",
+  "W": 2400,
+  "H": 1600,
+  "az": 120,
+  "el": 14,
+  "dist": 1.0,
+  "samples": 40,
+  "pitch": -4.0,
+  "roll": 6,
+  "sun_el": 14,
+  "sun_az": 260,
+  "sky_strength": 0.6,
+  "texmap": {
+   "f50klm.rgb": "../pr/F50_white.png",
+   "f50klm.png": "../pr/F50_white.png"
+  },
+  "skip": [
+   "wheel",
+   "strut",
+   "casing",
+   "lock_bar",
+   "tire",
+   "gear_door",
+   "gear_bay",
+   "logo",
+   "city",
+   "regleft",
+   "regright",
+   "box.002",
+   "propdisk"
+  ],
+  "skip_below": -2.2,
+  "clip_box": [
+   -12,
+   10.2,
+   -2.3,
+   2.5,
+   -1.75,
+   1.75
+  ]
+ }
+}

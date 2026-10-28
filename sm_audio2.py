@@ -57,7 +57,9 @@ ve = AL['voice_end']; mend = TOTAL
 CINEMA = getattr(CFG, 'STYLE', '') == 'cinema'
 INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'cc_roll': 0.8, 'cc_burst': 0.95, 'cc_tank': 0.9, 'cc_fire': 1.0,
          'cc_engines': 1.0, 'cc_struggle': 1.0, 'cc_crash': 0.0, 'cc_after': 0.35, 'cc_justice': 0.3, 'cc_end': 0.5,
-         'sw_hook': 0.8, 'sw_real': 0.35, 'sw_crack': 0.7, 'sw_decomp': 0.95, 'sw_cold': 0.9, 'sw_shake': 0.95, 'sw_manual': 0.8, 'sw_land': 0.5, 'sw_verdict': 0.4}
+         'sw_hook': 0.8, 'sw_real': 0.35, 'sw_crack': 0.7, 'sw_decomp': 0.95, 'sw_cold': 0.9, 'sw_shake': 0.95, 'sw_manual': 0.8, 'sw_land': 0.5, 'sw_verdict': 0.4,
+         'aw_hook': 0.7, 'aw_real': 0.3, 'aw_crash': 0.9, 'aw_cold': 0.6, 'aw_radio': 0.5, 'aw_decide': 0.35, 'aw_aval': 0.85, 'aw_trek': 0.75, 'aw_verdict': 0.4,
+         'dv_hook': 0.8, 'dv_speed': 0.9, 'dv_stealth': 0.75, 'dv_multi': 0.8, 'dv_export': 0.6, 'dv_prod': 0.7, 'dv_verdict': 0.85}
 def inten_at(tt):
     for sgx in SEGS:
         if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
@@ -451,6 +453,77 @@ def cues7(sc, s, S, at):
         add(sfx, at(0), stinger(ROOT * 2, 0.35)); add(sfx, at(0, 0.2), gliss(400, 900, 1.0, 0.05))
         for j in range(4): add(sfx, at(1) + 0.15 * j, pluck(660 * 2 ** ([0, 4, 7, 12][j] / 12), 0.5, 0.12))
         add(sfx, at(2), stinger(ROOT * 1.5, 0.3)); add(sfx, at(3), stinger(ROOT, 0.35))
+
+
+    # ---- Andes 1972 (sm_scenes12) ----
+    def gust(t0, d, g=0.14): add(sfx, t0, rumble(d, 230, g * 0.6)); add(sfx, t0, rumble(d, 75, g)); add(sfx, t0, gliss(300, 520, d, g * 0.12, 0.6, 0.6))
+    if sc == 'aw_hook':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.3, 95, 0.12)); add(sfx, at(0), rumble(S[0][1] - S[0][0], 190, 0.05))
+        gust(at(1), S[1][1] - S[1][0] + 0.4, 0.16); add(sfx, at(2), stinger(ROOT, 0.35)); gust(at(2), end - at(2), 0.12)
+    if sc == 'aw_real':
+        add(sfx, at(0), tone(220, S[0][1] - S[0][0] + 0.5, 0.04, 0.6, 0.6)); add(sfx, at(0, 0.6), pluck(880, 0.8, 0.06))
+        for j in range(4): add(sfx, at(1, 0.05) + j * 0.5, pluck(660 * 2 ** ([0, 3, 7, 12][j] / 12), 0.5, 0.05))
+    if sc == 'aw_crash':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 95, 0.1)); add(sfx, at(0, 0.5), tone(1200, 0.12, 0.05)); add(sfx, at(0, 0.55), tone(1200, 0.12, 0.05))
+        ti = S[1][0] + 0.30 * (S[1][1] - S[1][0])
+        add(sfx, S[1][0], rumble(ti - S[1][0], 95, 0.18)); add(sfx, ti, impact(1.4)); add(sfx, ti, tone(42, 1.4, 0.5, 0.002, 1.2))
+        crackle(ti, 1.2, 0.05, 80); add(sfx, ti + 0.1, rumble(end - ti, 160, 0.12)); add(sfx, ti + 0.1, gliss(400, 120, end - ti, 0.06))
+    if sc == 'aw_cold':
+        gust(at(0), end - at(0), 0.16)
+        for j in range(3): add(sfx, at(0) + 0.5 + j * 0.8, tone(140, 0.2, 0.25, 0.003, 0.15))
+        for j in range(25): add(sfx, at(1) + rng.random() * (S[1][1] - S[1][0]), tone(rng.uniform(3000, 4200), 0.04, 0.02, 0.001, 0.03))
+    if sc == 'aw_radio':
+        crackle(at(0, 0.2), S[0][1] - S[0][0], 0.03, 120); add(sfx, at(0, 0.3), tone(1000, 0.6, 0.03, 0.05, 0.4))
+        add(sfx, at(1), stinger(ROOT / 2, 0.45)); add(sfx, at(1), impact(0.7)); add(sfx, at(1, 0.4), impact(0.5, 1.2))
+    if sc == 'aw_decide':
+        MUTE.append((at(0) - 0.1, end)); add(sfx, at(0), tone(55, end - at(0), 0.16, 0.8, 1.0)); add(sfx, at(0, 0.6), tone(82.4, 2.0, 0.06, 0.6, 1.2))
+    if sc == 'aw_aval':
+        add(sfx, at(0), pluck(660, 0.8, 0.06)); add(sfx, at(0, 0.38), rumble(2.6, 38, 0.45)); add(sfx, at(0, 0.38), rumble(2.6, 70, 0.25))
+        add(sfx, at(0, 0.5), gliss(90, 40, 2.0, 0.3)); crackle(at(0, 0.45), 2.0, 0.05, 90)
+        MUTE.append((at(1) - 0.1, end + 0.3)); add(sfx, at(1), tone(55, end - at(1) + 0.8, 0.14, 0.5, 1.0))
+    if sc == 'aw_trek':
+        gust(at(0), S[0][1] - S[0][0], 0.12)
+        tt = at(0)
+        while tt < at(1) - 0.2: add(sfx, tt, tone(70, 0.12, 0.25, 0.004, 0.1)); tt += 0.62
+        for j in range(10): add(sfx, at(1) + j * (S[1][1] - S[1][0]) * 0.8 / 10, pluck(440 * 2 ** (j * 2 / 12), 0.4, 0.06))
+        add(sfx, at(1, 0.85), stinger(ROOT * 1.5, 0.25))
+    if sc == 'aw_verdict':
+        tt = at(0)
+        while tt < at(1) - 0.1: add(sfx, tt, tone(48, 0.07, 0.35, 0.002, 0.05)); tt += 0.075
+        add(sfx, at(0, 0.1), stinger(ROOT * 2, 0.3))
+        MUTE.append((at(1) - 0.1, at(2) - 0.1)); add(sfx, at(1), tone(110, S[1][1] - S[1][0] + 0.6, 0.05, 0.5, 0.8))
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    # ---- Duel Rafale vs F-22 (sm_scenes12) ----
+    def jetroar(t0, d, g=0.25): add(sfx, t0, rumble(d, 60, g)); add(sfx, t0, rumble(d, 125, g * 0.5)); add(sfx, t0, rumble(d, 410, g * 0.1))
+    def point(t0, hi=True):
+        add(sfx, t0, impact(0.8)); add(sfx, t0, stinger(ROOT * (2 if hi else 1.5), 0.32))
+        for j in range(3): add(sfx, t0 + 0.08 * j, pluck(880 * 2 ** ([0, 4, 7][j] / 12), 0.4, 0.08))
+    if sc.startswith('dv_') and sc not in ('dv_hook', 'dv_verdict'):
+        add(sfx, at(0), whoosh(0.3)); add(sfx, at(0, 0.1), impact(0.9)); add(sfx, at(0, 0.15), tone(1320, 0.4, 0.06, 0.002, 0.35))
+        point(at(3))
+    if sc == 'dv_hook':
+        jetroar(at(0), S[0][1] - S[0][0] + 0.5, 0.22); add(sfx, at(0, 0.6), impact(1.1)); add(sfx, at(0, 0.62), stinger(ROOT, 0.35))
+        add(sfx, at(2), impact(0.9)); add(sfx, at(2), stinger(ROOT * 1.5, 0.3))
+    if sc == 'dv_speed':
+        jetroar(at(1), S[1][1] - S[1][0] + 0.3, 0.3); add(sfx, at(1), gliss(200, 600, 1.2, 0.05))
+        jetroar(at(2), S[2][1] - S[2][0], 0.34); add(sfx, at(2), whoosh(0.35)); add(sfx, at(2, 0.1), gliss(150, 700, 1.6, 0.06))
+    if sc == 'dv_stealth':
+        tt = at(1)
+        while tt < at(3) - 0.2: add(sfx, tt, tone(1480, 0.18, 0.06, 0.002, 0.16)); tt += 1.4
+        add(sfx, at(1, 0.5), tone(2100, 0.05, 0.02)); add(sfx, at(2, 0.3), tone(1760, 0.25, 0.12, 0.002, 0.2)); add(sfx, at(2, 0.3), tone(880, 0.25, 0.08, 0.002, 0.2))
+    if sc == 'dv_multi':
+        for t0 in (28.0, 28.8, 29.57, 30.31, 31.67): add(sfx, t0, pluck(988, 0.3, 0.1)); add(sfx, t0, tone(140, 0.12, 0.2))
+        jetroar(at(2), S[2][1] - S[2][0], 0.18)
+    if sc == 'dv_export':
+        for j in range(8): add(sfx, at(1) + 0.25 * j + 0.25, pluck(660 * 2 ** (j * 2 / 12), 0.35, 0.08))
+        add(sfx, at(2, 0.1), tone(110, 0.3, 0.4, 0.002, 0.25)); add(sfx, at(2, 0.12), tone(2400, 0.06, 0.08)); add(sfx, at(2, 0.4), impact(0.8))
+    if sc == 'dv_prod':
+        for j in range(14): add(sfx, at(1) + j * 2.6 / 14, tone(700 + 30 * j, 0.05, 0.05, 0.002, 0.04))
+        add(sfx, at(1) + 2.6, impact(1.0)); add(sfx, at(1) + 2.6, tone(90, 0.5, 0.3, 0.002, 0.4))
+        add(sfx, at(2), gliss(300, 900, 1.6, 0.05))
+    if sc == 'dv_verdict':
+        add(sfx, at(0), impact(1.0)); add(sfx, at(0), stinger(ROOT * 2, 0.4)); jetroar(at(0), end - at(0), 0.16)
+        add(sfx, at(1, 0.45), impact(0.8)); add(sfx, at(1, 0.45), stinger(ROOT * 1.5, 0.3)); add(sfx, at(2), stinger(ROOT, 0.35))
 
 
 # ---------------- montage sonore ----------------
