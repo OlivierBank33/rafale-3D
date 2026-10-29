@@ -1,0 +1,103 @@
+{
+ "pa_front": {
+  "xml": "747-200/Models/boeing747-200.xml",
+  "gear": true,
+  "samples": 36,
+  "texmap": {
+   "747NW-fuselage.rgb": "../pr/747_fus_white.png",
+   "747NW-rudder.rgb": "../pr/747_rud_pa.png"
+  },
+  "exclude": [
+   "goldhofert"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "az": 212,
+  "el": 2,
+  "dist": 1.0,
+  "sun_el": 12,
+  "sun_az": 200,
+  "sky_strength": 0.5
+ },
+ "pa_side": {
+  "xml": "747-200/Models/boeing747-200.xml",
+  "gear": true,
+  "samples": 36,
+  "texmap": {
+   "747NW-fuselage.rgb": "../pr/747_fus_white.png",
+   "747NW-rudder.rgb": "../pr/747_rud_pa.png"
+  },
+  "exclude": [
+   "goldhofert"
+  ],
+  "W": 2600,
+  "H": 1300,
+  "az": 250,
+  "el": 4,
+  "dist": 1.15,
+  "sun_el": 12,
+  "sun_az": 200,
+  "sky_strength": 0.5
+ },
+ "klm_rot": {
+  "xml": "747-200/Models/boeing747-200.xml",
+  "gear": true,
+  "samples": 36,
+  "texmap": {
+   "747NW-fuselage.rgb": "../pr/747_fus_white.png",
+   "747NW-rudder.rgb": "../pr/747_rud_klm.png"
+  },
+  "exclude": [
+   "goldhofert"
+  ],
+  "W": 2600,
+  "H": 1500,
+  "az": 270,
+  "el": 3,
+  "dist": 1.2,
+  "pitch": 9,
+  "sun_el": 12,
+  "sun_az": 200,
+  "sky_strength": 0.5
+ },
+ "klm_rear": {
+  "xml": "747-200/Models/boeing747-200.xml",
+  "gear": true,
+  "samples": 36,
+  "texmap": {
+   "747NW-fuselage.rgb": "../pr/747_fus_white.png",
+   "747NW-rudder.rgb": "../pr/747_rud_klm.png"
+  },
+  "exclude": [
+   "goldhofert"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "az": 345,
+  "el": 5,
+  "dist": 1.0,
+  "sun_el": 12,
+  "sun_az": 200,
+  "sky_strength": 0.5
+ },
+ "klm_hero": {
+  "xml": "747-200/Models/boeing747-200.xml",
+  "gear": true,
+  "samples": 36,
+  "texmap": {
+   "747NW-fuselage.rgb": "../pr/747_fus_white.png",
+   "747NW-rudder.rgb": "../pr/747_rud_klm.png"
+  },
+  "exclude": [
+   "goldhofert"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "az": 150,
+  "el": 5,
+  "dist": 1.0,
+  "sun_el": 12,
+  "sun_az": 200,
+  "sky_strength": 0.5
+ }
+}

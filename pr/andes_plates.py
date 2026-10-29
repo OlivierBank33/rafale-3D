@@ -178,4 +178,103 @@ def render(name):
 
 if __name__ == '__main__':
     names = sys.argv[1:] or list(PL)
-    for n in names: render(n)
+    for n in names:
+        if n in PL: render(n)
+
+
+# =============================================================== jungle amazonienne (sv_juliane)
+def jungle_heights(n=480, size=3000.0, seed=11, river=True):
+    r = np.random.default_rng(seed)
+    from scipy import ndimage
+    def noise(sc):
+        g = r.random((n // sc + 3, n // sc + 3)); z = ndimage.zoom(g, sc, order=3)[:n, :n]
+        return (z - z.min()) / (z.max() - z.min())
+    from scipy.spatial import cKDTree
+    m = int(n * n / 10)                                             # couronnes d'arbres : dômes autour de points aléatoires
+    pts = r.random((m, 2)) * (n - 1); rad = r.uniform(2.6, 6.0, m)
+    gy, gx = np.mgrid[0:n, 0:n]
+    tree = cKDTree(pts); d, idx = tree.query(np.c_[gx.ravel(), gy.ravel()], k=3)
+    cr = np.zeros(n * n)
+    for k_ in range(3):
+        R_ = rad[idx[:, k_]]; cr = np.maximum(cr, R_ * np.sqrt(np.clip(1 - (d[:, k_] / R_) ** 2, 0, 1)) * (0.8 + 0.4 * (idx[:, k_] % 7) / 6))
+    crowns = cr.reshape(n, n) * 2.4
+    hills = noise(120) * 60 + noise(60) * 25
+    h = hills + crowns
+    ys, xs = np.mgrid[0:n, 0:n] / (n - 1)
+    rmask = np.zeros_like(h)
+    if river:
+        cx = 0.5 + 0.10 * np.sin(ys * 7.0) + 0.04 * np.sin(ys * 17 + 1)
+        d = np.abs(xs - cx)
+        rmask = np.clip(1 - (d - 0.018) / 0.012, 0, 1)
+        h = h * (1 - rmask) + (hills.min() - 6) * rmask
+    return h, size, rmask
+
+
+def build_jungle(h, size, rmask):
+    n = h.shape[0]
+    me = bpy.data.meshes.new('jungle'); bm = bmesh.new(); vs = []
+    for j in range(n):
+        for i in range(n):
+            vs.append(bm.verts.new(((i / (n - 1) - 0.5) * size, (j / (n - 1) - 0.5) * size, float(h[j, i]))))
+    for j in range(n - 1):
+        for i in range(n - 1):
+            a = j * n + i; bm.faces.new((vs[a], vs[a + 1], vs[a + n + 1], vs[a + n]))
+    bm.to_mesh(me); bm.free()
+    for p in me.polygons: p.use_smooth = True
+    ob = bpy.data.objects.new('jungle', me); bpy.context.scene.collection.objects.link(ob)
+    mat = bpy.data.materials.new('canopy'); mat.use_nodes = True; nt = mat.node_tree; bs = nt.nodes['Principled BSDF']
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    n1 = nt.nodes.new('ShaderNodeTexNoise'); n1.inputs['Scale'].default_value = 0.02; n1.inputs['Detail'].default_value = 6
+    nt.links.new(tc.outputs['Object'], n1.inputs['Vector'])
+    ramp = nt.nodes.new('ShaderNodeValToRGB')
+    el = ramp.color_ramp.elements
+    el[0].position = 0.35; el[0].color = (0.010, 0.045, 0.012, 1)
+    el[1].position = 0.75; el[1].color = (0.10, 0.20, 0.035, 1)
+    e = el.new(0.55); e.color = (0.03, 0.11, 0.02, 1)
+    nt.links.new(n1.outputs['Fac'], ramp.inputs['Fac']); nt.links.new(ramp.outputs['Color'], bs.inputs['Base Color'])
+    bs.inputs['Roughness'].default_value = 0.8
+    n2 = nt.nodes.new('ShaderNodeTexNoise'); n2.inputs['Scale'].default_value = 0.6; n2.inputs['Detail'].default_value = 8
+    nt.links.new(tc.outputs['Object'], n2.inputs['Vector'])
+    b = nt.nodes.new('ShaderNodeBump'); b.inputs['Strength'].default_value = 0.6
+    nt.links.new(n2.outputs['Fac'], b.inputs['Height']); nt.links.new(b.outputs['Normal'], bs.inputs['Normal'])
+    me.materials.append(mat)
+    bpy.ops.mesh.primitive_plane_add(size=60000, location=(0, 0, float(np.median(h)) - 4))     # canopée lointaine (horizon)
+    far = bpy.context.active_object; far.data.materials.append(mat)
+    # eau de la rivière
+    bpy.ops.mesh.primitive_plane_add(size=size * 1.2, location=(0, 0, float(h.min()) + 3.5))
+    wp = bpy.context.active_object
+    wm = bpy.data.materials.new('water'); wm.use_nodes = True; wb = wm.node_tree.nodes['Principled BSDF']
+    wb.inputs['Base Color'].default_value = (0.16, 0.11, 0.06, 1); wb.inputs['Roughness'].default_value = 0.08
+    wp.data.materials.append(wm)
+    return ob
+
+
+JPL = {
+    'jungle_air': dict(W=1300, H=1920, sun_el=30, sun_az=200, cam=(0, -1300, 380), look=(0, 1200, 0), lens=24, exposure=-2.2, strength=0.4),
+    'jungle_down': dict(W=1300, H=1920, sun_el=50, sun_az=200, cam=(0, -150, 700), look=(0, 0, 0), lens=26, exposure=-2.2, strength=0.4),
+}
+
+
+def render_jungle(name):
+    p = dict(JPL[name])
+    if os.environ.get('PREVIEW'):
+        p['W'] //= 4; p['H'] //= 4
+    sc = scene(p['W'], p['H'], p['sun_el'], p['sun_az'], p.get('strength', 1.0), p.get('exposure', -0.6), 8 if os.environ.get('PREVIEW') else 32)
+    h, size, rmask = jungle_heights()
+    build_jungle(h, size, rmask)
+    n = h.shape[0]
+    def river_x(yw):                                             # x monde du centre de la rivière à la coordonnée y monde
+        ys = yw / size + 0.5
+        return (0.5 + 0.10 * np.sin(ys * 7.0) + 0.04 * np.sin(ys * 17 + 1) - 0.5) * size
+    cam = list(p['cam']); look = list(p['look'])
+    if cam[0] is None: cam[0] = river_x(cam[1])
+    if look[0] is None: look[0] = river_x(look[1])
+    camera(cam, look, p['lens'])
+    sc.render.filepath = OUT + f'p_{name}.png'
+    bpy.ops.render.render(write_still=True)
+    print('DONE', name, flush=True)
+
+
+if __name__ == '__main__':
+    for n in sys.argv[1:]:
+        if n in JPL: render_jungle(n)

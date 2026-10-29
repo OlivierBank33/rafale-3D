@@ -1,0 +1,75 @@
+{
+ "p38_hero": {
+  "xml": "P-38-Lightning/Models/F5B-model.xml",
+  "texdirs": [
+   "Textures/texture-fr"
+  ],
+  "exclude": [
+   "train"
+  ],
+  "samples": 40,
+  "W": 2400,
+  "H": 2000,
+  "az": 145,
+  "el": 10,
+  "dist": 1.05,
+  "roll": -15,
+  "pitch": 2,
+  "sun_el": 40,
+  "sun_az": 160
+ },
+ "p38_side": {
+  "xml": "P-38-Lightning/Models/F5B-model.xml",
+  "texdirs": [
+   "Textures/texture-fr"
+  ],
+  "exclude": [
+   "train"
+  ],
+  "samples": 40,
+  "W": 2600,
+  "H": 1400,
+  "az": 92,
+  "el": 2,
+  "dist": 1.2,
+  "sun_el": 45,
+  "sun_az": 150
+ },
+ "p38_rear": {
+  "xml": "P-38-Lightning/Models/F5B-model.xml",
+  "texdirs": [
+   "Textures/texture-fr"
+  ],
+  "exclude": [
+   "train"
+  ],
+  "samples": 40,
+  "W": 2400,
+  "H": 2000,
+  "az": 330,
+  "el": 12,
+  "dist": 1.05,
+  "roll": 10,
+  "sun_el": 40,
+  "sun_az": 200
+ },
+ "p38_dive": {
+  "xml": "P-38-Lightning/Models/F5B-model.xml",
+  "texdirs": [
+   "Textures/texture-fr"
+  ],
+  "exclude": [
+   "train"
+  ],
+  "samples": 40,
+  "W": 2400,
+  "H": 2400,
+  "az": 150,
+  "el": 20,
+  "dist": 1.1,
+  "pitch": -38,
+  "roll": 25,
+  "sun_el": 40,
+  "sun_az": 160
+ }
+}

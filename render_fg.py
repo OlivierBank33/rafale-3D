@@ -43,6 +43,15 @@ def collect(xml_path, M, parts, exclude, depth=0):
     except ET.ParseError:
         return
     base = os.path.dirname(xml_path)
+    inc = root.get('include')
+    if inc:                                                  # <PropertyList include="..."> : sous-modèles du fichier inclus
+        ip = resolve(inc, base)
+        if ip and os.path.exists(ip):
+            try:
+                iroot = ET.parse(ip).getroot()
+                for m in iroot.findall('model'): root.append(m)
+            except ET.ParseError:
+                pass
     top = root.find('path')
     if top is not None and top.text:
         p = resolve(top.text, base)
@@ -53,7 +62,7 @@ def collect(xml_path, M, parts, exclude, depth=0):
         pe = m.find('path'); nm = (m.findtext('name') or '').lower()
         if pe is None or not pe.text:
             continue
-        low = pe.text.lower() + ' ' + nm
+        low = os.path.basename(pe.text.strip()).lower() + ' ' + nm
         if any(k in low for k in exclude):
             continue
         p = resolve(pe.text, base)

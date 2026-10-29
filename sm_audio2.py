@@ -59,7 +59,9 @@ INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'c
          'cc_engines': 1.0, 'cc_struggle': 1.0, 'cc_crash': 0.0, 'cc_after': 0.35, 'cc_justice': 0.3, 'cc_end': 0.5,
          'sw_hook': 0.8, 'sw_real': 0.35, 'sw_crack': 0.7, 'sw_decomp': 0.95, 'sw_cold': 0.9, 'sw_shake': 0.95, 'sw_manual': 0.8, 'sw_land': 0.5, 'sw_verdict': 0.4,
          'aw_hook': 0.7, 'aw_real': 0.3, 'aw_crash': 0.9, 'aw_cold': 0.6, 'aw_radio': 0.5, 'aw_decide': 0.35, 'aw_aval': 0.85, 'aw_trek': 0.75, 'aw_verdict': 0.4,
-         'dv_hook': 0.8, 'dv_speed': 0.9, 'dv_stealth': 0.75, 'dv_multi': 0.8, 'dv_export': 0.6, 'dv_prod': 0.7, 'dv_verdict': 0.85}
+         'dv_hook': 0.8, 'dv_speed': 0.9, 'dv_stealth': 0.75, 'dv_multi': 0.8, 'dv_export': 0.6, 'dv_prod': 0.7, 'dv_verdict': 0.85,
+         'jk_hook': 0.75, 'jk_real': 0.3, 'jk_storm': 0.85, 'jk_fall': 0.8, 'jk_hurt': 0.45, 'jk_river': 0.5, 'jk_found': 0.55, 'jk_later': 0.45, 'jk_verdict': 0.35,
+         'tf_hook': 0.6, 'tf_bomb': 0.55, 'tf_fog': 0.5, 'tf_radio': 0.6, 'tf_roll': 0.85, 'tf_impact': 0.95, 'tf_toll': 0.2, 'tf_after': 0.4}
 def inten_at(tt):
     for sgx in SEGS:
         if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
@@ -524,6 +526,89 @@ def cues7(sc, s, S, at):
     if sc == 'dv_verdict':
         add(sfx, at(0), impact(1.0)); add(sfx, at(0), stinger(ROOT * 2, 0.4)); jetroar(at(0), end - at(0), 0.16)
         add(sfx, at(1, 0.45), impact(0.8)); add(sfx, at(1, 0.45), stinger(ROOT * 1.5, 0.3)); add(sfx, at(2), stinger(ROOT, 0.35))
+    # ---- Juliane Koepcke, LANSA 508 (sm_scenes13) ----
+    def thunder(t0, g=1.0): add(sfx, t0, impact(1.1 * g)); add(sfx, t0, tone(38, 1.8, 0.5 * g, 0.004, 1.6)); add(sfx, t0 + 0.05, rumble(2.2, 52, 0.3 * g)); crackle(t0, 0.25, 0.05 * g, 30)
+    def birds(t0, d, n=10, g=0.05):
+        for j in range(n):
+            tb = t0 + d * rng.random(); f = rng.uniform(2300, 3600)
+            for m in range(int(rng.integers(2, 5))): add(sfx, tb + m * 0.09, gliss(f, f * rng.uniform(1.1, 1.3), 0.07, g, 0.004, 0.05))
+    def insects(t0, d, g=0.012): add(sfx, t0, rumble(d, 4200, g)); add(sfx, t0, rumble(d, 3900, g * 0.7))
+    if sc == 'jk_hook':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.3, 70, 0.15)); thunder(at(0) + 0.25); add(sfx, at(0) + 0.9, impact(1.3)); add(sfx, at(0) + 0.9, gliss(2400, 160, 0.7, 0.1)); crackle(at(0) + 0.9, 0.6, 0.06, 60)
+        wind(at(1), S[1][1] - S[1][0] + 0.2, 0.3); add(sfx, at(1), gliss(900, 260, S[1][1] - S[1][0], 0.06))
+        add(sfx, at(2), stinger(ROOT, 0.35)); insects(at(2), end - at(2)); birds(at(2, 0.2), end - at(2), 4)
+    if sc == 'jk_real':
+        add(sfx, at(0), tone(220, S[0][1] - S[0][0] + 0.5, 0.04, 0.6, 0.6)); add(sfx, at(0, 0.6), pluck(880, 0.8, 0.06))
+        for j in range(4): add(sfx, at(1, 0.1) + j * 0.55, pluck(660 * 2 ** ([0, 3, 7, 12][j] / 12), 0.5, 0.05))
+        add(sfx, at(2), rumble(end - at(2), 140, 0.08)); add(sfx, at(2, 0.05), pluck(1046, 0.5, 0.06))
+    if sc == 'jk_storm':
+        add(sfx, at(0), rumble(end - at(0), 72, 0.16)); add(sfx, at(0), rumble(end - at(0), 145, 0.06)); thunder(at(0) + 0.4, 0.8); thunder(at(0) + 1.2, 0.6)
+        L1 = S[1][1] - S[1][0]
+        thunder(S[1][0] + 0.05, 1.3); crackle(S[1][0] + 0.30 * L1, end - S[1][0] - 0.30 * L1, 0.04, 90)
+        tb = S[1][0] + 0.62 * L1; add(sfx, tb, impact(1.4)); add(sfx, tb, gliss(2600, 150, 0.8, 0.1)); wind(tb, end - tb + 0.4, 0.32)
+    if sc == 'jk_fall':
+        wind(at(0) - 0.1, S[0][1] - S[0][0] + 0.3, 0.36); add(sfx, at(0), gliss(1200, 300, S[0][1] - S[0][0], 0.05))
+        for j in range(6): add(sfx, at(0) + j * (S[0][1] - S[0][0]) / 6, tone(1500 - 120 * j, 0.05, 0.05, 0.002, 0.04))
+        add(sfx, S[0][1] + 0.05, impact(1.2)); crackle(S[0][1] + 0.05, 0.5, 0.06, 70)
+        MUTE.append((at(1) - 0.05, at(1, 0.5))); heartbeat(at(1, 0.1), end, 62, 0.4); insects(at(1), end - at(1)); birds(at(1, 0.3), end - at(1), 5)
+        add(sfx, at(1, 0.45), stinger(ROOT * 2, 0.25))
+    if sc == 'jk_hurt':
+        L0 = S[0][1] - S[0][0]
+        for j in range(3): add(sfx, at(0) + j * L0 * 0.3 + 0.05, tone(140, 0.25, 0.3, 0.003, 0.2)); add(sfx, at(0) + j * L0 * 0.3 + 0.05, tone(1760, 0.12, 0.04, 0.002, 0.1))
+        insects(at(1), end - at(1), 0.01); add(sfx, at(1), tone(55, end - at(1) + 0.5, 0.12, 0.4, 0.8))
+        tt = at(1)
+        while tt < end: add(sfx, tt, tone(990, 0.25, 0.04, 0.003, 0.22)); tt += 1 / 0.35 / 4
+    if sc == 'jk_river':
+        insects(at(0), end - at(0)); birds(at(0), end - at(0), 14)
+        add(sfx, at(1), rumble(end - at(1), 300, 0.05))
+        tt = at(1, 0.42)
+        while tt < end: splash(tt, 0.2, 0.025, 14); tt += 0.62
+    if sc == 'jk_found':
+        insects(at(0), end - at(0)); birds(at(0), S[0][1] - S[0][0], 5)
+        add(sfx, at(0, 0.05), pluck(660, 0.6, 0.06)); add(sfx, at(0, 0.3), stinger(ROOT * 1.5, 0.22))
+        add(sfx, at(1), stinger(ROOT * 2, 0.3)); add(sfx, at(1, 0.3), tone(330, 0.5, 0.05, 0.01, 0.4))
+        tt = at(1, 0.62)
+        while tt < end: splash(tt, 0.25, 0.03, 18); tt += 0.8
+    if sc == 'jk_later':
+        for j in range(6): add(sfx, at(0, 0.05) + j * 0.4, pluck(523 * 2 ** ([0, 4, 7, 12, 7, 16][j] / 12), 0.6, 0.06))
+        add(sfx, at(0, 0.55), stinger(ROOT * 2, 0.25)); birds(at(0), end - at(0), 6, 0.03)
+    if sc == 'jk_verdict':
+        add(sfx, at(0), stinger(ROOT * 2, 0.3)); add(sfx, at(0, 0.1), pluck(1320, 0.8, 0.06))
+        MUTE.append((at(1) - 0.1, at(2) - 0.1)); add(sfx, at(1), tone(110, S[1][1] - S[1][0] + 0.6, 0.05, 0.5, 0.8))
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    # ---- Ténérife 1977 (sm_scenes13) ----
+    def idle(t0, d, g=0.1): add(sfx, t0, rumble(d, 118, g)); add(sfx, t0, rumble(d, 236, g * 0.35)); add(sfx, t0, tone(1900, d, g * 0.06, 0.4, 0.4))
+    if sc == 'tf_hook':
+        idle(at(0), end - at(0), 0.1); add(sfx, at(0), tone(73.4, end - at(0), 0.08, 1.0, 1.0))
+        add(sfx, at(1), tone(1480, 0.5, 0.05, 0.01, 0.4)); add(sfx, at(1, 0.2), gliss(600, 900, 0.6, 0.04))
+        add(sfx, at(2), impact(0.9)); add(sfx, at(2), stinger(ROOT, 0.35))
+    if sc == 'tf_bomb':
+        add(sfx, at(0, 0.05), pluck(880, 0.6, 0.06)); te = S[0][0] + 0.45 * (S[0][1] - S[0][0])
+        add(sfx, te, impact(1.3)); add(sfx, te, tone(40, 1.6, 0.5, 0.002, 1.4)); crackle(te, 0.6, 0.05, 60)
+        for j in range(5): add(sfx, at(1) + 0.5 + j * 0.5, gliss(500, 380, 0.5, 0.03)); add(sfx, at(1) + 0.5 + j * 0.5, pluck(660, 0.3, 0.04))
+    if sc == 'tf_fog':
+        for j in range(8): add(sfx, at(0, 0.1) + j * 0.3, tone(1320, 0.04, 0.05, 0.002, 0.03))
+        idle(at(1), end - at(1), 0.12); add(sfx, at(2), tone(61.7, end - at(2), 0.1, 0.8, 0.8)); heartbeat(at(2, 0.3), end, 66, 0.3)
+    if sc == 'tf_radio':
+        def squelch(t0): crackle(t0, 0.25, 0.03, 25); add(sfx, t0, tone(1000, 0.08, 0.04, 0.002, 0.05))
+        squelch(at(0)); crackle(at(0, 0.1), S[0][1] - S[0][0], 0.015, 40)
+        squelch(at(1)); add(sfx, at(1, 0.1), pluck(1046, 0.4, 0.08)); add(sfx, S[1][0] + 0.40 * (S[1][1] - S[1][0]), tone(660, 0.3, 0.06, 0.005, 0.25))
+        squelch(at(2)); tb = at(2) + 0.3
+        add(sfx, tb, tone(2800, 3.0, 0.05, 0.05, 0.4)); add(sfx, tb, tone(2836, 3.0, 0.05, 0.05, 0.4)); crackle(tb, 3.0, 0.03, 120)
+    if sc == 'tf_roll':
+        add(sfx, at(0), spool(110, 260, S[0][1] - S[0][0], 0.22)); add(sfx, at(0), rumble(end - at(0), 60, 0.2)); add(sfx, at(0, 0.5), stinger(ROOT / 2, 0.35))
+        add(sfx, at(1), spool(260, 330, S[1][1] - S[1][0], 0.22)); heartbeat(at(1), end, 132, 0.4)
+        tm = S[1][0] + 0.45 * (S[1][1] - S[1][0]); add(sfx, tm, impact(0.9)); add(sfx, tm, gliss(400, 1400, 1.2, 0.07))
+    if sc == 'tf_impact':
+        L0 = S[0][1] - S[0][0]; th = S[0][0] + 0.45 * L0
+        add(sfx, at(0), rumble(th - at(0), 60, 0.3)); crackle(S[0][0] + 0.2 * L0, 0.16 * L0, 0.05, 50)
+        add(sfx, th, impact(1.6)); add(sfx, th, tone(36, 2.2, 0.6, 0.002, 2.0)); crackle(th, 1.0, 0.07, 120)
+        add(sfx, S[0][0] + 0.75 * L0, impact(1.1, 1.4)); add(sfx, at(1), rumble(end - at(1) + 0.5, 90, 0.2)); crackle(at(1), end - at(1), 0.05, 90)
+    if sc == 'tf_toll':
+        MUTE.append((at(0) - 0.15, end + 0.2)); add(sfx, at(0), tone(55, end - at(0) + 0.8, 0.14, 0.5, 1.0)); add(sfx, at(1, 0.1), tone(110, 1.5, 0.04, 0.4, 1.0))
+    if sc == 'tf_after':
+        for j in range(4): add(sfx, at(0, 0.1) + j * 0.45, pluck(523 * 2 ** ([0, 4, 7, 12][j] / 12), 0.5, 0.05))
+        add(sfx, S[0][0] + 0.5 * (S[0][1] - S[0][0]), tone(660, 0.4, 0.05)); add(sfx, at(1), stinger(ROOT, 0.35))
 
 
 # ---------------- montage sonore ----------------
