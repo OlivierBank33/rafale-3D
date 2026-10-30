@@ -1,0 +1,14 @@
+{
+ "flow": "03KfbEVZIm61l4iaaqXX",
+ "note": "Voix découpée par scène (quota EL bas). Composition : piste audio unique avec un clip par scène, gap_before = pause avant le clip (model_parameters.tracks[].clips[].gap_before). Recalculer align.json avec les vraies durées + transcription 0 crédit par morceau.",
+ "gaps": {"start": 0.25, "between": 0.7},
+ "chunks": [
+  {"scene": 0, "type": "sx_hook", "status": "A GENERER", "text": "L'auteur du Petit Prince a disparu en plein vol. Pendant cinquante-quatre ans, personne n'a su où. Tu connais la fin de l'histoire ?"},
+  {"scene": 1, "type": "sx_takeoff", "status": "ok", "node": "WEuu4U5db2rshcExrKhq", "generation": "lxEhWIBlTF4II99RjJer", "duration": 11.24},
+  {"scene": 2, "type": "sx_vanish", "status": "A GENERER", "text": "Après un dernier écho radar, l'avion disparaît. Aucune trace, aucun message."},
+  {"scene": 3, "type": "sx_bracelet", "status": "ok", "node": "gR3lxjdcTO3Df5wIlwWr", "generation": "RR1tp4l8JiyHbB6kNA0p", "duration": 7.06},
+  {"scene": 4, "type": "sx_wreck", "status": "ok", "node": "32Y1gXuX1A7DOHJClFGj", "generation": "4VwB46n0FRESp9dgDugb", "duration": 12.49},
+  {"scene": 5, "type": "sx_claim", "status": "A GENERER", "text": "En deux mille huit, un ancien pilote allemand affirme l'avoir abattu ce jour-là. Mais son récit comporte des incohérences."},
+  {"scene": 6, "type": "sx_verdict", "status": "A GENERER", "text": "Abattu, panne, malaise ? Personne ne sait vraiment ce qui s'est passé. Et toi, tu crois qu'il a été abattu ?"}
+ ]
+}

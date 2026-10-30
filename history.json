@@ -1558,7 +1558,8 @@
   "2026-10-12 : backlog duels complété avec des duels côté France (modèles disponibles) ; SPAD vs Fokker ajouté hors backlog pour respecter la règle 'camp français'.",
   "2026-10-27 : 28/10 produit — 10:00 SURVIVRAIS-TU ? Sichuan 3U8633 en style cinéma 3D (A319 FlightGear, sm_scenes11) ; 18:00 finale TU ES LE PILOTE (A l'eau 5-3). Série terminée après l'ép. 4.",
   "2026-10-28 : 29/10 produit — 10:00 crash des Andes (Le Cercle des neiges) en cinéma 3D (plaques Blender), 18:00 duel Rafale vs F-22 la revanche en cinéma 3D ; 12:30 = film premium Concorde déjà programmé.",
-  "30/10 : créneau 18:00 VIDE — quota ElevenLabs épuisé (10 000 crédits/mois, ~1 280 par voix de 60 s). Script prêt : MYSTÈRES ép. 02 Saint-Exupéry (dl_cfg/my_saintex, el_text.txt prêt, flow EL 03KfbEVZIm61l4iaaqXX) ; rendus P-38 F-5B (pr/r_p38_hero|side) faits. À produire dès que des crédits sont rechargés."
+  "30/10 : créneau 18:00 VIDE — quota ElevenLabs épuisé (10 000 crédits/mois, ~1 280 par voix de 60 s). Script prêt : MYSTÈRES ép. 02 Saint-Exupéry (dl_cfg/my_saintex, el_text.txt prêt, flow EL 03KfbEVZIm61l4iaaqXX) ; rendus P-38 F-5B (pr/r_p38_hero|side) faits. À produire dès que des crédits sont rechargés.",
+  "30/10 (run de 13:50) : crédits ElevenLabs à 58 / 10 000 — aucun créneau du 31/10 ne peut être voisé. Saint-Exupéry : 3 scènes sur 7 voisées (dl_cfg/my_saintex/voice_chunks.json), visuels prêts (sm_scenes14, planche relue). Olivier prévenu (message + notification) : recharge nécessaire. Ne pas publier sans la voix Corentin sauf accord explicite d'Olivier."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -1706,7 +1707,9 @@
   "25/10: 26/10 produit en v2 (sm_scenes7 + cues7). Ports de composition EL désormais 'video' + 'audio' (paramètres identiques : piste vidéo du bed + piste voix). media_push : après push d'un bed, supprimer le fichier local puis `git update-index --skip-worktree` sur les fichiers supprimés (le hook git exige un dépôt propre).",
   "26/10 : ne JAMAIS lancer le post YouTube+Facebook en parallèle du post TikTok — l'URL static.metricool.com n'existe qu'après la réponse TikTok (erreur corrigée sur MH370 par updateScheduledPost).",
   "29/10 : NE JAMAIS lancer creative_transcribe_audio avant que la voix soit 'completed' : la transcription relance alors le nœud TTS (crédits refacturés). Toujours estimate_only avant un run quand le quota est bas.",
-  "29/10 : jungle Blender inutilisable (canopée « moisie ») -> pr/jungle2d.py (cairo). rng de sm_audio2 = numpy Generator : rng.integers(), pas randint. Plaque vue de dessus dézoomée : EXTEND_REFLECT (sinon bandes noires)."
+  "29/10 : jungle Blender inutilisable (canopée « moisie ») -> pr/jungle2d.py (cairo). rng de sm_audio2 = numpy Generator : rng.integers(), pas randint. Plaque vue de dessus dézoomée : EXTEND_REFLECT (sinon bandes noires).",
+  "30/10 : ElevenLabs débite l'ESTIMATION (credit_costs du lancement, ≈ 1,68 crédit/caractère en multilingual_v2 ; turbo/flash : même estimation dans les flows), PAS le champ « price » de la génération (≈ 1/caractère). Une voix de 60 s ≈ 2 100 crédits ; le quota refuse toute demande dont l'estimation dépasse le solde. Lire le solde dans le message d'erreur ; ne jamais lancer une voix découpée sans être sûr d'avoir de quoi la finir.",
+  "30/10 : composition EL = frise : model_parameters.tracks[] (piste vidéo + pistes audio), chaque piste a des clips[] avec gap_before (secondes) ; plusieurs nœuds audio branchés sur le port 'audio' deviennent des pistes superposées. Pour une voix en morceaux : une seule piste audio, un clip par morceau, gap_before = pause (via creative_update_node model_parameters.tracks)."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",

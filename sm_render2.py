@@ -34,6 +34,9 @@ SC.update(sm_scenes12.SC12)
 import sm_scenes13
 sm_scenes13.R = R1
 SC.update(sm_scenes13.SC13)
+import sm_scenes14
+sm_scenes14.R = R1
+SC.update(sm_scenes14.SC14)
 CINEMA = getattr(CFG, 'STYLE', '') == 'cinema'
 ORG, BLUE, RED, WH = R1.ORG, R1.BLUE, R1.RED, R1.WH
 YEL = (1.0, 0.85, 0.25)

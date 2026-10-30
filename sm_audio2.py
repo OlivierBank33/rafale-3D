@@ -61,7 +61,8 @@ INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'c
          'aw_hook': 0.7, 'aw_real': 0.3, 'aw_crash': 0.9, 'aw_cold': 0.6, 'aw_radio': 0.5, 'aw_decide': 0.35, 'aw_aval': 0.85, 'aw_trek': 0.75, 'aw_verdict': 0.4,
          'dv_hook': 0.8, 'dv_speed': 0.9, 'dv_stealth': 0.75, 'dv_multi': 0.8, 'dv_export': 0.6, 'dv_prod': 0.7, 'dv_verdict': 0.85,
          'jk_hook': 0.75, 'jk_real': 0.3, 'jk_storm': 0.85, 'jk_fall': 0.8, 'jk_hurt': 0.45, 'jk_river': 0.5, 'jk_found': 0.55, 'jk_later': 0.45, 'jk_verdict': 0.35,
-         'tf_hook': 0.6, 'tf_bomb': 0.55, 'tf_fog': 0.5, 'tf_radio': 0.6, 'tf_roll': 0.85, 'tf_impact': 0.95, 'tf_toll': 0.2, 'tf_after': 0.4}
+         'tf_hook': 0.6, 'tf_bomb': 0.55, 'tf_fog': 0.5, 'tf_radio': 0.6, 'tf_roll': 0.85, 'tf_impact': 0.95, 'tf_toll': 0.2, 'tf_after': 0.4,
+         'sx_hook': 0.55, 'sx_takeoff': 0.5, 'sx_vanish': 0.7, 'sx_bracelet': 0.4, 'sx_wreck': 0.55, 'sx_claim': 0.6, 'sx_verdict': 0.45}
 def inten_at(tt):
     for sgx in SEGS:
         if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
@@ -609,6 +610,35 @@ def cues7(sc, s, S, at):
     if sc == 'tf_after':
         for j in range(4): add(sfx, at(0, 0.1) + j * 0.45, pluck(523 * 2 ** ([0, 4, 7, 12][j] / 12), 0.5, 0.05))
         add(sfx, S[0][0] + 0.5 * (S[0][1] - S[0][0]), tone(660, 0.4, 0.05)); add(sfx, at(1), stinger(ROOT, 0.35))
+    # ---- Saint-Exupéry (sm_scenes14) ----
+    def prop(t0, d, g=0.1): add(sfx, t0, rumble(d, 96, g)); add(sfx, t0, rumble(d, 192, g * 0.4))
+    if sc == 'sx_hook':
+        prop(at(0), S[0][1] - S[0][0] + 0.3, 0.1); add(sfx, at(0, 0.7), gliss(500, 300, 1.2, 0.04))
+        for j in range(8): add(sfx, at(1) + j * (S[1][1] - S[1][0]) / 8, tone(1320, 0.04, 0.04, 0.002, 0.03))
+        add(sfx, at(2), stinger(ROOT, 0.35))
+    if sc == 'sx_takeoff':
+        prop(at(0), S[0][1] - S[0][0], 0.09); add(sfx, at(0, 0.55), gliss(300, 1500, 1.4, 0.04))
+        for j in range(4): t0 = S[1][0] + 0.15 * (S[1][1] - S[1][0]) + j * 0.7; add(sfx, t0, tone(2600, 0.03, 0.12, 0.001, 0.02)); add(sfx, t0 + 0.05, tone(1800, 0.05, 0.08, 0.001, 0.04))
+    if sc == 'sx_vanish':
+        tt = at(0)
+        while tt < end: add(sfx, tt, tone(1000 if tt < at(0) + 1.2 else 700, 0.12, 0.08, 0.002, 0.1)); tt += 3.93
+        MUTE.append((at(1) - 0.1, end)); add(sfx, at(1), tone(55, end - at(1) + 0.6, 0.12, 0.4, 0.8))
+    if sc == 'sx_bracelet':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 300, 0.04)); add(sfx, at(0, 0.6), pluck(1568, 0.6, 0.08))
+        add(sfx, at(1, 0.1), gliss(2400, 3600, 1.5, 0.03)); add(sfx, at(1, 0.4), pluck(1760, 1.0, 0.06)); add(sfx, at(1, 0.5), stinger(ROOT * 2, 0.22))
+    if sc == 'sx_wreck':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.3, 70, 0.14)); add(sfx, at(0), gliss(300, 90, S[0][1] - S[0][0], 0.05))
+        for j in range(10): add(sfx, at(0) + rng.random() * (S[0][1] - S[0][0]), tone(rng.uniform(500, 900), 0.08, 0.03, 0.005, 0.06))
+        add(sfx, at(1, 0.6), stinger(ROOT * 1.5, 0.3)); add(sfx, at(1, 0.6), impact(0.6))
+        for j in range(3): add(sfx, at(2, 0.1) + j * 0.4, pluck(523 * 2 ** ([0, 4, 7][j] / 12), 0.6, 0.05))
+    if sc == 'sx_claim':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0], 140, 0.1)); add(sfx, at(0, 0.1), stinger(ROOT / 2, 0.3))
+        for j in range(5): add(sfx, at(1) + 0.2 + j * 0.3, tone(220 - 15 * j, 0.15, 0.08, 0.003, 0.12))
+        add(sfx, at(1, 0.3), impact(0.7))
+    if sc == 'sx_verdict':
+        L0 = S[0][1] - S[0][0]
+        for j in range(3): add(sfx, at(0) + j * L0 * 0.3, impact(0.5)); add(sfx, at(0) + j * L0 * 0.3, tone(660 + 110 * j, 0.3, 0.06, 0.002, 0.25))
+        prop(at(1), S[1][1] - S[1][0], 0.06); add(sfx, at(2), stinger(ROOT, 0.35))
 
 
 # ---------------- montage sonore ----------------
