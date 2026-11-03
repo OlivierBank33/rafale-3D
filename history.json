@@ -1562,7 +1562,8 @@
   "30/10 (run de 13:50) : crédits ElevenLabs à 58 / 10 000 — aucun créneau du 31/10 ne peut être voisé. Saint-Exupéry : 3 scènes sur 7 voisées (dl_cfg/my_saintex/voice_chunks.json), visuels prêts (sm_scenes14, planche relue). Olivier prévenu (message + notification) : recharge nécessaire. Ne pas publier sans la voix Corentin sauf accord explicite d'Olivier.",
   "31/10 : toujours 58 crédits ElevenLabs — rien produit pour le 01/11. Conteneur réinitialisé ce jour (seul le dépôt rafale-3d main restait) : la prochaine production doit réinstaller (RUNBOOK §2 : clone minuteaero-pipeline + setup.sh + modèles FlightGear §1decies). Brouillon prêt : dl_cfg/hc_helios (Helios 522, l'avion fantôme, ~19k recherches/mois +450 %) — faits à revérifier avant la voix.",
   "01/11 : toujours 58 crédits ElevenLabs (pas de renouvellement le 1er du mois) — rien produit pour le 02/11. Olivier prévenu pour la 3e fois.",
-  "02/11 : toujours 58 crédits ElevenLabs — rien produit pour le 03/11 (4e jour)."
+  "02/11 : toujours 58 crédits ElevenLabs — rien produit pour le 03/11 (4e jour).",
+  "03/11 : toujours 58 crédits ElevenLabs — rien produit pour le 04/11 (5e jour)."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
