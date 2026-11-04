@@ -1525,6 +1525,29 @@
     "Wikipedia EN Tenerife airport disaster (rapport CIAIAC)"
    ],
    "vidiq": "tenerife airport disaster ~83k/mois (+19 %)"
+  },
+  {
+   "date": "2026-11-05 12:30",
+   "format": "MYSTÈRES ép. 02 (style cinéma 3D, sm_scenes14)",
+   "name": "La disparition de Saint-Exupéry (31/07/1944) : P-38 F-5B FlightGear n° 223, radiographie du nez photo, viseur de reconnaissance sur la carte topo, dernier écho radar, gourmette « (CONSUELO) » au reflet balayé, descente à 85 m (profondimètre, plongeur), « 2734 L » à la lampe, musée du Bourget, Bf 109 et incohérences, abattu/panne/malaise",
+   "voice": "Corentin (7 morceaux, un par scène, enchaînés dans la composition)",
+   "duree": 64.92,
+   "flow": "03KfbEVZIm61l4iaaqXX",
+   "composition": "dAsc9k2Ia5Q0uemKUdqA",
+   "credits": "≈ 1 700 (3 morceaux le 30/10 au tarif 1,68/car. + 4 le 04/11 au tarif 2,25/car.)",
+   "uuids": {
+    "tiktok": "-2472072650060905978",
+    "youtube+facebook": "1149925345439336786"
+   },
+   "post_ids": {
+    "tiktok": "416480429",
+    "youtube+facebook": "416480530"
+   },
+   "media": "https://static.metricool.com/planner/202611/7174127-file-13440568712538928725.mp4",
+   "sources": [
+    "Parc national des Calanques, « L'épave de l'avion de Saint-Exupéry »",
+    "Wikipedia FR/EN Antoine de Saint-Exupéry (disparition)"
+   ]
   }
  ],
  "notes": [
@@ -1563,7 +1586,8 @@
   "31/10 : toujours 58 crédits ElevenLabs — rien produit pour le 01/11. Conteneur réinitialisé ce jour (seul le dépôt rafale-3d main restait) : la prochaine production doit réinstaller (RUNBOOK §2 : clone minuteaero-pipeline + setup.sh + modèles FlightGear §1decies). Brouillon prêt : dl_cfg/hc_helios (Helios 522, l'avion fantôme, ~19k recherches/mois +450 %) — faits à revérifier avant la voix.",
   "01/11 : toujours 58 crédits ElevenLabs (pas de renouvellement le 1er du mois) — rien produit pour le 02/11. Olivier prévenu pour la 3e fois.",
   "02/11 : toujours 58 crédits ElevenLabs — rien produit pour le 03/11 (4e jour).",
-  "03/11 : toujours 58 crédits ElevenLabs — rien produit pour le 04/11 (5e jour)."
+  "03/11 : toujours 58 crédits ElevenLabs — rien produit pour le 04/11 (5e jour).",
+  "04/11 : crédits ElevenLabs de nouveau disponibles (renouvellement ou recharge). Facturation désormais ≈ 2,25 crédits/caractère (estimation au lancement) : une voix de 60 s ≈ 2 900 crédits, soit ≈ 3 vidéos pour 10 000 crédits. Saint-Exupéry fini et programmé le 05/11 12:30 ; 10:00 et 18:00 laissés vides (faits des nouveaux sujets invérifiables sans WebFetch, refusé en exécution non surveillée ; et budget à arbitrer avec Olivier)."
  ],
  "render_assets": "r3d/*.png : concorde spitfire b2 beluga sr71 f22 a10 m2000 f117 an225 typhoon f15 f16 harrier mig21 su37 b52 alphajet c130 f35 b787 caravelle a320 a330 b767",
  "slot_roles": {
@@ -1713,7 +1737,8 @@
   "29/10 : NE JAMAIS lancer creative_transcribe_audio avant que la voix soit 'completed' : la transcription relance alors le nœud TTS (crédits refacturés). Toujours estimate_only avant un run quand le quota est bas.",
   "29/10 : jungle Blender inutilisable (canopée « moisie ») -> pr/jungle2d.py (cairo). rng de sm_audio2 = numpy Generator : rng.integers(), pas randint. Plaque vue de dessus dézoomée : EXTEND_REFLECT (sinon bandes noires).",
   "30/10 : ElevenLabs débite l'ESTIMATION (credit_costs du lancement, ≈ 1,68 crédit/caractère en multilingual_v2 ; turbo/flash : même estimation dans les flows), PAS le champ « price » de la génération (≈ 1/caractère). Une voix de 60 s ≈ 2 100 crédits ; le quota refuse toute demande dont l'estimation dépasse le solde. Lire le solde dans le message d'erreur ; ne jamais lancer une voix découpée sans être sûr d'avoir de quoi la finir.",
-  "30/10 : composition EL = frise : model_parameters.tracks[] (piste vidéo + pistes audio), chaque piste a des clips[] avec gap_before (secondes) ; plusieurs nœuds audio branchés sur le port 'audio' deviennent des pistes superposées. Pour une voix en morceaux : une seule piste audio, un clip par morceau, gap_before = pause (via creative_update_node model_parameters.tracks)."
+  "30/10 : composition EL = frise : model_parameters.tracks[] (piste vidéo + pistes audio), chaque piste a des clips[] avec gap_before (secondes) ; plusieurs nœuds audio branchés sur le port 'audio' deviennent des pistes superposées. Pour une voix en morceaux : une seule piste audio, un clip par morceau, gap_before = pause (via creative_update_node model_parameters.tracks).",
+  "04/11 : un conteneur réinitialisé se réinstalle en ≈ 10 min : clone minuteaero-pipeline, cp -r pipe/*, setup.sh (puis cp fonts/*.ttf ~/.fonts && fc-cache), geo/ne50.geojson (raw GitHub), rendus/plaques : clone --filter=blob:none --sparse de minuteaero-media puis `git sparse-checkout set --no-cone '/pr3d/*'` (le mode cône télécharge aussi les 3,7 Go de vidéos à la racine), cp media_push/pr3d/*.png pr/, `DL=dl/<slug>/ python3 dl_tts.py` pour durs.json. WebFetch exige une autorisation : en exécution non surveillée il échoue — vérifier les faits d'un nouveau sujet quand Olivier est présent, ou réutiliser des faits déjà sourcés."
  ],
  "format_2026_10_22": {
   "10:00": "SURVIVRAIS-TU ? (stickman)",
