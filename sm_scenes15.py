@@ -307,7 +307,7 @@ def sc_hl_crash(c, t, sg, lt, u):
         g = cairo.LinearGradient(0, 0, 0, H); g.add_color_stop_rgb(0, 0.35, 0.45, 0.62); g.add_color_stop_rgb(1, 0.85, 0.75, 0.62); c.set_source(g); c.paint()
         b = sg['sent'][2]; q = ap(t, b[0] - 0.2, b[1] + 0.2)
         hills(c, t)
-        plane(c, 'hl_dive', 420 + 300 * q, 520 + 420 * q, 0.30 - 0.06 * q, alpha=1 - ap(q, 0.85, 1.0))
+        plane(c, 'hl_bank', 700 - 340 * q, 500 + 440 * q, 0.30 - 0.06 * q, rot=-0.15 - 0.2 * q, alpha=1 - ap(q, 0.85, 1.0))
         c.set_source_rgba(0, 0, 0, 0.6 * ap(q, 0.8, 1.0)); c.paint()
         tag(c, "PRÈS DE GRAMMATIKO, À 40 KM D'ATHÈNES", 540, 1285, WH, ap(q, 0.1, 0.25), 42)
     else:

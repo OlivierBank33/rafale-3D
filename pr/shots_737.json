@@ -16,7 +16,13 @@
    "overhead",
    "landing-light",
    "tyre-smoke",
-   "contrail"
+   "contrail",
+   "strobe",
+   "beacon",
+   "landing",
+   "tyre",
+   "light",
+   "halo"
   ],
   "W": 2400,
   "H": 1600,
@@ -57,7 +63,13 @@
    "overhead",
    "landing-light",
    "tyre-smoke",
-   "contrail"
+   "contrail",
+   "strobe",
+   "beacon",
+   "landing",
+   "tyre",
+   "light",
+   "halo"
   ],
   "W": 2600,
   "H": 1300,
@@ -97,7 +109,13 @@
    "overhead",
    "landing-light",
    "tyre-smoke",
-   "contrail"
+   "contrail",
+   "strobe",
+   "beacon",
+   "landing",
+   "tyre",
+   "light",
+   "halo"
   ],
   "W": 2400,
   "H": 1600,
@@ -138,7 +156,13 @@
    "overhead",
    "landing-light",
    "tyre-smoke",
-   "contrail"
+   "contrail",
+   "strobe",
+   "beacon",
+   "landing",
+   "tyre",
+   "light",
+   "halo"
   ],
   "W": 2400,
   "H": 1600,
