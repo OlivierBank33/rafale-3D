@@ -62,7 +62,8 @@ INTEN = {'cc_hook': 0.6, 'cc_legend': 0.35, 'cc_flight': 0.3, 'cc_dc10': 0.5, 'c
          'dv_hook': 0.8, 'dv_speed': 0.9, 'dv_stealth': 0.75, 'dv_multi': 0.8, 'dv_export': 0.6, 'dv_prod': 0.7, 'dv_verdict': 0.85,
          'jk_hook': 0.75, 'jk_real': 0.3, 'jk_storm': 0.85, 'jk_fall': 0.8, 'jk_hurt': 0.45, 'jk_river': 0.5, 'jk_found': 0.55, 'jk_later': 0.45, 'jk_verdict': 0.35,
          'tf_hook': 0.6, 'tf_bomb': 0.55, 'tf_fog': 0.5, 'tf_radio': 0.6, 'tf_roll': 0.85, 'tf_impact': 0.95, 'tf_toll': 0.2, 'tf_after': 0.4,
-         'sx_hook': 0.55, 'sx_takeoff': 0.5, 'sx_vanish': 0.7, 'sx_bracelet': 0.4, 'sx_wreck': 0.55, 'sx_claim': 0.6, 'sx_verdict': 0.45}
+         'sx_hook': 0.55, 'sx_takeoff': 0.5, 'sx_vanish': 0.7, 'sx_bracelet': 0.4, 'sx_wreck': 0.55, 'sx_claim': 0.6, 'sx_verdict': 0.45,
+         'hl_hook': 0.6, 'hl_switch': 0.45, 'hl_alarm': 0.75, 'hl_hypoxia': 0.65, 'hl_f16': 0.8, 'hl_steward': 0.7, 'hl_crash': 0.5, 'hl_after': 0.4}
 def inten_at(tt):
     for sgx in SEGS:
         if sgx['t0'] <= tt < sgx['end']: return INTEN.get(sgx['scene'], 0.5)
@@ -610,6 +611,39 @@ def cues7(sc, s, S, at):
     if sc == 'tf_after':
         for j in range(4): add(sfx, at(0, 0.1) + j * 0.45, pluck(523 * 2 ** ([0, 4, 7, 12][j] / 12), 0.5, 0.05))
         add(sfx, S[0][0] + 0.5 * (S[0][1] - S[0][0]), tone(660, 0.4, 0.05)); add(sfx, at(1), stinger(ROOT, 0.35))
+    # ---- Helios 522 (sm_scenes15) ----
+    def cabin_hum(t0, d, g=0.07): add(sfx, t0, rumble(d, 150, g)); add(sfx, t0, rumble(d, 330, g * 0.4))
+    if sc == 'hl_hook':
+        cabin_hum(at(0), end - at(0), 0.06); add(sfx, at(0, 0.3), gliss(800, 600, 1.5, 0.03))
+        for j in range(3): add(sfx, at(1) + j * 0.35, tone(1000, 0.08, 0.05, 0.002, 0.06)); crackle(at(1) + j * 0.35, 0.25, 0.02, 20)
+        add(sfx, at(2), stinger(ROOT, 0.35)); add(sfx, at(2, 0.1), gliss(1200, 2400, 1.2, 0.03))
+    if sc == 'hl_switch':
+        for j in range(4): add(sfx, at(0, 0.2) + j * 0.5, pluck(660, 0.3, 0.05))
+        add(sfx, at(1) + 0.6, tone(180, 0.08, 0.35, 0.001, 0.06)); add(sfx, at(1) + 0.62, tone(2200, 0.03, 0.08, 0.001, 0.02))
+        add(sfx, at(1) + 1.1, stinger(ROOT / 2, 0.3))
+    if sc == 'hl_alarm':
+        cabin_hum(at(0), S[0][1] - S[0][0] + 0.3, 0.07); add(sfx, at(0), gliss(150, 260, S[0][1] - S[0][0], 0.05))
+        tt = at(1)
+        while tt < end - 0.2: add(sfx, tt, tone(880, 0.22, 0.10, 0.003, 0.05)); add(sfx, tt + 0.25, tone(660, 0.22, 0.10, 0.003, 0.05)); tt += 0.6
+    if sc == 'hl_hypoxia':
+        for j in range(12): add(sfx, at(0) + 0.1 + j * 0.09, tone(rng.uniform(300, 500), 0.06, 0.05, 0.002, 0.04))
+        heartbeat(at(1), at(2), 58, 0.4); add(sfx, at(1), gliss(400, 120, S[1][1] - S[1][0], 0.05))
+        tt = at(2)
+        while tt < end: add(sfx, tt, pluck(523, 0.3, 0.04)); tt += 0.9
+    if sc == 'hl_f16':
+        add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.4, 60, 0.3)); add(sfx, at(0), rumble(S[0][1] - S[0][0] + 0.4, 125, 0.15)); add(sfx, at(0, 0.5), whoosh(0.35))
+        L1 = S[1][1] - S[1][0]
+        for j in range(3): add(sfx, S[1][0] + j * 0.3 * L1 + 0.2, impact(0.5)); add(sfx, S[1][0] + j * 0.3 * L1 + 0.2, tone(220, 0.25, 0.08, 0.003, 0.2))
+    if sc == 'hl_steward':
+        heartbeat(at(0), end, 92, 0.4); add(sfx, at(0, 0.3), stinger(ROOT * 1.5, 0.25)); add(sfx, at(1), gliss(300, 600, S[1][1] - S[1][0], 0.04))
+    if sc == 'hl_crash':
+        add(sfx, at(0), tone(1200, 0.15, 0.06)); add(sfx, at(0, 0.3), tone(1200, 0.15, 0.06))
+        L1 = S[1][1] - S[1][0]
+        add(sfx, at(1) + 0.1, spool(220, 60, 0.45 * L1, 0.2)); add(sfx, at(1) + 0.55 * L1, spool(220, 60, 0.45 * L1, 0.2))
+        add(sfx, at(2), rumble(S[2][1] - S[2][0] + 0.3, 80, 0.15)); add(sfx, at(2), gliss(500, 150, S[2][1] - S[2][0], 0.05))
+        MUTE.append((at(3) - 0.15, end + 0.3)); add(sfx, at(3), tone(55, end - at(3) + 0.8, 0.14, 0.5, 1.0))
+    if sc == 'hl_after':
+        add(sfx, at(0) + 0.6, tone(180, 0.08, 0.35, 0.001, 0.06)); add(sfx, at(0) + 0.9, pluck(880, 0.6, 0.06)); add(sfx, at(1), stinger(ROOT, 0.35))
     # ---- Saint-Exupéry (sm_scenes14) ----
     def prop(t0, d, g=0.1): add(sfx, t0, rumble(d, 96, g)); add(sfx, t0, rumble(d, 192, g * 0.4))
     if sc == 'sx_hook':

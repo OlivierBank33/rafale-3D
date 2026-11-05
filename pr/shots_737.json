@@ -1,0 +1,166 @@
+{
+ "hl_hero": {
+  "xml": "737-300/Models/737-300.xml",
+  "gear": false,
+  "samples": 36,
+  "texmap": {
+   "733_white.png": "../pr/737_helios.png"
+  },
+  "exclude": [
+   "goldhofert",
+   "seating",
+   "services",
+   "autopush",
+   "taxilight",
+   "bulkhead",
+   "overhead",
+   "landing-light",
+   "tyre-smoke",
+   "contrail"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "sun_el": 35,
+  "sun_az": 160,
+  "sky_strength": 0.6,
+  "az": 150,
+  "el": 6,
+  "dist": 1.0,
+  "pitch": 2,
+  "skip": [
+   "llightl",
+   "llightr",
+   "navlight",
+   "plane.009",
+   "plane.010",
+   "strut",
+   "tyre",
+   "axle",
+   "ngdoor",
+   "geardoor"
+  ]
+ },
+ "hl_side": {
+  "xml": "737-300/Models/737-300.xml",
+  "gear": false,
+  "samples": 36,
+  "texmap": {
+   "733_white.png": "../pr/737_helios.png"
+  },
+  "exclude": [
+   "goldhofert",
+   "seating",
+   "services",
+   "autopush",
+   "taxilight",
+   "bulkhead",
+   "overhead",
+   "landing-light",
+   "tyre-smoke",
+   "contrail"
+  ],
+  "W": 2600,
+  "H": 1300,
+  "sun_el": 35,
+  "sun_az": 160,
+  "sky_strength": 0.6,
+  "az": 270,
+  "el": 3,
+  "dist": 1.1,
+  "skip": [
+   "llightl",
+   "llightr",
+   "navlight",
+   "plane.009",
+   "plane.010",
+   "strut",
+   "tyre",
+   "axle",
+   "ngdoor",
+   "geardoor"
+  ]
+ },
+ "hl_bank": {
+  "xml": "737-300/Models/737-300.xml",
+  "gear": false,
+  "samples": 36,
+  "texmap": {
+   "733_white.png": "../pr/737_helios.png"
+  },
+  "exclude": [
+   "goldhofert",
+   "seating",
+   "services",
+   "autopush",
+   "taxilight",
+   "bulkhead",
+   "overhead",
+   "landing-light",
+   "tyre-smoke",
+   "contrail"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "sun_el": 35,
+  "sun_az": 160,
+  "sky_strength": 0.6,
+  "az": 205,
+  "el": 18,
+  "dist": 1.05,
+  "roll": 22,
+  "skip": [
+   "llightl",
+   "llightr",
+   "navlight",
+   "plane.009",
+   "plane.010",
+   "strut",
+   "tyre",
+   "axle",
+   "ngdoor",
+   "geardoor"
+  ]
+ },
+ "hl_dive": {
+  "xml": "737-300/Models/737-300.xml",
+  "gear": false,
+  "samples": 36,
+  "texmap": {
+   "733_white.png": "../pr/737_helios.png"
+  },
+  "exclude": [
+   "goldhofert",
+   "seating",
+   "services",
+   "autopush",
+   "taxilight",
+   "bulkhead",
+   "overhead",
+   "landing-light",
+   "tyre-smoke",
+   "contrail"
+  ],
+  "W": 2400,
+  "H": 1600,
+  "sun_el": 35,
+  "sun_az": 160,
+  "sky_strength": 0.6,
+  "az": 120,
+  "el": 12,
+  "dist": 1.05,
+  "pitch": -12,
+  "roll": -8,
+  "skip": [
+   "llightl",
+   "llightr",
+   "navlight",
+   "plane.009",
+   "plane.010",
+   "strut",
+   "tyre",
+   "axle",
+   "ngdoor",
+   "geardoor"
+  ]
+ }
+}
